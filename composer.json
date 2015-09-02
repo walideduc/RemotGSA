@@ -1,0 +1,11 @@
+{
+    "name": "backbee/gsabundle",
+    "description": "Next GSABundle",
+    "type": "bundles-package", 
+    "extra": {
+	"installer-name": "GSABundle"
+    },
+    "require": {
+	"next/composer-installers": "1.1.0"
+    }
+}
