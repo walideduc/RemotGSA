@@ -1,6 +1,6 @@
-<div {{ this.bb5content(null, {'class': 'recherche padding-top bloc'})|raw }}>
+<div {{ this.bbcontent(null, {'class': 'recherche padding-top bloc'})|raw }}>
 
-	<form class="form-horizontal searchForm" role="search" action="{{ this.getObject().getParam('search_results_page:array:value') }}" method="get" autocomplete="off">
+	<form class="form-horizontal searchForm" role="search" action="{{ this.getObject().getParamValue('search_results_page') }}" method="get" autocomplete="off">
 		<div id="custom-search-input">
             <div class="input-group col-md-12">
                 <input type="text" class="search-query noshadow form-control" placeholder="Recherche..." name="q" value="{{ query.0 }}">
@@ -18,5 +18,5 @@
 <!-- MOTEUR RECHERCHE -->
 
 <script type='text/javascript'>
-   document.resultPage = "{{ this.getObject().getParam('search_results_page:array:value') }}";
+   document.resultPage = "{{ this.getObject().getParamValue('search_results_page') }}";
 </script>

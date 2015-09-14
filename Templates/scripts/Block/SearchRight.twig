@@ -1,4 +1,4 @@
-<div {{ this.bb5content() | raw }} >
+<div {{ this.bbcontent() | raw }} >
     {% if responseVideo.0.getResults() %}
         {% include 'Block/Result/video_search_right.twig' %}
     {% endif %}
@@ -26,7 +26,7 @@
     {% if responseDossier.0.getResults() %}
         {% include 'Block/Result/dossier_search_right.twig' %}
     {% endif %}
-    
+
     <div class="bloc center">
         <script type="text/javascript"><!--
             google_ad_client = "ca-pub-8147423388682709";

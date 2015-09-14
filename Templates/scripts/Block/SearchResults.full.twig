@@ -4,7 +4,7 @@
 <!-- RESULTATS TOP-->
 {% set cssSite = {'www.bfmtv.com': 'rub2', 'www.business.bfmtv.com': 'rub3', 'www.rmcsport.bfmtv.com': 'rub4', 'www.01net.com': 'rub5'} %}
 {% set customTemplate = [ 'diaporama', 'article','video' ] %}
-<div class="bloc col-xs-12 hidden-xs"> 
+<div class="bloc col-xs-12 hidden-xs">
     {%  if(response.0.getSuggestions() | length != 0) %}
         <p>Essayez avec l'orthographe :
             {% for suggestion in response.0.getSuggestions() %}
@@ -58,7 +58,7 @@
     </div>
 </div>
 {% else %}
-    {% include 'Block/Result/nav_block.twig' %}
+    {% include 'Block/Result/NavBlock.twig' %}
     {# include template by type, first type template differs from others #}
         <div class="tab-content clearfix padding-top" id="search-result-content">
           <div class="tab-pane fade in active" id="all">
@@ -75,17 +75,17 @@
 
                  {% set currentId = result.id %}
                  {% if result_amount == 1 %}
-                   {% include 'Block/Result/lien_commercial_block.twig' with {'lien_id': 1} %}
-             {% include 'Block/Result/lien_partenaire_block.twig' %}
+                   {% include 'Block/Result/LienCommercialBlock.twig' with {'lien_id': 1} %}
+             {% include 'Block/Result/LienPartenaireBlock.twig' %}
                 {% endif %}
                  {% set typology = result.getMetaTag('typology')|lower %}
                  {% set result_amount = result_amount+1 %}
                 {%  if ( three_first_videos|length > 0 and videoBlock and (result_amount == 4 or (result_amount < 4 and loop.last)))  %}
-                    {% include 'Block/search_results.videoinsert.twig' %}
+                    {% include 'Block/SearchResults.videoinsert.twig' %}
                     {% set videoBlock = false %}
                  {% endif %}
                 {% if result_amount == 8 %}
-                   {% include 'Block/Result/lien_commercial_block.twig' with {'lien_id': 2} %}
+                   {% include 'Block/Result/LienCommercialBlock.twig' with {'lien_id': 2} %}
                 {% endif %}
                  {% if submittedQuery.type != 'typology:video' %}
                     {% set type = result.getMetaTag('type')|lower %}
@@ -114,7 +114,7 @@
                  {% endif %}
              {% endfor %}
              <!-- PUB BOTTOM -->
-             {% include 'Block/Result/lien_commercial_block.twig' with {'lien_id': 3} %}
+             {% include 'Block/Result/LienCommercialBlock.twig' with {'lien_id': 3} %}
              <!-- /PUB BOTTOM -->
              </ul>
           </div>
@@ -140,7 +140,7 @@
        </ul>
    </div>
    <!-- PAGE -->
-   {% include 'Block/Result/pagination_block.twig' %}
+   {% include 'Block/Result/PaginationBlock.twig' %}
    <!-- /PAGE -->
       {# js that loads associated searches #}
       <script type="text/javascript">
