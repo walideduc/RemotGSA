@@ -1,27 +1,27 @@
 <?php
-namespace BackBuilder\Bundle\GSABundle;
+namespace BackBee\Bundle\GSABundle;
 
-use BackBuilder\Bundle\ABundle;
-use BackBuilder\Bundle\GSABundle\Model\Response\ParserFactory;
-use BackBuilder\Bundle\GSABundle\Model\Response\XmlParser;
-use BackBuilder\ClassContent\AClassContent;
-use BackBuilder\NestedNode\Page;
-use BackBuilder\ClassContent\Block\search_results;
-use BackBuilder\ClassContent\Block\recherche;
+use BackBee\Bundle\AbstractBundle;
+use BackBee\Bundle\GSABundle\Model\Response\ParserFactory;
+use BackBee\Bundle\GSABundle\Model\Response\XmlParser;
+use BackBee\ClassContent\AbstractClassContent;
+use BackBee\NestedNode\Page;
+use BackBee\ClassContent\Block\SearchResults;
+use BackBee\ClassContent\Block\Recherche;
 use Guzzle\Http\Client;
 use Symfony\Component\HttpFoundation\Response;
-use BackBuilder\Bundle\GSABundle\Model\Filter;
-use BackBuilder\Bundle\GSABundle\Model\LinkBuilder;
-use BackBuilder\Bundle\GSABundle\Model\Pager;
+use BackBee\Bundle\GSABundle\Model\Filter;
+use BackBee\Bundle\GSABundle\Model\LinkBuilder;
+use BackBee\Bundle\GSABundle\Model\Pager;
 use Symfony\Component\Yaml\Parser;
 
 use Symfony\Component\HttpFoundation\Request;
 
-class GSA extends ABundle
+class GSA extends AbstractBundle
 {
     /**
      * Start the bundle
-     * @return \BackBuilder\Bundle\GSABundle\GSA
+     * @return \BackBee\Bundle\GSABundle\GSA
      */
     public function start()
     {
@@ -30,7 +30,7 @@ class GSA extends ABundle
 
     /**
      * Stop the bundle
-     * @return \BackBuilder\Bundle\GSABundle\GSA
+     * @return \BackBee\Bundle\GSABundle\GSA
      */
     public function stop()
     {
@@ -64,8 +64,8 @@ class GSA extends ABundle
 
         // Create the search_results container and set needed parameters
         $searchResultsBlock = new recherche();
-        $searchResultsBlock->setState(AClassContent::STATE_NORMAL);
-        $searchResultsBlock->recherche_results_bloc->setState(AClassContent::STATE_NORMAL)
+        $searchResultsBlock->setState(AbstractClassContent::STATE_NORMAL);
+        $searchResultsBlock->recherche_results_bloc->setState(AbstractClassContent::STATE_NORMAL)
             ->setParam('submittedQuery', $submittedQuery);
 
         // right block search
@@ -77,15 +77,15 @@ class GSA extends ABundle
                 $resultRight = $gsaRequestRight->send($gsaResponse->getTopKeyword());
                 $parserRight = ParserFactory::getParser('xml');
                 $gsaResponseRight = $parserRight->parse($resultRight);
-                $searchResultsBlock->recherche_right_bloc->setState(AClassContent::STATE_NORMAL)
+                $searchResultsBlock->recherche_right_bloc->setState(AbstractClassContent::STATE_NORMAL)
                     ->setParam('response'.ucfirst($key), $gsaResponseRight);
             }
         }
 
         // Create page with right layout
         $site = $this->getApplication()->getSite();
-        $root = $em->getRepository('BackBuilder\NestedNode\Page')->getRoot($site);
-        $layout = $em->find('BackBuilder\Site\Layout', md5('searchlayout-' . $site->getLabel()));
+        $root = $em->getRepository('BackBee\NestedNode\Page')->getRoot($site);
+        $layout = $em->find('BackBee\Site\Layout', md5('searchlayout-' . $site->getLabel()));
 
         $pagebuilder = $bbapp->getContainer()->get('pagebuilder');
 
