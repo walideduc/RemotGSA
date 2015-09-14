@@ -1,15 +1,18 @@
-search_textbox:
+SearchTextbox:
     properties:
         name: Formulaire de recherche
         description: "Permet d'effectuer une recherche"
-        category: [Recherche]
+        category: ['Recherche']
         cache-lifetime: 0
     parameters:
         search_results_page:
-            rendertype: text
+            type: 'text'
             label: "Url de la page qui affichera la recherche"
             value: "/search"
         autocomplete:
-            rendertype: checkbox
+            type: 'checkbox'
             label: "Affiche l'autocompletion"
-            checked: false
+            options:
+                'false': 'false'
+            value: ['false']
+            inline: true

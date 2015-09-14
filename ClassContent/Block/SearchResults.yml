@@ -1,60 +1,69 @@
-search_results:
+SearchResults:
     properties:
         name: Conteneur de résultats de recherche
         description: "Permet de présenter dans une page dédiée les résultats de la recherche"
-        category: [Recherche]
+        category: ['Recherche']
         cache-lifetime: -60
+    elements:
+        recherche_bloc:
+            type: \BackBee\ClassContent\Block\SearchTextbox
+            label: Recherche bloc
     parameters:
         mode:
-            rendertype: select
+            type: 'select'
             label: "Mode de rendu"
             options:
-                full: "Page complète, filtres, pager, ..."
-                videoinsert: "Encart Vidéo"
-                related: "Recherche associée"
-            selected: full
+                'full': "Page complète, filtres, pager, ..."
+                'videoinsert': "Encart Vidéo"
+                'related': "Recherche associée"
+            value: ['full']
         source_type:
-            rendertype: select
+            type: 'select'
             label: "Source de la recherche"
             options:
-                query: "Paramètre de la requête http"
-                fixed: "Valeur fixe"
-                metatag: "Metatag de la recherche générale"
-            selected: query
+                'query': "Paramètre de la requête http"
+                'fixed': "Valeur fixe"
+                'metatag': "Metatag de la recherche générale"
+            value: ['query']
         source_value:
-            rendertype: text
+            type: 'text'
             label: "Valeur pour la source de la recherche"
             value: "q"
         start:
-            rendertype: text
+            type: 'text'
             label: "Index du premier résultat à retourner"
             value: 0
         force_start:
-            rendertype: checkbox
+            type: 'checkbox'
             label: "Forcer l'index du premier résultat (la valeur en url ne sera pas prise en compte)"
-            checked: false
+            options:
+                'false': 'false'
+            value: ['false']
+            inline: true
         num:
-            rendertype: text
+            type: 'text'
             label: "Nombre de résultat par page"
             value: 12
         force_num:
-            rendertype: checkbox
+            type: 'checkbox'
             label: "Forcer le nombre de résultat (la valeur en url ne sera pas prise en compte)"
-            checked: false
+            options:
+                'false': 'false'
+            value: ['false']
+            inline: true
         requiredfields:
-            rendertype: text
+            type: 'text'
             label: "Expression de filtrage par MetaTag"
-            value:
+            value: ''
         force_requiredfields:
-            rendertype: checkbox
+            type: 'checkbox'
             label: "Forcer le filtre (la valeur en url ne sera pas prise en compte)"
-            checked: false
+            options:
+                'false': 'false'
+            value: ['false']
+            inline: true
         inmeta:
-            rendertype: text
+            type: 'text'
             label: "Expression de filtrage inmeta (obligatoire pour des daterange)"
-            value:
-    elements:
-        recherche_bloc:
-            type: \BackBuilder\ClassContent\Block\search_textbox
-            label: Recherche bloc
+            value: ''
 

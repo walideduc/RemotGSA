@@ -1,0 +1,35 @@
+SearchRight:
+    properties:
+        name: pub
+        description: "pub de recherche"
+        category: ['Recherche']
+        cache-lifetime: 0
+    parameters:
+        mode:
+            type: 'select'
+            label: "Mode de rendu"
+            options:
+                'full': "Page complète, filtres, pager, ..."
+                'videoinsert': "Encart Vidéo"
+                'related': "Recherche associée"
+            value: ['related']
+        source_type:
+            type: 'select'
+            label: "Source de la recherche"
+            options:
+                'query': "Paramètre de la requête http"
+                'fixed': "Valeur fixe"
+                'metatag': "Metatag de la recherche générale"
+            value: ['query']
+        source_value:
+            type: 'text'
+            label: "Valeur pour la source de la recherche"
+            value: "q"
+        start:
+            type: 'text'
+            label: "Index du premier résultat à retourner"
+            value: 0
+        num:
+            type: 'text'
+            label: "Nombre de résultat par page"
+            value: 3
