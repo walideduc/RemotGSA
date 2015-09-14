@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<GSP VER="3.2">
+    <TM>0.058073</TM><Q>nsa</Q>
+    <PARAM name="q" value="nsa" original_value="nsa"/>
+    <PARAM name="client" value="default_frontend" original_value="default_frontend"/>
+    <PARAM name="output" value="json" original_value="json"/>
+    <PARAM name="site" value="default_collection" original_value="default_collection"/>
+    <PARAM name="getfields" value="*" original_value="*"/>
+    <PARAM name="ie" value="UTF-8" original_value="UTF-8"/>
+    <PARAM name="ulang" value="en" original_value="en"/>
+    <PARAM name="ip" value="91.233.68.5" original_value="91.233.68.5"/>
+    <PARAM name="access" value="p" original_value="p"/>
+    <PARAM name="sort" value="date:D:L:d1" original_value="date:D:L:d1"/>
+    <PARAM name="entqr" value="3" original_value="3"/>
+    <PARAM name="entqrm" value="0" original_value="0"/>
+    <Spelling><Suggestion q="nssa">&lt;b&gt;&lt;i&gt;nssa&lt;/i&gt;&lt;/b&gt;</Suggestion></Spelling><Synonyms><OneSynonym q="obama">obama</OneSynonym></Synonyms><RES SN="1" EN="10">
+    <M>181</M>
+    <FI/><NB><NU>/search?q=nsa&amp;site=default_collection&amp;lr=&amp;ie=UTF-8&amp;client=default_frontend&amp;access=p&amp;sort=date:D:L:d1&amp;getfields=%252a&amp;start=10&amp;sa=N</NU>
+</NB>
+
+    <R N="1"><U>http://www.01net.com/article/600821/</U><UE>http://www.01net.com/article/600821/</UE><T>Les révélations sur l&amp;#39;espionnage tous azimuts de l&amp;#39;Agence &lt;b&gt;...&lt;/b&gt;</T><RK>8</RK><ENT_SOURCE>T4-BK38FXVE46NLN</ENT_SOURCE><FS NAME="date" VALUE="2013-08-01"/><MT N="typology" V="article"/><MT N="id" V="600821"/><MT N="site" V="www.01net.com"/><MT N="chaine" V="Actualités"/><MT N="rubrique" V="Sécurité"/><MT N="type" V="article"/><MT N="title" V="Vous avez aimé Prism, vous allez adorer Xkeyscore !"/><MT N="chapoarticle" V="Un programme ultra sophistiqué dénommé Xkeyscore permet à la NSA de surveiller en temps réel tous les e-mails, chat et navigation internet de n&#39;importe qui dans le monde."/><MT N="displayurl" V="http://www.01net.com/editorial/600821/vous-avez-aime-prism-vous-allez-adorer-xkeyscore/"/><MT N="lastmodifieddate" V="2013-08-01"/><MT N="date" V="2013-08-01"/><MT N="author" V="Laurent Cointot"/><MT N="media" V="Articles"/><S>Les révélations sur l&amp;#39;espionnage tous azimuts de l&amp;#39;Agence nationale de&lt;br&gt; sécurité américaine (&lt;b&gt;NSA&lt;/b&gt;) n&amp;#39;en finissent pas de rebondir. &lt;b&gt;...&lt;/b&gt;  </S><LANG>fr</LANG><HAS><L/><C SZ="5k" CID="SjicRgYjfG4J" ENC="UTF-8"/></HAS></R><R N="2"><U>http://pro.01net.com/article/396349/</U><UE>http://pro.01net.com/article/396349/</UE><T>Avec le &lt;b&gt;NSA&lt;/b&gt; 240, l&amp;#39;Américain Sonic-wall propose une solution &lt;b&gt;...&lt;/b&gt;</T><RK>8</RK><ENT_SOURCE>T4-BK38FXVE46NLN</ENT_SOURCE><FS NAME="date" VALUE="2008-11-06"/><MT N="typology" V="article"/><MT N="id" V="396349"/><MT N="site" V="pro.01net.com"/><MT N="chaine" V="Archives"/><MT N="type" V="article"/><MT N="title" V="Un boîtier UTM doué de redondance pour petite structure"/><MT N="chapoarticle" V="Avec le NSA 240, l&#39;Américain Sonic-wall propose une solution hybride au confluent de ses gammes TZ et NSA. Objectif : fournir aux petites entreprises les moyens des plus grandes. Le boîtier NSA 240 s&#39;appuie sur le système d&#39;exploitation SonicOS 5.0, qui offre, entre autres, la possibilité de gérer une architecture biprocesseur. En l&#39;occurrence deux Octeon+ cadencés à 700 MHz, élaborés par Cavium, avec l&#39;argument que ces processeurs d&#39;architecture MIPS sont plus performants que des x86 pour les traitements IP. En charge complète, le boîtier multifonction plafonne à 110 Mbit/s réels. Pour s&#39;assurer de ses performances, le constructeur soumet son matériel à des crash tests avec Avalanche Reflector de Spirent. Ce dernier génère un trafic HTTP qui pollue la bande passante et met en activité chaque service de la passerelle. Création de réseaux virtuels Au programme du NSA 240 : RPV IPSec (le SSL est en préparation et devrait faire partie d&#39;une prochaine mise à jour), antivirus et antispyware maison, détection d&#39;intrusion (avec antirootkit intégré), et enfin, filtrage des courriels à l&#39;aide de listes noires. Doté du mécanisme d&#39;encapsulation 802.1q, le boîtier accueille plusieurs interfaces virtuelles sur un port. De la gamme TZ, destinée aux petites entreprises, NSA 240 reprend le port PC Card pour carte 3G, offrant ainsi un lien de secours en cas de panne du lien ADSL. Par ailleurs, il intègre un commutateur à six ports. Les deux ports A"/><MT N="displayurl" V="http://pro.01net.com/editorial/396349/un-boitier-utm-doue-de-redondance-pour-petite-structure/"/><MT N="lastmodifieddate" V="2008-11-06"/><MT N="date" V="2008-11-06"/><MT N="author" V="Stéphane Bellec"/><MT N="media" V="Articles"/><S>Avec le &lt;b&gt;NSA&lt;/b&gt; 240, l&amp;#39;Américain Sonic-wall propose une solution hybride&lt;br&gt; au confluent de ses gammes TZ et &lt;b&gt;NSA&lt;/b&gt;. Objectif &lt;b&gt;...&lt;/b&gt;  </S><LANG>fr</LANG><HAS><L/><C SZ="3k" CID="On9zSEzs6Z4J" ENC="UTF-8"/></HAS></R><R N="3"><U>http://www.01net.com/article/599873/</U><UE>http://www.01net.com/article/599873/</UE><T>Microsoft est-il un collaborateur zêlé des services secrets &lt;b&gt;...&lt;/b&gt;</T><RK>8</RK><ENT_SOURCE>T4-BK38FXVE46NLN</ENT_SOURCE><FS NAME="date" VALUE="2013-07-12"/><MT N="typology" V="article"/><MT N="id" V="599873"/><MT N="site" V="www.01net.com"/><MT N="chaine" V="Actualités"/><MT N="rubrique" V="Sécurité"/><MT N="type" V="article"/><MT N="title" V="Prism : Microsoft aurait aidé la NSA à déchiffrer les flux Skype et Outlook"/><MT N="chapoarticle" V="Microsoft aurait collaboré activement avec les services de la NSA et du FBI pour leur ouvrir l&#39;accès à sa messagerie Outlook, à Skype et à Skydrive (stockage).  "/><MT N="displayurl" V="http://www.01net.com/editorial/599873/prism-microsoft-aurait-aide-la-nsa-a-dechiffrer-les-flux-skype-et-outlook/"/><MT N="lastmodifieddate" V="2013-07-12"/><MT N="date" V="2013-07-12"/><MT N="author" V="Frédéric Bergé"/><MT N="media" V="Articles"/><S>La question se pose, selon des extraits de documents fournis par Edward&lt;br&gt; Snowden, l&amp;#39;informaticien de la &lt;b&gt;NSA&lt;/b&gt; (national security agency) en fuite &lt;b&gt;...&lt;/b&gt;  </S><LANG>fr</LANG><HAS><L/><C SZ="4k" CID="oqKKtMAjw2sJ" ENC="UTF-8"/></HAS></R><R N="4"><U>http://pro.01net.com/article/352614/</U><UE>http://pro.01net.com/article/352614/</UE><T>ZyXEL ajoute une nouvelle corde à son arc, qui en compte &lt;b&gt;...&lt;/b&gt;</T><RK>8</RK><ENT_SOURCE>T4-BK38FXVE46NLN</ENT_SOURCE><FS NAME="date" VALUE="2007-06-26"/><MT N="typology" V="article"/><MT N="id" V="352614"/><MT N="site" V="pro.01net.com"/><MT N="chaine" V="Archives"/><MT N="type" V="article"/><MT N="title" V="ZyXEL s&#39;initie au stockage pour les PME"/><MT N="chapoarticle" V="Le constructeur présente ses deux premiers produits NAS. Destinés aux entreprises de petite et moyenne taille, ils stockent jusqu&#39;à 3 téraoctets de données. "/><MT N="displayurl" V="http://pro.01net.com/editorial/352614/zyxel-sinitie-au-stockage-pour-les-pme/"/><MT N="lastmodifieddate" V="2007-06-26"/><MT N="date" V="2007-06-26"/><MT N="author" V="Gilbert Kallenborn"/><MT N="media" V="Articles"/><S>&lt;b&gt;...&lt;/b&gt; Le premier, le &lt;b&gt;NSA&lt;/b&gt;-2400, est un serveur de stockage et de sauvegarde pour&lt;br&gt; les entreprises de taille moyenne (50 à 100 utilisateurs). &lt;b&gt;...&lt;/b&gt;  </S><LANG>fr</LANG><HAS><L/><C SZ="4k" CID="W1hccnE0dE8J" ENC="UTF-8"/></HAS></R><R N="5"><U>http://www.01net.com/article/602178/</U><UE>http://www.01net.com/article/602178/</UE><T>Vous avez perdu un e-mail? Et pourquoi ne pas demander à &lt;b&gt;...&lt;/b&gt;</T><RK>8</RK><ENT_SOURCE>T4-BK38FXVE46NLN</ENT_SOURCE><FS NAME="date" VALUE="2013-09-02"/><MT N="typology" V="article"/><MT N="id" V="602178"/><MT N="site" V="www.01net.com"/><MT N="chaine" V="Actualités"/><MT N="rubrique" V="Société"/><MT N="type" V="article"/><MT N="title" V="Il a effacé un e-mail et cherche à le récupérer... auprès de la NSA"/><MT N="chapoarticle" V="Un journaliste néerlandais a fait une farce aux services secrets américains en les prenant pour un fournisseur de services de sauvegarde automatique de données. Bravo l&#39;artiste.  "/><MT N="displayurl" V="http://www.01net.com/editorial/602178/il-a-efface-un-email-et-cherche-a-le-recuperer-aupres-de-la-nsa/"/><MT N="lastmodifieddate" V="2013-09-02"/><MT N="date" V="2013-09-02"/><MT N="author" V="Gilbert Kallenborn"/><MT N="media" V="Articles"/><S>Et pourquoi ne pas demander à la &lt;b&gt;NSA&lt;/b&gt;, qui semble-t-il sauvegarde toute&lt;br&gt; la Toile, de le restaurer ? &lt;b&gt;...&lt;/b&gt; Je suis bien chez la &lt;b&gt;NSA&lt;/b&gt; ? &lt;b&gt;...&lt;/b&gt;  </S><LANG>fr</LANG><HAS><L/><C SZ="3k" CID="8PqjilwlBvoJ" ENC="ISO-8859-1"/></HAS></R><R N="6"><U>http://www.01net.com/article/601588/</U><UE>http://www.01net.com/article/601588/</UE><T>Il ya une semaine à peine, le Washington Post</T><RK>8</RK><ENT_SOURCE>T4-BK38FXVE46NLN</ENT_SOURCE><FS NAME="date" VALUE="2013-08-22"/><MT N="typology" V="article"/><MT N="id" V="601588"/><MT N="site" V="www.01net.com"/><MT N="chaine" V="Actualités"/><MT N="rubrique" V="Sécurité"/><MT N="type" V="article"/><MT N="title" V="La NSA reconnaît avoir récolté « par erreur » des communications entre Américains"/><MT N="chapoarticle" V="L&#39;information était encore une supposition il y a quelques jours. Des officiels américains ont admis cet « espionnage » de leurs concitoyens."/><MT N="displayurl" V="http://www.01net.com/editorial/601588/la-nsa-reconnait-avoir-recolte-par-erreur-des-communications-entre-americains/"/><MT N="lastmodifieddate" V="2013-08-22"/><MT N="date" V="2013-08-22"/><MT N="author" V="Cécile Bolesse, avec AFP"/><MT N="media" V="Articles"/><S>&lt;b&gt;...&lt;/b&gt; à peine, le Washington Post dénonçait des milliers d&amp;#39;infractions sur le respect&lt;br&gt; de la vie privée commises par l&amp;#39;Agence nationale de sécurité (&lt;b&gt;NSA&lt;/b&gt;). &lt;b&gt;...&lt;/b&gt;  </S><LANG>fr</LANG><HAS><L/><C SZ="4k" CID="ej7_QbBRJOQJ" ENC="UTF-8"/></HAS></R><R N="7"><U>http://www.01net.com/article/597011/</U><UE>http://www.01net.com/article/597011/</UE><T>« Et si ce n&amp;#39;était que le début ? »</T><RK>8</RK><ENT_SOURCE>T4-BK38FXVE46NLN</ENT_SOURCE><FS NAME="date" VALUE="2013-06-07"/><MT N="typology" V="article"/><MT N="id" V="597011"/><MT N="site" V="www.01net.com"/><MT N="chaine" V="Actualités"/><MT N="rubrique" V="Société"/><MT N="type" V="article"/><MT N="title" V="Etats-Unis : tous les appels téléphoniques sont surveillés depuis au moins 7 ans"/><MT N="chapoarticle" V="Verizon, contraint de donner ses données clients à la NSA, ne serait pas le seul. De nouvelles informations dessinent une situation où les données des américains et des Internautes du monde entier sont surveillées par les Etats-Unis."/><MT N="displayurl" V="http://www.01net.com/editorial/597011/etats-unis-tous-les-appels-telephoniques-sont-surveilles-depuis-au-moins-7-ans/"/><MT N="lastmodifieddate" V="2013-06-07"/><MT N="date" V="2013-06-07"/><MT N="author" V="Pierre Fontaine"/><MT N="media" V="Articles"/><S>&lt;b&gt;...&lt;/b&gt; l&amp;#39;opérateur américain Verizon avait été contraint de remettre les données&lt;br&gt; relatives aux communications de tous ses abonnés à la &lt;b&gt;NSA&lt;/b&gt;, l&amp;#39;agence &lt;b&gt;...&lt;/b&gt;  </S><LANG>fr</LANG><HAS><L/><C SZ="9k" CID="7mxzoXuWi48J" ENC="UTF-8"/></HAS></R><R N="8"><U>http://www.01net.com/article/598845/</U><UE>http://www.01net.com/article/598845/</UE><T>On s&amp;#39;en doutait un peu, mais c&amp;#39;est désormais confirmé : la &lt;b&gt;...&lt;/b&gt;</T><RK>8</RK><ENT_SOURCE>T4-BK38FXVE46NLN</ENT_SOURCE><FS NAME="date" VALUE="2013-07-01"/><MT N="typology" V="article"/><MT N="id" V="598845"/><MT N="site" V="www.01net.com"/><MT N="chaine" V="Actualités"/><MT N="rubrique" V="Sécurité"/><MT N="type" V="article"/><MT N="title" V="La France a été la cible d&#39;une cybersurveillance massive par la NSA"/><MT N="chapoarticle" V="Les agents américains récoltent des millions de données de connexion téléphonique par jour sur les citoyens français. Des ambassades et missions diplomatiques françaises et européennes ont également été espionnées."/><MT N="displayurl" V="http://www.01net.com/editorial/598845/la-france-a-ete-la-cible-d-une-cybersurveillance-massive-par-la-nsa/"/><MT N="lastmodifieddate" V="2013-07-01"/><MT N="date" V="2013-07-01"/><MT N="author" V="Gilbert Kallenborn, avec AFP"/><MT N="media" V="Articles"/><S>&lt;b&gt;...&lt;/b&gt; la France a été, à son tour, la cible de la stratégie mondiale de surveillance&lt;br&gt; téléphonique et informatique des agents de la &lt;b&gt;NSA&lt;/b&gt; (National Security &lt;b&gt;...&lt;/b&gt;  </S><LANG>fr</LANG><HAS><L/><C SZ="9k" CID="PYlIqJloUS0J" ENC="UTF-8"/></HAS></R><R N="9"><U>http://pro.01net.com/article/400836/</U><UE>http://pro.01net.com/article/400836/</UE><T>Sonicwall a choisi d&amp;#39;équiper les serveurs de sécurité réseau &lt;b&gt;...&lt;/b&gt;</T><RK>8</RK><ENT_SOURCE>T4-BK38FXVE46NLN</ENT_SOURCE><FS NAME="date" VALUE="2008-12-18"/><MT N="typology" V="article"/><MT N="id" V="400836"/><MT N="site" V="pro.01net.com"/><MT N="chaine" V="Archives"/><MT N="type" V="article"/><MT N="title" V="Sonicwall passe à l&#39;analyse applicative sur sa gamme NSA"/><MT N="chapoarticle" V="Sonicwall a choisi d&#39;équiper les serveurs de sécurité réseau de sa gamme NSA d&#39;un nouveau pare-feu applicatif. Ce dernier détecte les flux applicatifs entrants et sortants et y applique à la volée les règles de sécurité définies par l&#39;administrateur. Aucun filtrage préinstallé Là où beaucoup de pare-feu applicatifs reposent sur une base de signatures mise à jour par les laboratoires de l&#39;éditeur et n&#39;analysent que les ports et les protocoles utilisés par les applications, Sonicwall ne préinstalle aucun critère de filtrage. C&#39;est le responsable sécurité qui les définira selon la politique définie par l&#39;entreprise. Ainsi, une action menée par le pare-feu (blocage, envoi en quarantaine, redirection, etc.) peut être déclenchée par la détection d&#39;un mot-clé contenu dans une page web, dans un courriel, dans un fichier FTP ou dans une pièce jointe. Une application particulière peut également donner suite à une classification. Objectif : protéger la fuite d&#39;informations et limiter l&#39;intrusion de sites malveillants et non autorisés. Des fichiers volumineux inspectés à la volée Développé en interne, le moteur d&#39;analyse à la volée s&#39;oppose aux solutions d&#39;inspection des trames de données en mode buffer. Dans ce cas, le pare-feu reçoit, stocke puis analyse les informations. Avec le pare-feu de Sonicwall, les plus petits boîtiers NSA sont en mesure de filtrer en temps réel des fichiers de plusieurs centaines de megaoctets. Avec ce"/><MT N="displayurl" V="http://pro.01net.com/editorial/400836/sonicwall-passe-a-lanalyse-applicative-sur-sa-gamme-nsa/"/><MT N="lastmodifieddate" V="2008-12-18"/><MT N="date" V="2008-12-18"/><MT N="author" V="Eddye Dibar"/><MT N="media" V="Articles"/><S>Sonicwall a choisi d&amp;#39;équiper les serveurs de sécurité réseau de sa gamme&lt;br&gt; &lt;b&gt;NSA&lt;/b&gt; d&amp;#39;un nouveau pare-feu applicatif. &lt;b&gt;...&lt;/b&gt; ||| Pare-feu. Produit : &lt;b&gt;NSA&lt;/b&gt;. &lt;b&gt;...&lt;/b&gt;  </S><LANG>fr</LANG><HAS><L/><C SZ="3k" CID="gYWRAFcXf10J" ENC="UTF-8"/></HAS></R><R N="10"><U>http://www.01net.com/article/599441/</U><UE>http://www.01net.com/article/599441/</UE><T>Le couple Glenn Greenwald et Edward Snowden continue à &lt;b&gt;...&lt;/b&gt;</T><RK>8</RK><ENT_SOURCE>T4-BK38FXVE46NLN</ENT_SOURCE><FS NAME="date" VALUE="2013-07-08"/><MT N="typology" V="article"/><MT N="id" V="599441"/><MT N="site" V="www.01net.com"/><MT N="chaine" V="Actualités"/><MT N="rubrique" V="Société"/><MT N="type" V="article"/><MT N="title" V="PRISM : Les Etats-Unis ont espionné les appels et mails des Brésiliens"/><MT N="chapoarticle" V="Nouveau domino dans la série de révélations PRISM, un programme a été dévoilé qui permet aux Etats-Unis d&#39;espionner les communications téléphoniques et les mails échangés dans les pays étrangers, en l&#39;occurrence, une puissance montante, le Brésil."/><MT N="displayurl" V="http://www.01net.com/editorial/599441/prism-les-etats-unis-ont-espionne-les-appels-et-mails-des-bresiliens/"/><MT N="lastmodifieddate" V="2013-07-08"/><MT N="date" V="2013-07-08"/><MT N="author" V="Pierre Fontaine, avec AFP"/><MT N="media" V="Articles"/><S>Le couple Glenn Greenwald et Edward Snowden continue à ébranler&lt;br&gt; le monde et à démasquer les agissements de la &lt;b&gt;NSA&lt;/b&gt;. &lt;b&gt;...&lt;/b&gt;  </S><LANG>fr</LANG><HAS><L/><C SZ="8k" CID="K5OlRHTA8AIJ" ENC="UTF-8"/></HAS></R><PARM>
+    <PC>0</PC><PMT NM="typology" DN="Source" IR="0" T="0">
+    <PV V="article" L="" H="" C="179"/>
+    <PV V="logiciel" L="" H="" C="2"/>
+</PMT>
+    <PMT NM="type" DN="type" IR="0" T="0">
+        <PV V="Logiciel" L="" H="" C="2"/>
+        <PV V="astuces" L="" H="" C="9"/>
+        <PV V="article" L="" H="" C="170"/>
+    </PMT>
+    <PMT NM="date" DN="date" IR="0" T="4">
+        <PV V="2013-06-07" L="" H="" C="5"/>
+        <PV V="2013-06-10" L="" H="" C="4"/>
+        <PV V="2013-06-24" L="" H="" C="4"/>
+        <PV V="2013-08-01" L="" H="" C="4"/>
+        <PV V="2013-09-02" L="" H="" C="4"/>
+        <PV V="2013-07-01" L="" H="" C="3"/>
+        <PV V="2013-08-26" L="" H="" C="3"/>
+        <PV V="2013-08-28" L="" H="" C="3"/>
+        <PV V="2003-09-15" L="" H="" C="2"/>
+        <PV V="2004-06-01" L="" H="" C="2"/>
+        <PV V="2005-03-01" L="" H="" C="2"/>
+        <PV V="2005-05-01" L="" H="" C="2"/>
+        <PV V="2007-01-01" L="" H="" C="2"/>
+        <PV V="2013-06-13" L="" H="" C="2"/>
+        <PV V="2013-06-14" L="" H="" C="2"/>
+        <PV V="2013-06-17" L="" H="" C="2"/>
+        <PV V="2013-06-18" L="" H="" C="2"/>
+        <PV V="2013-07-04" L="" H="" C="2"/>
+        <PV V="2013-07-11" L="" H="" C="2"/>
+        <PV V="2013-08-05" L="" H="" C="2"/>
+        <PV V="2013-08-06" L="" H="" C="2"/>
+        <PV V="2013-08-09" L="" H="" C="2"/>
+        <PV V="2013-08-22" L="" H="" C="2"/>
+        <PV V="2013-09-12" L="" H="" C="2"/>
+        <PV V="2013-09-16" L="" H="" C="2"/>
+        <PV V="2013-09-18" L="" H="" C="2"/>
+        <PV V="2002-08-07" L="" H="" C="1"/>
+        <PV V="2002-11-21" L="" H="" C="1"/>
+        <PV V="2002-12-01" L="" H="" C="1"/>
+        <PV V="2002-12-02" L="" H="" C="1"/>
+        <PV V="2002-12-06" L="" H="" C="1"/>
+        <PV V="2002-12-20" L="" H="" C="1"/>
+        <PV V="2003-02-10" L="" H="" C="1"/>
+        <PV V="2003-04-01" L="" H="" C="1"/>
+        <PV V="2003-07-24" L="" H="" C="1"/>
+        <PV V="2003-09-01" L="" H="" C="1"/>
+        <PV V="2003-11-25" L="" H="" C="1"/>
+        <PV V="2003-12-01" L="" H="" C="1"/>
+        <PV V="2003-12-18" L="" H="" C="1"/>
+        <PV V="2004-01-01" L="" H="" C="1"/>
+        <PV V="2004-04-01" L="" H="" C="1"/>
+        <PV V="2004-05-10" L="" H="" C="1"/>
+        <PV V="2004-06-14" L="" H="" C="1"/>
+        <PV V="2004-07-02" L="" H="" C="1"/>
+        <PV V="2004-09-30" L="" H="" C="1"/>
+        <PV V="2004-10-01" L="" H="" C="1"/>
+        <PV V="2004-10-04" L="" H="" C="1"/>
+        <PV V="2004-11-01" L="" H="" C="1"/>
+        <PV V="2004-11-19" L="" H="" C="1"/>
+        <PV V="2005-01-21" L="" H="" C="1"/>
+        <PV V="2005-02-18" L="" H="" C="1"/>
+        <PV V="2005-06-01" L="" H="" C="1"/>
+        <PV V="2005-09-01" L="" H="" C="1"/>
+        <PV V="2005-09-05" L="" H="" C="1"/>
+        <PV V="2005-09-12" L="" H="" C="1"/>
+        <PV V="2005-12-01" L="" H="" C="1"/>
+        <PV V="2006-02-01" L="" H="" C="1"/>
+        <PV V="2006-03-01" L="" H="" C="1"/>
+        <PV V="2006-03-27" L="" H="" C="1"/>
+        <PV V="2006-03-30" L="" H="" C="1"/>
+        <PV V="2006-04-14" L="" H="" C="1"/>
+        <PV V="2006-07-01" L="" H="" C="1"/>
+        <PV V="2006-12-01" L="" H="" C="1"/>
+        <PV V="2006-12-15" L="" H="" C="1"/>
+        <PV V="2007-03-12" L="" H="" C="1"/>
+        <PV V="2007-06-20" L="" H="" C="1"/>
+        <PV V="2007-06-26" L="" H="" C="1"/>
+        <PV V="2007-09-01" L="" H="" C="1"/>
+        <PV V="2007-09-14" L="" H="" C="1"/>
+        <PV V="2007-10-04" L="" H="" C="1"/>
+        <PV V="2008-05-15" L="" H="" C="1"/>
+        <PV V="2008-06-02" L="" H="" C="1"/>
+        <PV V="2008-10-16" L="" H="" C="1"/>
+        <PV V="2008-11-06" L="" H="" C="1"/>
+        <PV V="2008-11-17" L="" H="" C="1"/>
+        <PV V="2008-12-18" L="" H="" C="1"/>
+        <PV V="2009-01-16" L="" H="" C="1"/>
+        <PV V="2009-02-12" L="" H="" C="1"/>
+        <PV V="2009-05-01" L="" H="" C="1"/>
+        <PV V="2009-05-07" L="" H="" C="1"/>
+        <PV V="2009-05-18" L="" H="" C="1"/>
+        <PV V="2009-05-28" L="" H="" C="1"/>
+        <PV V="2009-07-09" L="" H="" C="1"/>
+        <PV V="2009-07-10" L="" H="" C="1"/>
+        <PV V="2009-09-04" L="" H="" C="1"/>
+        <PV V="2009-10-15" L="" H="" C="1"/>
+        <PV V="2009-11-18" L="" H="" C="1"/>
+        <PV V="2009-11-19" L="" H="" C="1"/>
+        <PV V="2009-11-26" L="" H="" C="1"/>
+        <PV V="2009-12-03" L="" H="" C="1"/>
+        <PV V="2010-04-27" L="" H="" C="1"/>
+        <PV V="2010-10-28" L="" H="" C="1"/>
+        <PV V="2011-03-25" L="" H="" C="1"/>
+        <PV V="2011-03-28" L="" H="" C="1"/>
+        <PV V="2011-04-13" L="" H="" C="1"/>
+        <PV V="2012-01-20" L="" H="" C="1"/>
+        <PV V="2012-02-24" L="" H="" C="1"/>
+        <PV V="2012-02-28" L="" H="" C="1"/>
+        <PV V="2012-03-01" L="" H="" C="1"/>
+        <PV V="2012-03-23" L="" H="" C="1"/>
+        <PV V="2012-04-02" L="" H="" C="1"/>
+        <PV V="2012-04-10" L="" H="" C="1"/>
+        <PV V="2012-06-01" L="" H="" C="1"/>
+        <PV V="2012-09-06" L="" H="" C="1"/>
+        <PV V="2012-10-05" L="" H="" C="1"/>
+        <PV V="2012-10-09" L="" H="" C="1"/>
+        <PV V="2012-12-20" L="" H="" C="1"/>
+        <PV V="2012-12-31" L="" H="" C="1"/>
+        <PV V="2013-01-11" L="" H="" C="1"/>
+        <PV V="2013-01-21" L="" H="" C="1"/>
+        <PV V="2013-01-22" L="" H="" C="1"/>
+        <PV V="2013-01-30" L="" H="" C="1"/>
+        <PV V="2013-04-16" L="" H="" C="1"/>
+        <PV V="2013-04-17" L="" H="" C="1"/>
+        <PV V="2013-04-19" L="" H="" C="1"/>
+        <PV V="2013-04-23" L="" H="" C="1"/>
+        <PV V="2013-04-24" L="" H="" C="1"/>
+        <PV V="2013-05-24" L="" H="" C="1"/>
+        <PV V="2013-06-06" L="" H="" C="1"/>
+        <PV V="2013-06-08" L="" H="" C="1"/>
+        <PV V="2013-06-12" L="" H="" C="1"/>
+        <PV V="2013-06-19" L="" H="" C="1"/>
+        <PV V="2013-07-03" L="" H="" C="1"/>
+        <PV V="2013-07-05" L="" H="" C="1"/>
+        <PV V="2013-07-08" L="" H="" C="1"/>
+        <PV V="2013-07-12" L="" H="" C="1"/>
+        <PV V="2013-07-15" L="" H="" C="1"/>
+        <PV V="2013-07-17" L="" H="" C="1"/>
+        <PV V="2013-07-19" L="" H="" C="1"/>
+        <PV V="2013-07-22" L="" H="" C="1"/>
+        <PV V="2013-07-26" L="" H="" C="1"/>
+        <PV V="2013-08-02" L="" H="" C="1"/>
+        <PV V="2013-08-07" L="" H="" C="1"/>
+        <PV V="2013-08-12" L="" H="" C="1"/>
+        <PV V="2013-08-16" L="" H="" C="1"/>
+        <PV V="2013-08-21" L="" H="" C="1"/>
+        <PV V="2013-08-27" L="" H="" C="1"/>
+        <PV V="2013-09-05" L="" H="" C="1"/>
+        <PV V="2013-09-06" L="" H="" C="1"/>
+        <PV V="2013-09-09" L="" H="" C="1"/>
+        <PV V="2013-09-19" L="" H="" C="1"/>
+    </PMT>
+</PARM>
+</RES>
+</GSP>

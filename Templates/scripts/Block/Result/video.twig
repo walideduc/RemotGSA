@@ -1,0 +1,48 @@
+<li class="bloc row clearfix art-bloc {{  cssSite[articleSite] }}">
+    <article class="art-body">
+        {% if  result.getMetaTag('thumbnailpublicurl')|length > 0 or result.getMetaTag('image')|length > 36 %}
+        <div class="hidden-xs col-sm-3 col-md-3">
+            <a href="{{ result.getUrl() }}">
+                <figure class="figure">
+                    {% if result.getMetaTag('image') %}
+                        <img class="article-img img-responsive-l" alt="" src="{{ result.getMetaTag('image')|raw_resizer('c', 250, 175)|replace({'/i/0/0/':'/c/140/100/', '/c/0/0/':'/c/140/100/'}) }}">
+                    {% elseif result.getMetaTag('thumbnailpublicurl') %}
+                        <img class="article-img img-responsive-l" alt="" src="{{ result.getMetaTag('thumbnailpublicurl')|replace({'/i/0/0/':'/c/140/100/', '/c/0/0/':'/c/140/100/'}) }}">
+                    {% endif %}
+                </figure>
+            </a>
+        </div>
+
+        <div class="col-xs-12 col-sm-9 col-md-9 art-body">
+
+            {% else %}
+            <div class="col-xs-12 col-sm-12 col-md-12 art-body">
+                {% endif %}
+                <a title="{{ result.getMetaTag('title') }}" href="{{ result.getUrl() }}">
+                    <h2 class="title-medium no-margin padding-bottom-s">{{ result.getMetaTag('title')|raw}}</h2>
+                </a>
+                <div class="clearfix"></div>
+                <div class="color-txt-1">
+                    <span class="border-l border-color"></span>
+                    <font class="type cap"><b>Video</b></font>
+                    {#
+                    -
+                    <i class="fa fa-clock-o"></i>
+                    <time datetime="{{ result.getMetaTag('lastmodifieddate')|date('Y-m-d H:i:s') }}" itemprop="datePublished">
+                        {% if result.getMetaTag('lastmodifieddate')|date('d/m/y') == now|date('d/m/y') and (result.getMetaTag('lastmodifieddate')|time_ago != '0 minutes')  %}
+                            il y a {{ result.getMetaTag('lastmodifieddate')|time_ago }}
+                        {% else %}
+                            le {{ result.getMetaTag('lastmodifieddate')|date("d/m/Y") }}
+                            {# à {{ result.getMetaTag('lastmodifieddate')|date("H:i") }}
+                        {% endif %}
+                    </time>
+                    #}
+                </div>
+                <div>
+                    {% if  result.getMetaTag('shortdescription')|length > 0  %}
+                        <p>{{ result.getMetaTag('shortdescription')|replace({'&lt;em&gt;':'','&lt;p&gt;':'', '&lt;/em&gt;':'',"'":'ll&#39;'})|raw }}</p>
+                     {% endif %}
+                </div>
+            </div>
+    </article>
+</li>

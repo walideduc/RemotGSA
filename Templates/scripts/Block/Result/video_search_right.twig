@@ -1,0 +1,40 @@
+<div class="bloc bg-color-1 padding-inside-all">
+    <p class="h4">
+        Vidéos associées à
+        <strong>{{ responseVideo.0.getParameters('q')['value'] }}</strong>
+    </p>
+    <ul class="bloc list-unstyled">
+        {% for index, result in responseVideo.0.getResults() %}
+        
+        <li class="border-b-s modulx1">
+            <article class="row">
+                
+                <figure class="col-xs-4 col-md-4 modulx1 table-display">
+                    <a href="{{ result.getUrl() }}" class="table-cell-middle">
+                        <div class="relative">
+                            <img class="article-img img-responsive-l" alt="" src="{{ result.getMetaTag('image')|raw_resizer('c', 250, 175)|replace({'/i/0/0/':'/c/100/80/', '/c/0/0/':'/c/100/80/'})|raw }}">
+                            <div class="rub-date clearfix">
+                                <div class="pull-left icon-video-small center">
+                                    <i class="fa fa-play media-background"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </figure>
+
+                <div class="media-body modulx1 table-display col-xs-8 col-md-8">
+                    <div class="table-cell-middle">
+                        <a href="{{ result.getUrl() }}">
+                            {#<div class="color-txt-1">
+                                <span class="border-l border-color"></span>
+                                {{ result.getMetaTag('site') }}
+                            </div>#}
+                            <h2 class="title-small">{{ result.getMetaTag('title')|truncate(60, false, '&hellip;')|raw}}</h2>
+                        </a>
+                    </div>
+                </div>
+            </article>
+        </li>
+        {% endfor %}
+    </ul>
+</div>

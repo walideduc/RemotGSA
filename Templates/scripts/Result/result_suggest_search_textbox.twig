@@ -1,0 +1,11 @@
+{% if suggestResult is not empty %}
+	 <div id="title-suggest-search" class="well no-padding no-margin">
+		<strong class="padding-inside-s-all">Mots-clés</strong>
+	</div>
+	<ul class="single-suggest-results suggestion list-unstyled padding-inside-s clearfix">
+		{% for data in suggestResult %}
+			<li><a title="{{ data }}" href="{{ path }}?q={{ data }}">{{ data }}</a></li>
+		{% endfor %}
+	</ul>
+	<span id="firstSuggest" style="display: none;">{{ firstSuggest }}</span>
+{% endif %}

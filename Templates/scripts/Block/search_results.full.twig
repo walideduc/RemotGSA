@@ -1,0 +1,206 @@
+<!-- MONTEUR DE RECHERCHE TOP -->
+ {{ this.render(recherche_bloc)|raw }}
+ <!-- /MONTEUR DE RECHERCHE TOP -->
+<!-- RESULTATS TOP-->
+{% set cssSite = {'www.bfmtv.com': 'rub2', 'www.business.bfmtv.com': 'rub3', 'www.rmcsport.bfmtv.com': 'rub4', 'www.01net.com': 'rub5'} %}
+{% set customTemplate = [ 'diaporama', 'article','video' ] %}
+<div class="bloc col-xs-12 hidden-xs"> 
+    {%  if(response.0.getSuggestions() | length != 0) %}
+        <p>Essayez avec l'orthographe :
+            {% for suggestion in response.0.getSuggestions() %}
+                <em><strong><a href="{{ linkbuilder.0.getLink(suggestion) }}" title="{{ suggestion }}">{{ suggestion }}</a></strong></em>
+            {% endfor %}
+        </p>
+    {% endif %}
+    <!-- cluster -->
+    <div>Environ {{response.0.totalResults}} résultats {# | Recherches associées à <strong>{{response.0.searchString}}</strong> : #}</div>
+    <p id="loading_cluster"></p>
+
+    <ul class="list-unstyled list-inline">
+        {% set clusterCount = 3 %}
+        {%  if(response.0.getSynonyms() | length != 0) %}
+            {% for name,query in response.0.getSynonyms() %}
+                {%  if clusterCount > 0 %}
+                    <li><a href="{{ linkbuilder.0.getLink(suggestion) }}">{{ name }}</a></li>
+                    {% set clusterCount = clusterCount-1 %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+            {%  if clusterCount > 0 %}
+                {%  for i in 0..clusterCount %}
+                    {% if i-1 >= 0 %}
+                    <li class="cluster_label{{ i }}"></li>
+                    {% endif %}
+                {% endfor %}
+            {%  endif %}
+
+    </ul>
+
+    <!-- cluster end -->
+    <!-- suggestion begin -->
+
+    <!-- suggestion end-->
+</div>
+<!-- /RESULTATS TOP-->
+
+<!-- CONTENU RESULTATS -->
+{% if(noQuery.0) %}
+<div class="tab-content clearfix padding-top">
+    <div class="tab-pane fade in active" id="all">
+        <p>Pas de terme recherché</p>
+    </div>
+</div>
+
+{% elseif (response.0.getResults()|length == 0) %}
+<div class="tab-content clearfix padding-top">
+    <div class="tab-pane fade in active" id="all">
+        <p>Pas de résultat pour la recherche {{ response.0.getQuery() }}</p>
+    </div>
+</div>
+{% else %}
+    {% include 'Block/Result/nav_block.twig' %}
+    {# include template by type, first type template differs from others #}
+        <div class="tab-content clearfix padding-top" id="search-result-content">
+          <div class="tab-pane fade in active" id="all">
+             <ul class="list-unstyled">
+             {% set first = {} %}
+             {% set result_amount = 0 %}
+             {% set videoDisplayed = [] %}
+             {% set videoBlock = true %}
+
+                 {% for index, result in three_first_videos %}
+                     {% set videoDisplayed = videoDisplayed|merge([result.id]) %}
+                 {% endfor %}
+             {% for index, result in response.0.getResults() %}
+
+                 {% set currentId = result.id %}
+                 {% if result_amount == 1 %}
+                   {% include 'Block/Result/lien_commercial_block.twig' with {'lien_id': 1} %}
+             {% include 'Block/Result/lien_partenaire_block.twig' %}
+                {% endif %}
+                 {% set typology = result.getMetaTag('typology')|lower %}
+                 {% set result_amount = result_amount+1 %}
+                {%  if ( three_first_videos|length > 0 and videoBlock and (result_amount == 4 or (result_amount < 4 and loop.last)))  %}
+                    {% include 'Block/search_results.videoinsert.twig' %}
+                    {% set videoBlock = false %}
+                 {% endif %}
+                {% if result_amount == 8 %}
+                   {% include 'Block/Result/lien_commercial_block.twig' with {'lien_id': 2} %}
+                {% endif %}
+                 {% if submittedQuery.type != 'typology:video' %}
+                    {% set type = result.getMetaTag('type')|lower %}
+                    {% set articleSite = result.getMetaTag('site') %}
+                   {% if type is not empty %}
+                      {% if (type not in first) and pager.0.getCurrent() == 1 %}
+                         {% set template='Block/Result/'~type~'.first.twig' %}
+                         {% set first = first|merge({(type):true}) %}
+                      {% else %}
+                         {% set template='Block/Result/'~type~'.twig' %}
+                      {% endif %}
+                      {% include template %}
+                   {%  elseif typology in customTemplate %}
+                       {% if (typology not in first) and pager.0.getCurrent() == 1 and typology != 'video' %}
+                           {% set template='Block/Result/'~typology~'.first.twig' %}
+                           {% set first = first|merge({(typology):true}) %}
+                       {% elseif  typology == 'video' and (result.id not in videoDisplayed)%}
+                           {% set template='Block/Result/'~typology~'.twig' %}
+                       {% elseif  typology != 'video' %}
+                           {% set template='Block/Result/'~typology~'.twig' %}
+                       {% endif %}
+                       {% if template %}
+                           {% include template %}
+                       {% endif %}
+                   {% endif %}
+                 {% endif %}
+             {% endfor %}
+             <!-- PUB BOTTOM -->
+             {% include 'Block/Result/lien_commercial_block.twig' with {'lien_id': 3} %}
+             <!-- /PUB BOTTOM -->
+             </ul>
+          </div>
+       </div>
+   <!-- MONTEUR DE RECHERCHE BOTTOM -->
+   {{ this.render(recherche_bloc)|raw }}
+   <!-- /MONTEUR DE RECHERCHE BOTTOM -->
+   <div  class="bloc">
+       <ul class="list-unstyled list-inline">
+           {%  set clusterBottomStart = 0 %}
+           {%  set clusterBottomEnd = 5 %}
+           {%  if(response.0.getSynonyms() | length != 0) %}
+               {% for name,query in response.0.getSynonyms() %}
+                   <li><a href="{{ linkbuilder.0.getLink(suggestion) }}">{{ name }}</a></li>
+                   {%  set clusterBottomEnd = clusterBottomEnd-1 %}
+               {% endfor %}
+           {% endif %}
+            {%  for i in 0..clusterBottomEnd %}
+            <li class="cluster_label{{ i }}"></li>
+            {%  set clusterBottomStart = clusterBottomStart+1 %}
+            {% endfor %}
+
+       </ul>
+   </div>
+   <!-- PAGE -->
+   {% include 'Block/Result/pagination_block.twig' %}
+   <!-- /PAGE -->
+      {# js that loads associated searches #}
+      <script type="text/javascript">
+          google.setOnLoadCallback(function() {
+              if ( $('#bloc_csa_1').height() <= 20) {
+                  $('#liens-commerciaux_').hide();
+              }
+              if ( $('#bloc_csa_2').height() <= 20) {
+                  $('#liens-commerciaux_2').hide();
+              }
+              if ( $('#bloc_csa_2').height() <= 20) {
+                  $('#liens-commerciaux_3').hide();
+              }
+          });
+          $(document).ready(function(){
+         {% set parameters = response.0.getParameters() %}
+         window['GSA_getSearchRootPathPrefix'] = function() {
+            return '{{ app.request.pathinfo }}';
+         }
+         {# cs_loadClusters('q={{ response.0.getSearchString() }}&site={{ parameters['site']['value'] }}',displayClusters); #}
+
+          var parametresCsa =  setParamCsa( '{{ response.0.searchString }}');
+          var parametresBlocCsa1 = parametresBlocCsa('bloc_csa_1', 5, true, '{{ response.0.searchString }}');
+          var parametresBlocCsa2 = parametresBlocCsa('bloc_csa_2', 2, false, '{{ response.0.searchString }}');
+          var parametresBlocCsa3 = parametresBlocCsa('bloc_csa_3', 2, false, '{{ response.0.searchString }}');
+
+          // Appel effectif à AdSense : les paramètres des blocs sont passés dans l'appel
+          new google.ads.search.Ads(parametresCsa, parametresBlocCsa1, parametresBlocCsa2, parametresBlocCsa3);
+         });
+
+          function google_ad_request_done(google_ads) {
+
+          }
+        // code d'appel CSA
+        //Masque les résultats organiques de la page
+          var displayClusters = function (args,obj) {
+              clustersList = obj.clusters[0].clusters;
+              for(var data in clustersList){
+                  clusterLabel = clustersList[data].label;
+                  clusterLabel = clusterLabel.replace(" ","+");
+                  if ($('.cluster_label'+data) !== undefined) {
+                      var li =  '<li><a href="/search?q='+clusterLabel+'">'+clustersList[data].label+'</a></li>';
+                      $('.cluster_label'+data).html(li);
+                  }
+              }
+              $('#loading_cluster').hide();
+          }
+
+
+      </script>
+   {% endif %}
+   <!-- /CONTENU RESULTATS -->
+ <!-- /CONTENT -->
+<script type="text/javascript" charset="utf-8">
+
+    // Renvoie un objet contenant les paramètres d'affichage d'un bloc CSA donné
+
+    //Génération des paramètres des blocs CSA
+
+
+
+
+</script>

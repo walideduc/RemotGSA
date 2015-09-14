@@ -1,0 +1,60 @@
+search_results:
+    properties:
+        name: Conteneur de résultats de recherche
+        description: "Permet de présenter dans une page dédiée les résultats de la recherche"
+        category: [Recherche]
+        cache-lifetime: -60
+    parameters:
+        mode:
+            rendertype: select
+            label: "Mode de rendu"
+            options:
+                full: "Page complète, filtres, pager, ..."
+                videoinsert: "Encart Vidéo"
+                related: "Recherche associée"
+            selected: full
+        source_type:
+            rendertype: select
+            label: "Source de la recherche"
+            options:
+                query: "Paramètre de la requête http"
+                fixed: "Valeur fixe"
+                metatag: "Metatag de la recherche générale"
+            selected: query
+        source_value:
+            rendertype: text
+            label: "Valeur pour la source de la recherche"
+            value: "q"
+        start:
+            rendertype: text
+            label: "Index du premier résultat à retourner"
+            value: 0
+        force_start:
+            rendertype: checkbox
+            label: "Forcer l'index du premier résultat (la valeur en url ne sera pas prise en compte)"
+            checked: false
+        num:
+            rendertype: text
+            label: "Nombre de résultat par page"
+            value: 12
+        force_num:
+            rendertype: checkbox
+            label: "Forcer le nombre de résultat (la valeur en url ne sera pas prise en compte)"
+            checked: false
+        requiredfields:
+            rendertype: text
+            label: "Expression de filtrage par MetaTag"
+            value:
+        force_requiredfields:
+            rendertype: checkbox
+            label: "Forcer le filtre (la valeur en url ne sera pas prise en compte)"
+            checked: false
+        inmeta:
+            rendertype: text
+            label: "Expression de filtrage inmeta (obligatoire pour des daterange)"
+            value:
+    elements:
+        recherche_bloc:
+            type: \BackBuilder\ClassContent\Block\search_textbox
+            label: Recherche bloc
+

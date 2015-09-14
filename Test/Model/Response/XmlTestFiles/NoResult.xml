@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<GSP VER="3.2">
+  <TM>0.042443</TM>
+  <Q>testqsdfsdqfsdqfsdqfsdq</Q>
+  <PARAM name="q" value="testqsdfsdqfsdqfsdqfsdq" original_value="testqsdfsdqfsdqfsdqfsdq"/>
+  <PARAM name="client" value="json" original_value="json"/>
+  <PARAM name="output" value="xml_no_dtd" original_value="xml_no_dtd"/>
+  <PARAM name="site" value="default_collection" original_value="default_collection"/>
+  <PARAM name="start" value="0" original_value="0"/>
+  <PARAM name="num" value="10" original_value="10"/>
+  <PARAM name="getfields" value="*" original_value="*"/>
+  <PARAM name="requiredfields" value="typology" original_value="typology"/>
+  <PARAM name="ie" value="UTF-8" original_value="UTF-8"/>
+  <PARAM name="ulang" value="fr" original_value="fr"/>
+  <PARAM name="ip" value="94.23.8.219" original_value="94.23.8.219"/>
+  <PARAM name="access" value="p" original_value="p"/>
+  <PARAM name="sort" value="date:D:L:d1" original_value="date:D:L:d1"/>
+  <PARAM name="entqr" value="3" original_value="3"/>
+  <PARAM name="entqrm" value="0" original_value="0"/>
+</GSP>

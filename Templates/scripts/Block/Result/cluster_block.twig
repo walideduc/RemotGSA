@@ -1,0 +1,23 @@
+{% block search_result_Suggestions %}{% endblock %}
+<p>Recherches associées à <strong>{{response.0.searchString | raw}}</strong> :</p>
+    {%  if(response.0.getSynonyms() | length != 0) %}
+        {% for name,query in response.0.getSynonyms() %}
+            {% set nbSuggestionsMax = nbSuggestionsMax - 1 %}
+        {% endfor %}
+    {% endif %}
+{% if nbSuggestionsMax > 0 %}
+    <p id="cluster_message"></p>
+    {% if cluster_container is defined %}
+    <ul id="{{cluster_container}}" class="list-unstyled list-inline">
+        {%  for i in 0..nbSuggestionsMax %}
+            <li id="cluster_label{{ i }}"></li>
+        {% endfor %}
+        {%  if(response.0.getSynonyms() | length != 0) %}
+            {% for name,query in response.0.getSynonyms() %}
+                <li><a href="{{ linkbuilder.0.getLink(suggestion) }}">{{ name }}</a></li>
+            {% endfor %}
+        {% endif %}
+    </ul>
+    {% endif %}
+{% endif %}
+

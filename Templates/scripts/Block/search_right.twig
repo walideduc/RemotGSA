@@ -1,0 +1,44 @@
+<div {{ this.bb5content() | raw }} >
+    {% if responseVideo.0.getResults() %}
+        {% include 'Block/Result/video_search_right.twig' %}
+    {% endif %}
+
+    <div class="bloc center hidden-xs">
+        <!-- PUB -->
+            {{ this.partial('Partials/smartadserver.twig', {format_id: 98})|raw }}
+            {{ this.partial('Partials/smartadserver.twig', {format_id: 1972})|raw }}
+        <!-- PUB -->
+    </div>
+
+    {% if responseArticle.0.getResults() %}
+        {% include 'Block/Result/article_search_right.twig' %}
+    {% endif %}
+
+    <div class="bloc center hidden-xs">
+        <!-- PUB BOTTOM -->
+            {{ this.partial('Partials/smartadserver.twig', {format_id: 289})|raw }}
+        <!-- PUB -->
+    </div>
+
+    {% if responseDiaporama.0.getResults() %}
+        {% include 'Block/Result/diaporama_search_right.twig' %}
+    {% endif %}
+    {% if responseDossier.0.getResults() %}
+        {% include 'Block/Result/dossier_search_right.twig' %}
+    {% endif %}
+    
+    <div class="bloc center">
+        <script type="text/javascript"><!--
+            google_ad_client = "ca-pub-8147423388682709";
+            /* btf_pave_droit_centre */
+            google_ad_slot = "6818047589";
+            google_ad_width = 300;
+            google_ad_height = 250;
+            //-->
+        </script>
+
+        <script type="text/javascript"
+                src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+        </script>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+<!-- LIEN PARTENAIRE -->
+<style type="text/css">.ad{padding:2px 0;margin:0px;word-wrap:break-word;}.ad.f{}.ad.fr{}.ad.l{}.ad.lr{}#adBlock b{}.descText, .ctcCO{font-size:14px;}.sr-div, .sl-table-ol td, .sl-table td, .sl-column{font-size:13px;}.adC{padding:4px 4px;position:relative;}.ad span{_width:99%;}#adBlock{/*background:#fff;*/margin:0;padding:0;}#adBlock h2{font-size:13px;font-weight:normal;padding:0;margin:0;}#adBlock span.lhHeader{padding:3px 4px 0;}#adBlock span.rhHeader{padding:0 4px;float:right;position:relative;z-index:1;}#adBlock h2 a, #adBlock h2{color:#676767;text-decoration:none;}.titleLink, .sl-table a, .sl-table-ol a, .sl-column a{color:#222;}.titleLink, .ctcT a{font-size:18px;font-weight:normal;}.titleLink{display:-moz-inline-box;display:inline-block;zoom:1;*display:inline;line-height:1.4em;margin:0;padding:0;}h2 a:hover{color:#676767;text-decoration:none;font-weight:normal;background-color:transparent;}.domainLink{color:#999;font-style:normal;font-weight:normal;font-size:12px;text-decoration:none;}.invisible{display:none;}.oneLineDescText{margin:0 4px;}.twoLineAd{margin-right:8px;}.textLink{color:#333;text-decoration:none;}.sameLineDomainLink{margin-left:8px;}.individualLabel{background-color:#EDB802;font-size:12px;color:white;border-radius:2px;padding:0 2px;margin-right:3px;vertical-align:baseline;}.sl-table, .sl-column{visibility:hidden;margin-top:4px;}.sl-table-ol a, .sl-table a, .sl-column a{text-decoration:none;}.sl-table-ol td{vertical-align:top;padding:0px;}.sl-table a:hover, .sl-column a:hover, .sl-table-ol a:hover{text-decoration:underline;}.sl-table td{vertical-align:top;padding:0px;}.sl-right{margin-left:13px;}.sl-left a, .sl-right a{color:#999;}.sl-left{margin-left:12px;}.sl-table, .sl-column{line-height:1.5;}.sitelinks{margin:0;padding:0;list-style-type:none;overflow:hidden;}.sitelink{float:left;width:49%;}.sitelink-spacer{padding-right:10px;}.sitelink-nowrap{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:left;}.plus-ones, .plus-ones a{text-decoration:none;color:#666666;}.plus-ones a:hover{text-decoration:underline;}.sr-div, .sr-rl{color:#575757;}.sr-rl{text-decoration:none;}.sr-rl:hover{text-decoration:underline;}.sr-gl{text-decoration:none;color:#777777;}.sr-gl:hover{text-decoration:underline;}.sr-p{padding-right:60px;}.sr-nsc{display:inline;position:relative;}.sr-star{position:absolute;}a:hover{color:#49c;}.ctcLD{color:#676767;font-size:80%;}.ctcI{width:10px;height:10px;margin-right:1px;}.ctcCOI{width:16px;height:16px;}.ctcT{margin:4px 0px 2px;}.ctcT a{text-decoration:none;}.ctcCO{font-weight:bold;}.location{color:#666;}.ohTbl{border-collapse:collapse;visibility:hidden;}.ohWrapper{margin-left:20px;}.ohWrapper.foh{margin:0;}.ohImg{float:left;background:url(//www.google.com/images/afs/offer_highlight_4.png) no-repeat;}.ohTxt{margin-left:3px;color:#666;}.raiDiv{margin-bottom:20px;}.raiImg{margin-right:5px;margin-top:10px;margin-bottom:0px;border:1px solid #ccc;}.nowrap{white-space:nowrap;}.buttonsWrapper{margin:10px 0 13px;white-space:nowrap;}.inlineButton{display:inline-block;box-sizing:border-box;text-align:center;border-left:1px solid #ddd;vertical-align:top;}.inlineButton.firstButton{border-left:none;}.button{text-align:center;}.buttonImageWrapper{margin-top:10px;line-height:0;}.buttonTextWrapper{margin-top:7px;}.buttonText{text-decoration:none;color:#5897F1;font-size:12px;}</style>
+
+{%  if (response.0.getPartnersLinks() | length != 0) %}
+<div class="bloc liens-partenaires">
+    <p class="small">Liens partenaires</p>
+      {% for infos in response.0.getPartnersLinks() %}
+        <div class="ad">
+            <div class="adC">
+                <div class="adD">
+                    <div class="adStd">
+                        <div>
+                            <a target="_blank" class="titleLink" href="{{ infos.url }}">
+                                <span dir="ltr">{{ infos.title }}</span>&lrm;
+                            </a>
+                        </div>
+                        <a target="_blank" class="domainLink threeLineAd" href="{{ infos.url }}">
+                            <span dir="ltr">{{ infos.url }}</span>&lrm;
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+      {% endfor %}
+</div>
+{% endif %}
+<!-- /LIEN PARTENAIRE -->

@@ -1,0 +1,35 @@
+search_right:
+    properties:
+        name: pub
+        description: "pub de recherche"
+        category: [Recherche]
+        cache-lifetime: 0
+    parameters:
+        mode:
+            rendertype: select
+            label: "Mode de rendu"
+            options:
+                full: "Page complète, filtres, pager, ..."
+                videoinsert: "Encart Vidéo"
+                related: "Recherche associée"
+            selected: related
+        source_type:
+            rendertype: select
+            label: "Source de la recherche"
+            options:
+                query: "Paramètre de la requête http"
+                fixed: "Valeur fixe"
+                metatag: "Metatag de la recherche générale"
+            selected: query
+        source_value:
+            rendertype: text
+            label: "Valeur pour la source de la recherche"
+            value: "q"
+        start:
+            rendertype: text
+            label: "Index du premier résultat à retourner"
+            value: 0
+        num:
+            rendertype: text
+            label: "Nombre de résultat par page"
+            value: 3

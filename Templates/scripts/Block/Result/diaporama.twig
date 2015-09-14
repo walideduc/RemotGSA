@@ -1,0 +1,32 @@
+<li class="bloc row clearfix art-bloc {{  cssSite[articleSite] }}">
+    <article>
+        <div class="hidden-xs col-sm-3 col-md-3">
+            <a href="{{ result.getUrl() }}">
+                <figure class="figure border-default">
+                    <img class="article-img img-responsive-l" alt="" src="{{ result.getMetaTag('image')|raw_resizer('c', 250, 175)|replace({'/i/0/0/':'/i/140/100/', '/c/0/0/':'/i/140/100/'}) }}">
+                </figure>
+            </a>
+        </div>
+        <div class="col-xs-12 col-sm-9 col-md-9 art-body">
+            <a title="{{ result.getMetaTag('title') | striptags }}" href="{{ result.getUrl() }}">
+                <h2 class="h4 media-heading">
+                    {{ result.getMetaTag('title')|raw}}
+                </h2>
+            </a>
+            <div class="color-txt-1">
+                <span class="border-l border-color "></span>
+                <font class="type cap"><b>Diaporama</b></font> > {{ result.getMetaTag('site') }} -
+                <i class="fa fa-clock-o"></i>
+                <time datetime="{{ result.getMetaTag('lastmodifieddate') }}" itemprop="datePublished">
+                    {% if result.getMetaTag('lastmodifieddate')|date('d/m/y') == now|date('d/m/y') %}
+                        il y a {{ result.getMetaTag('lastmodifieddate')|time_ago }}
+                    {% else %}
+                        le {{ result.getMetaTag('lastmodifieddate')|date("d/m/Y") }}
+                        {# à {{ result.getMetaTag('lastmodifieddate')|date("H:i") }} #}
+                    {% endif %}
+                </time>
+            </div>
+            <p>{{ result.getSnippet()|raw }}</p>
+        </div>
+    </article>
+</li>

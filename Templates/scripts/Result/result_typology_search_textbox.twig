@@ -1,0 +1,3 @@
+{% for typology in typologyResult|keys %}
+    {% include 'Result/result_search_textbox.' ~ typology ~ '.twig' ignore missing with {'results': typologyResult[typology].results } %}
+{% endfor %}

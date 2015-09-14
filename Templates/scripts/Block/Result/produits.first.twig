@@ -1,0 +1,75 @@
+<style>
+    .star-ok{
+        color : #FC0
+    }
+    .star-ko {
+        color : #999
+    }
+</style>
+<li class="bloc clearfix art-bloc {{  cssSite[articleSite] }}">
+    <article class="row">
+        <div class="hidden-xs col-sm-3 col-md-3">
+            <a title="{{ result.title | striptags }}" href="{{ result.getUrl() }}">
+                <figure class="figure border-default">
+                    <img src="{{result.getMetaTag('thumbnailpublicurl')}}" alt="" class="article-img img-responsive-l">
+                </figure>
+            </a>
+        </div>
+        <div class="col-xs-12 col-sm-9 col-md-9 art-body">
+            <a href="{{ result.getUrl() }}" title="">
+                <h2 class="h4 media-heading">
+                    <strong>{{ result.getMetaTag('rubrique') }}</strong>
+                    {{ result.getMetaTag('title') }}
+                    {% if result.getMetaTag('note') != 'nonteste' %}
+                        <span class="stars">
+                        <span class="star-ok">
+                           {%  for i in 0..5 %}
+                               {% if i<result.getMetaTag('note') %}
+                                   <i class="fa fa-star"></i>
+                               {% endif %}
+                           {% endfor %}
+                        </span>
+                        <span class="star-ko">
+                        {%  for i in 0..5 %}
+                            {% if i>result.getMetaTag('note') %}
+                                <i class="fa fa-star"></i>
+                            {% endif %}
+                        {% endfor %}
+                       </span>
+                    </span>
+                    {% endif %}
+                </h2>
+            </a>
+            <div class="color-txt-1">
+                <span class="border-l border-color"></span>
+                {{ result.getMetaTag('site') }} -
+                <i class="fa fa-clock-o"></i>
+                <time itemprop="datePublished" datetime="{{ result.getMetaTag('lastmodifieddate')|date('d/m/y') }}">
+                    {% if result.getMetaTag('lastmodifieddate')|date('d/m/y') == now|date('d/m/y') %}
+                        il y a {{ result.getMetaTag('lastmodifieddate')|time_ago }}
+                    {% else %}
+                        le {{ result.getMetaTag('lastmodifieddate')|date("d/m/Y") }} à {{ result.getMetaTag('lastmodifieddate')|date("H:i") }}
+                    {% endif %}
+                </time>
+            </div>
+            <p>
+               {{ result.getSnippet() | raw }}
+            </p>
+            <div class="row hidden-xs small">
+                <div class="col-sm-2 col-md-2">
+                    <figure class="figure">
+                    <img class="img-responsive-l" src="http://www.01net.com/front_office/images/produits/structure/teste_5_5.gif" alt="">
+                    </figure>
+                </div>
+                <div class="col-sm-10 col-md-10">
+                    <ul class="list-unstyled padding-top">
+                    <li>Rubrique : {{ result.getMetaTag('rubrique')}}</li>
+                    {% if result.getMetaTag('price') %}
+                        <li>Meilleur prix : {{ result.getMetaTag('price') }} €</li>
+                    {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </article>
+</li>

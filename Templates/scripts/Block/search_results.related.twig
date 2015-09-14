@@ -1,0 +1,12 @@
+<div {{ this.bb5content() | raw }} >
+    {% if (noQuery.0 == false) %}
+        {% set typology =  response.0.getMetaTags('typology')%}
+
+        <h4>{{ typology[0]['value'] }} associés à {{ response.0.getSearchString() }}</h4>
+        <ul>
+            {% for result in response.0.getResults() %}
+                <li><a href="{{ result.getUrl() }}">{{ result.getTitle() | raw}}</a></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>

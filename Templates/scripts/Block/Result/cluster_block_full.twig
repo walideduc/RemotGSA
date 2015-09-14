@@ -1,0 +1,12 @@
+{% extends 'Block/Result/cluster_block.twig' %}
+
+{% block search_result_Suggestions %}
+    <p class="small">Environ {{response.0.totalResults}} résultats</p>
+    {%  if(response.0.getSuggestions() | length != 0) %}
+    <p>Essayez avec l'orthographe :
+        {% for suggestion in response.0.getSuggestions() %}
+            <em><strong><a href="{{ linkbuilder.0.getLink(suggestion) }}" title="{{ suggestion }}">{{ suggestion }}</a></strong></em>
+        {% endfor %}
+    </p>
+    {% endif %}
+{% endblock %}
