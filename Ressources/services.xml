@@ -28,7 +28,7 @@
             <parameter>http://%gsa.server_address%/cluster.js</parameter>
         </parameter>
     </parameters>
-    
+
     <services>
         <service id="gsa.request"
                  class="%gsa.request.class%"

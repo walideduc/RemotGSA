@@ -1,0 +1,9 @@
+bundle:
+    name: GSA
+    description: 'Utils to query a google search appliance engine'
+    author: 'Next Interactive Media'
+    version: 1
+    enable: on
+    thumbnail: "img/extnd-x/picto-extnd-gsa.png"
+    #service: BackBuilder\Bundle\PollBundle\Services\Local\Poll
+    #manage_multisite: false

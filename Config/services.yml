@@ -1,0 +1,64 @@
+parameters:
+  gsa.server_address: gsa1.01net.com
+  gsa.server_port:
+  gsa.request.class: BackBee\Bundle\GSABundle\Model\Request
+  gsa.default_parameters: BackBee\Bundle\ScoreCenterBundle\Model\Parser\SCParser
+
+#    <parameters>
+#        <parameter key="gsa.server_address">gsa1.01net.com</parameter>
+#        <parameter key="gsa.server_port"></parameter>
+        #<parameter key="gsa.request.class">BackBuilder\Bundle\GSABundle\Model\Request</parameter>
+#        <parameter key="gsa.default_parameters" type="collection">
+#            <parameter key="client">default_frontend</parameter>
+#            <!-- DEFAUTL JSON : <parameter key="client">json</parameter>
+#            <parameter key="proxystylesheet">json</parameter>-->
+#            <parameter key="output">xml_no_dtd</parameter>
+#            <parameter key="site">default_collection</parameter>
+#            <parameter key="start">0</parameter>
+#            <parameter key="num">10</parameter>
+#            <parameter key="getfields">*</parameter>
+#            <parameter key="requiredfields">typology</parameter>
+#            <parameter key="rc">1</parameter>
+#            <parameter key="filter">0</parameter>
+#        </parameter>
+#        <parameter key="gsa.js_cluster_scripts" type="collection">
+#            <parameter>http://%gsa.server_address%/uri.js</parameter>
+#            <parameter>http://%gsa.server_address%/common.js</parameter>
+#            <parameter>http://%gsa.server_address%/xmlhttp.js</parameter>
+#            <parameter>http://%gsa.server_address%/cluster.js</parameter>
+#        </parameter>
+#    </parameters>
+
+
+
+services:
+  gsa.request:
+    class: "%gsa.request%"
+    arguments: ["@guzzle.http_client","%gsa.server_address%","%gsa.server_port%"]
+  gsa.parser:
+    #class: Backbee\Bundle\ScoreCenterBundle\Model\Parser\SCParser
+    class: "%gsa.path%"
+    arguments: ["@gsa.request"]
+  gsa.manager:
+    class: BackBee\Bundle\ScoreCenterBundle\Services\ScoreCenterManager
+    arguments: ["@gsa.request","@gsa.parser"]
+  guzzle.http_client:
+    class: 'GuzzleHttp\Client'
+
+
+#    <services>
+#        <service id="gsa.request"
+#                 class="%gsa.request.class%"
+#                 scope="prototype"
+#                 >
+#            <argument type="service" id="guzzle.http_client"></argument>
+#            <argument>%gsa.server_address%</argument>
+#            <argument>%gsa.server_port%</argument>
+#            <argument>%gsa.default_parameters%</argument>
+#        </service>
+
+#        <service id="guzzle.http_client"
+#                 class="Guzzle\Http\Client"
+#                 scope="prototype">
+#        </service>
+#    </services>
