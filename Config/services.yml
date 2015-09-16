@@ -2,7 +2,21 @@ parameters:
   gsa.server_address: gsa1.01net.com
   gsa.server_port:
   gsa.request.class: BackBee\Bundle\GSABundle\Model\Request
-  gsa.default_parameters: BackBee\Bundle\ScoreCenterBundle\Model\Parser\SCParser
+  gsa.default_parameters:
+    client: default_frontend
+    output: xml_no_dtd
+    site: default_collection
+    start: 0
+    num: 10
+    getfields: *
+    requiredfields: typology
+    rc: 1
+    filter: 0
+  gsa.js_cluster_scripts:
+    - 'http://%gsa.server_address%/uri.js'
+    - 'http://%gsa.server_address%/common.js'
+    - 'http://%gsa.server_address%/xmlhttp.js'
+    - 'http://%gsa.server_address%/cluster.js'
 
 #    <parameters>
 #        <parameter key="gsa.server_address">gsa1.01net.com</parameter>
@@ -34,14 +48,11 @@ parameters:
 services:
   gsa.request:
     class: "%gsa.request%"
-    arguments: ["@guzzle.http_client","%gsa.server_address%","%gsa.server_port%"]
-  gsa.parser:
-    #class: Backbee\Bundle\ScoreCenterBundle\Model\Parser\SCParser
-    class: "%gsa.path%"
-    arguments: ["@gsa.request"]
-  gsa.manager:
-    class: BackBee\Bundle\ScoreCenterBundle\Services\ScoreCenterManager
-    arguments: ["@gsa.request","@gsa.parser"]
+    arguments:
+      - "@guzzle.http_client"
+      - "%gsa.server_address%"
+      - "%gsa.server_port%"
+      - "%gsa.default_parameters%"
   guzzle.http_client:
     class: 'GuzzleHttp\Client'
 
