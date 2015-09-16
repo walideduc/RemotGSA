@@ -1,9 +1,9 @@
 <?php
 
-namespace BackBuilder\Bundle\GSABundle\Model\Response;
+namespace BackBee\Bundle\GSABundle\Model\Response;
 
-use BackBuilder\Bundle\GSABundle\Model\Response,
-    BackBuilder\Bundle\GSABundle\Model\Result;
+use BackBee\Bundle\GSABundle\Model\Response;
+use BackBee\Bundle\GSABundle\Model\Result;
 
 class JsonParser implements ParserInterface
 {
@@ -47,7 +47,7 @@ class JsonParser implements ParserInterface
         }
         echo($jsonString); exit();
         $json = json_decode($jsonString,true);
-        
+
         $this->gsaResponse =  new Response();
 
         $this->gsaResponse
@@ -212,4 +212,4 @@ class JsonParser implements ParserInterface
 
         return $this;
     }
-} 
+}

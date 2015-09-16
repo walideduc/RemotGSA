@@ -8,7 +8,7 @@ use BackBee\ClassContent\AbstractClassContent;
 use BackBee\NestedNode\Page;
 use BackBee\ClassContent\Block\SearchResults;
 use BackBee\ClassContent\Block\Recherche;
-use Guzzle\Http\Client;
+use GuzzleHttp\Client;
 use Symfony\Component\HttpFoundation\Response;
 use BackBee\Bundle\GSABundle\Model\Filter;
 use BackBee\Bundle\GSABundle\Model\LinkBuilder;
@@ -37,6 +37,10 @@ class GSA extends AbstractBundle
         return $this;
     }
 
+    /**
+     *
+     * @param Request
+     */
     public function searchAction(Request $request)
     {
         $response = new Response();
@@ -55,15 +59,20 @@ class GSA extends AbstractBundle
             header("Location: /");
             exit;
         }
+        var_dump("GSA / searchAction");
         $gsaRequest = $bbapp->getContainer()->get('gsa.request');
         $submittedQuery =  $query->all();
+        var_dump("GSA / searchAction submittedQuery");
+        var_dump($submittedQuery);
+
         $gsaRequest->setParameters($submittedQuery);
+        var_dump("GSA / searchAction post");
         $result = $gsaRequest->send();
         $parser = ParserFactory::getParser('xml');
         $gsaResponse = $parser->parse($result);
 
         // Create the search_results container and set needed parameters
-        $searchResultsBlock = new recherche();
+        $searchResultsBlock = new Recherche();
         $searchResultsBlock->setState(AbstractClassContent::STATE_NORMAL);
         $searchResultsBlock->recherche_results_bloc->setState(AbstractClassContent::STATE_NORMAL)
             ->setParam('submittedQuery', $submittedQuery);
@@ -106,35 +115,33 @@ class GSA extends AbstractBundle
 
     public static function getKeywordParams($q = "")
     {
-        $parameters = array('video' =>
-                array('params' =>
-                    array('q' =>  $q,
-                        'requiredFields' => 'typology:video',
-                        'limit' => 3
-                    )
-                ),
-                'article' =>
-                array('params' =>
-                    array('q' =>  $q,
-                        'requiredFields' => 'typology:article',
-                        'limit' => 3
-                    )
-                ),
-                'dossier' =>
-                array('params' =>
-                    array('q' =>  $q,
-                        'requiredFields' => 'typology:dossier',
-                        'limit' => 3
-                    )
-                ),
-                'diaporama' =>
-                array('params' =>
-                    array('q' =>  $q,
-                        'requiredFields' => 'typology:diaporama',
-                        'limit' => 3
-                    )
-                ),
-            );
+        $parameters = [
+            'video' => [
+                'params' => [
+                    'q' =>  $q,
+                    'requiredFields' => 'typology:video',
+                    'limit' => 3
+                ]],
+            'article' => [
+                'params' => [
+                    'q' =>  $q,
+                    'requiredFields' => 'typology:article',
+                    'limit' => 3
+                ]],
+            'dossier' => [
+                'params' => [
+                    'q' =>  $q,
+                    'requiredFields' => 'typology:dossier',
+                    'limit' => 3
+                ]],
+            'diaporama' => [
+                'params' => [
+                    'q' =>  $q,
+                    'requiredFields' => 'typology:diaporama',
+                    'limit' => 3
+                ]],
+            ];
+
         return $parameters;
     }
 
@@ -167,31 +174,29 @@ class GSA extends AbstractBundle
 
     public function getTypologyParams($q = "")
     {
-        $parameters = array('video' =>
-                array('params' =>
-                    array('partialFields' => 'title:'. $q .'.chapoarticle:'. $q .'.thumbnailpublicurl.typology:video',
-                        'limit' => 2
-                    )
-                ),
-                'article' =>
-                array('params' =>
-                    array('partialFields' => 'title:'. $q .'.chapoarticle:'. $q .'.thumbnailpublicurl.typology:article',
-                        'limit' => 1
-                    )
-                ),
-                'logiciel' =>
-                array('params' =>
-                    array('partialFields' => 'editeur:'. $q .'.title:'. $q .'.thumbnailpublicurl.typology:logiciel',
-                        'limit' => 1
-                    )
-                ),
-                'produit' =>
-                array('params' =>
-                    array('partialFields' => 'title:'. $q .'.fabriquant:'. $q .'.thumbnailpublicurl.typology:produit',
-                        'limit' => 1
-                    )
-                ),
-            );
+        $parameters = [
+            'video' => [
+                'params' => [
+                    'partialFields' => 'title:'. $q .'.chapoarticle:'. $q .'.thumbnailpublicurl.typology:video',
+                    'limit' => 2
+                ]],
+            'article' => [
+                'params' => [
+                    'partialFields' => 'title:'. $q .'.chapoarticle:'. $q .'.thumbnailpublicurl.typology:article',
+                    'limit' => 1
+                ]],
+            'logiciel' => [
+                'params' => [
+                    'partialFields' => 'editeur:'. $q .'.title:'. $q .'.thumbnailpublicurl.typology:logiciel',
+                    'limit' => 1
+                ]],
+            'produit' => [
+                'params' => [
+                    'partialFields' => 'title:'. $q .'.fabriquant:'. $q .'.thumbnailpublicurl.typology:produit',
+                    'limit' => 1
+                ]],
+            ];
+
         return $parameters;
     }
 
@@ -226,7 +231,7 @@ class GSA extends AbstractBundle
             $routing = $this->getConfig()->getSection('route');
             $path = $routing['gsa.bundle.search']['pattern'];
 
-            $render = $renderer->partial('Result/result_suggest_search_textbox.twig', array(
+            $render = $renderer->partial('Result/ResultSuggestSearchTextbox.twig', array(
                 'suggestResult' => $suggestResult,
                 'page' => $query->get('page'),
                 'firstSuggest' => $firstSuggest,
@@ -266,8 +271,10 @@ class GSA extends AbstractBundle
                 $responses[$key] = $xmlParser->parse($gsaRequest->send());
             }
 
-            $render = $renderer->partial('Result/result_typology_search_textbox.twig', array('page' => $query->get('page'),
-                                                                                    'typologyResult' => $responses));
+            $render = $renderer->partial('Result/ResultTypologySearchTextbox.twig', [
+                    'page' => $query->get('page'),
+                    'typologyResult' => $responses
+                ]);
             $response->setContent($render);
             $response->send();
         }

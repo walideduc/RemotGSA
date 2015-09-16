@@ -1,53 +1,24 @@
 parameters:
+
   gsa.server_address: gsa1.01net.com
   gsa.server_port:
   gsa.request.class: BackBee\Bundle\GSABundle\Model\Request
   gsa.default_parameters:
-    client: default_frontend
-    output: xml_no_dtd
-    site: default_collection
-    start: 0
-    num: 10
-    getfields: *
-    requiredfields: typology
-    rc: 1
-    filter: 0
-  gsa.js_cluster_scripts:
-    - 'http://%gsa.server_address%/uri.js'
-    - 'http://%gsa.server_address%/common.js'
-    - 'http://%gsa.server_address%/xmlhttp.js'
-    - 'http://%gsa.server_address%/cluster.js'
-
-#    <parameters>
-#        <parameter key="gsa.server_address">gsa1.01net.com</parameter>
-#        <parameter key="gsa.server_port"></parameter>
-        #<parameter key="gsa.request.class">BackBuilder\Bundle\GSABundle\Model\Request</parameter>
-#        <parameter key="gsa.default_parameters" type="collection">
-#            <parameter key="client">default_frontend</parameter>
-#            <!-- DEFAUTL JSON : <parameter key="client">json</parameter>
-#            <parameter key="proxystylesheet">json</parameter>-->
-#            <parameter key="output">xml_no_dtd</parameter>
-#            <parameter key="site">default_collection</parameter>
-#            <parameter key="start">0</parameter>
-#            <parameter key="num">10</parameter>
-#            <parameter key="getfields">*</parameter>
-#            <parameter key="requiredfields">typology</parameter>
-#            <parameter key="rc">1</parameter>
-#            <parameter key="filter">0</parameter>
-#        </parameter>
-#        <parameter key="gsa.js_cluster_scripts" type="collection">
-#            <parameter>http://%gsa.server_address%/uri.js</parameter>
-#            <parameter>http://%gsa.server_address%/common.js</parameter>
-#            <parameter>http://%gsa.server_address%/xmlhttp.js</parameter>
-#            <parameter>http://%gsa.server_address%/cluster.js</parameter>
-#        </parameter>
-#    </parameters>
-
-
+    client: 'default_frontend'
+    output: 'xml_no_dtd'
+    site: 'default_collection'
+    start: '0'
+    num: '10'
+    getfields: '*'
+    requiredfields: 'typology'
+    rc: '1'
+    filter: '0'
+  gsa.js_cluster_scripts: [['http://%gsa.server_address%/uri.js'],['http://%gsa.server_address%/common.js'],['http://%gsa.server_address%/xmlhttp.js'],['http://%gsa.server_address%/cluster.js']]
 
 services:
+
   gsa.request:
-    class: "%gsa.request%"
+    class: BackBee\Bundle\GSABundle\Model\Request #"%gsa.request.class%"
     arguments:
       - "@guzzle.http_client"
       - "%gsa.server_address%"

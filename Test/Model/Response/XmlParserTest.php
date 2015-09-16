@@ -1,11 +1,11 @@
 <?php
 
-namespace BackBuilder\Bundle\GSABundle\Test\Model\Response;
+namespace BackBee\Bundle\GSABundle\Test\Model\Response;
 
 
 
-use BackBuilder\Bundle\GSABundle\Model\Response\XmlParser;
-use BackBuilder\Bundle\GSABundle\Model\Response;
+use BackBee\Bundle\GSABundle\Model\Response\XmlParser;
+use BackBee\Bundle\GSABundle\Model\Response;
 
 class XmlParserTest extends \PHPUnit_Framework_TestCase
 {
@@ -133,7 +133,7 @@ class XmlParserTest extends \PHPUnit_Framework_TestCase
      *//*
     public function testParseCorrectXmlWillSetBasicsData($xml)
     {
-        $gsaResponseMock = $this->getMock('BackBuilder\Bundle\GSABundle\Model\Response',
+        $gsaResponseMock = $this->getMock('BackBee\Bundle\GSABundle\Model\Response',
             array('setGsaVersion','setTime','setSearchString'));
 
         $gsaResponseMock
@@ -149,7 +149,7 @@ class XmlParserTest extends \PHPUnit_Framework_TestCase
             ->method('setSearchString')
             ->will($this->returnSelf());
 
-        $xmlParserMock = $this->getMock('BackBuilder\Bundle\GSABundle\Model\Response\XmlParser',
+        $xmlParserMock = $this->getMock('BackBee\Bundle\GSABundle\Model\Response\XmlParser',
             array('parseParameters','parseResponse'),
             array($xml,$gsaResponseMock));
 
@@ -176,4 +176,4 @@ class XmlParserTest extends \PHPUnit_Framework_TestCase
 
 
 
-} 
+}

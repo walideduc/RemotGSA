@@ -1,9 +1,9 @@
 <?php
 
-namespace BackBuilder\Bundle\GSABundle\Test\Model;
+namespace BackBee\Bundle\GSABundle\Test\Model;
 
-use BackBuilder\Bundle\GSABundle\Model\Request;
-use Guzzle\Http\Client;
+use BackBee\Bundle\GSABundle\Model\Request;
+use GuzzleHttp\Client;
 //use Guzzle\Http\Message\Request as httpRequest;
 
 class RequestTest extends \PHPUnit_Framework_TestCase
@@ -29,9 +29,9 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 
     private function constructGsaRequestWithMockedClient()
     {
-        $httpClientMock = $this->getMock('Guzzle\Http\Client');
-        $httpRequestMock = $this->getMock('Guzzle\Http\Message\Request',array(),array(),'',false);
-        $httpResponseMock = $this->getMock('Guzzle\Http\Message\Response',array(),array(),'',false);
+        $httpClientMock = $this->getMock('GuzzleHttp\Client');
+        $httpRequestMock = $this->getMock('GuzzleHttp\Message\Request',array(),array(),'',false);
+        $httpResponseMock = $this->getMock('GuzzleHttp\Message\Response',array(),array(),'',false);
 
         $httpClientMock
             ->expects($this->once())
@@ -193,4 +193,4 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 
 
 
-} 
+}

@@ -1,6 +1,6 @@
 <?php
 
-namespace BackBuilder\Bundle\GSABundle\Model\Response;
+namespace BackBee\Bundle\GSABundle\Model\Response;
 
 
 class ParserFactory
@@ -12,11 +12,11 @@ class ParserFactory
      */
     public static function getParser($type)
     {
-        $class = 'BackBuilder\Bundle\GSABundle\Model\Response\\'.ucfirst($type).'Parser';
+        $class = 'BackBee\Bundle\GSABundle\Model\Response\\'.ucfirst($type).'Parser';
         if (!class_exists($class)) {
             throw new \InvalidArgumentException('parser type: '.$class.' unknown');
         }
 
         return new $class();
     }
-} 
+}

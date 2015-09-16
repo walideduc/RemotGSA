@@ -1,9 +1,9 @@
 <?php
 
-namespace BackBuilder\Bundle\GSABundle\Model;
+namespace BackBee\Bundle\GSABundle\Model;
 
 
-use BackBuilder\BBApplication;
+use BackBee\BBApplication;
 
 class Pager
 {

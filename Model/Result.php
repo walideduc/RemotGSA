@@ -1,6 +1,6 @@
 <?php
 
-namespace BackBuilder\Bundle\GSABundle\Model;
+namespace BackBee\Bundle\GSABundle\Model;
 
 
 class Result implements \JsonSerializable
@@ -99,7 +99,7 @@ class Result implements \JsonSerializable
     }
 
     /**
-     * @param \BackBuilder\Bundle\GSABundle\Model\id $searchApplianceId
+     * @param \BackBee\Bundle\GSABundle\Model\id $searchApplianceId
      */
     public function setSearchApplianceId($searchApplianceId)
     {
@@ -109,7 +109,7 @@ class Result implements \JsonSerializable
     }
 
     /**
-     * @return \BackBuilder\Bundle\GSABundle\Model\id
+     * @return \BackBee\Bundle\GSABundle\Model\id
      */
     public function getSearchApplianceId()
     {
@@ -186,7 +186,7 @@ class Result implements \JsonSerializable
     }
 
     /**
-     * @param \BackBuilder\Bundle\GSABundle\Model\language $language
+     * @param \BackBee\Bundle\GSABundle\Model\language $language
      */
     public function setLanguage($language)
     {
@@ -196,7 +196,7 @@ class Result implements \JsonSerializable
     }
 
     /**
-     * @return \BackBuilder\Bundle\GSABundle\Model\language
+     * @return \BackBee\Bundle\GSABundle\Model\language
      */
     public function getLanguage()
     {
@@ -263,4 +263,4 @@ class Result implements \JsonSerializable
     }
 
 
-} 
+}

@@ -1,10 +1,10 @@
 <?php
 
-namespace BackBuilder\Bundle\GSABundle\Model\Response;
+namespace BackBee\Bundle\GSABundle\Model\Response;
 
-use BackBuilder\Bundle\GSABundle\Model\Response;
-use BackBuilder\Bundle\GSABundle\Model\Result;
-use BackBuilder\Bundle\CommonBundle\Service\Encoding;
+use BackBee\Bundle\GSABundle\Model\Response;
+use BackBee\Bundle\GSABundle\Model\Result;
+use BackBee\Bundle\CommonBundle\Service\Encoding;
 
 class XmlParser implements ParserInterface
 {
@@ -49,7 +49,7 @@ class XmlParser implements ParserInterface
         }
 
         $sXml = simplexml_load_string($xml);
-        
+
         $this->gsaResponse =  new Response();
 
         $this->gsaResponse
@@ -166,7 +166,7 @@ class XmlParser implements ParserInterface
      */
     private function parseResultMetaTag(\SimpleXMLElement $metaNode, Result $result)
     {
-        $metaNodeAttributes = $metaNode->attributes();        
+        $metaNodeAttributes = $metaNode->attributes();
         $result->addMetaTag(
             (string)$metaNodeAttributes->N,
             (string)Encoding::UTF8FixWin1252Chars($metaNodeAttributes->V)
@@ -190,4 +190,4 @@ class XmlParser implements ParserInterface
 
         return $this;
     }
-} 
+}

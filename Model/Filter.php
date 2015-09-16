@@ -1,8 +1,8 @@
 <?php
 
-namespace BackBuilder\Bundle\GSABundle\Model;
+namespace BackBee\Bundle\GSABundle\Model;
 
-use BackBuilder\BBApplication;
+use BackBee\BBApplication;
 
 class Filter
 {
@@ -73,4 +73,4 @@ class Filter
     public function getResponse(){
         return $this->response;
     }
-} 
+}

@@ -1,8 +1,8 @@
 <?php
 
-namespace BackBuilder\Bundle\GSABundle\Model\Response;
+namespace BackBee\Bundle\GSABundle\Model\Response;
 
-use BackBuilder\Bundle\GSABundle\Model\Response;
+use BackBee\Bundle\GSABundle\Model\Response;
 
 interface ParserInterface
 {

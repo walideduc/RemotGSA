@@ -1,6 +1,6 @@
 <?php
 
-namespace BackBuilder\Bundle\GSABundle\Model;
+namespace BackBee\Bundle\GSABundle\Model;
 
 
 class Response implements \JsonSerializable
