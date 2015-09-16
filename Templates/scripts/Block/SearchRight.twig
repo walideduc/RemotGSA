@@ -1,30 +1,30 @@
 <div {{ this.bbcontent() | raw }} >
     {% if responseVideo.0.getResults() %}
-        {% include 'Block/Result/video_search_right.twig' %}
+        {% include 'Block/Result/VideoSearchRight.twig' %}
     {% endif %}
 
     <div class="bloc center hidden-xs">
         <!-- PUB -->
-            {{ this.partial('Partials/smartadserver.twig', {format_id: 98})|raw }}
-            {{ this.partial('Partials/smartadserver.twig', {format_id: 1972})|raw }}
+            {{ this.partial('partials/smartadserver.twig', {format_id: 98})|raw }}
+            {{ this.partial('partials/smartadserver.twig', {format_id: 1972})|raw }}
         <!-- PUB -->
     </div>
 
     {% if responseArticle.0.getResults() %}
-        {% include 'Block/Result/article_search_right.twig' %}
+        {% include 'Block/Result/ArticleSearchRight.twig' %}
     {% endif %}
 
     <div class="bloc center hidden-xs">
         <!-- PUB BOTTOM -->
-            {{ this.partial('Partials/smartadserver.twig', {format_id: 289})|raw }}
+            {{ this.partial('partials/smartadserver.twig', {format_id: 289})|raw }}
         <!-- PUB -->
     </div>
 
     {% if responseDiaporama.0.getResults() %}
-        {% include 'Block/Result/diaporama_search_right.twig' %}
+        {% include 'Block/Result/DiaporamaSearchRight.twig' %}
     {% endif %}
     {% if responseDossier.0.getResults() %}
-        {% include 'Block/Result/dossier_search_right.twig' %}
+        {% include 'Block/Result/DossierSearchRight.twig' %}
     {% endif %}
 
     <div class="bloc center">
