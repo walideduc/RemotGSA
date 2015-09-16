@@ -1,15 +1,15 @@
 <?php
 
-namespace BackBuilder\Bundle\GSABundle\Listener;
+namespace BackBee\Bundle\GSABundle\Listener;
 
-use BackBuilder\Event\Event,
-    Symfony\Component\HttpFoundation\Request;
+use BackBee\Event\Event;
+use Symfony\Component\HttpFoundation\Request;
 
 class SearchTextboxListener
 {
 
     /**
-     * @var \BackBuilder\BBApplication
+     * @var \BackBee\BBApplication
      */
     private static $bbapp;
     private static $target;
@@ -46,16 +46,17 @@ class SearchTextboxListener
 
         self::$target->setParam('query', $query);
 
-        if (self::$target->getParam('autocomplete:array:checked'))
+        if (self::$target->getParamValue('autocomplete'))
         {
-           self::$renderer->addFooterScript('/ressources/js/external/js_autocomplete.js');
+           self::$renderer->addFooterScript('/resources/js/external/js_autocomplete.js');
         }
     }
 
     private static function initOnPrerenderSearch(Event $event)
     {
         if (self::init($event)) {
-            if (false === is_a(self::$target, '\BackBuilder\ClassContent\Block\search_textbox')) return false;
+            if (false === is_a(self::$target, '\BackBee\ClassContent\Block\SearchTextbox'))
+                return false;
         } else {
             return false;
         }

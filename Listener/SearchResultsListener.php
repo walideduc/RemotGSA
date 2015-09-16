@@ -1,25 +1,19 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: nihau
- * Date: 11/02/14
- * Time: 17:28
- */
+namespace BackBee\Bundle\GSABundle\Listener;
 
-namespace BackBuilder\Bundle\GSABundle\Listener;
-
-use BackBuilder\Bundle\GSABundle\Model\LinkBuilder;
-use BackBuilder\Bundle\GSABundle\Model\Response\ParserFactory,
-    BackBuilder\Event\Event,
-    BackBuilder\Bundle\GSABundle\Model\Pager,
-    BackBuilder\Bundle\GSABundle\Model\Filter,
-    BackBuilder\Renderer\Renderer;
+use BackBee\Bundle\GSABundle\Model\LinkBuilder;
+use BackBee\Bundle\GSABundle\Model\Response\ParserFactory;
+use BackBee\Event\Event;
+use BackBee\Bundle\GSABundle\Model\Pager;
+use BackBee\Bundle\GSABundle\Model\Filter;
+use BackBee\Renderer\Renderer;
+use BackBee\ClassContent\AbstractClassContent;
 
 class SearchResultsListener
 {
 
     /**
-     * @var $bbapp BackBuilder\BBApplication
+     * @var $bbapp BackBee\BBApplication
      */
     private static $bbapp;
     private static $target;
@@ -35,7 +29,7 @@ class SearchResultsListener
     private static function initOnPrerenderSearch(Event $event)
     {
         if (self::init($event)) {
-            if (false === is_a(self::$target, '\BackBuilder\ClassContent\Block\search_results')) return false;
+            if (false === is_a(self::$target, '\BackBee\ClassContent\Block\SearchResults')) return false;
         } else {
             return false;
         }
@@ -83,8 +77,8 @@ class SearchResultsListener
      */
     private static function getBlockParameterValue($parameterName,$valueName)
     {
-        $array = self::$target->getParam($parameterName,'array');
-        return isset($array[$valueName])?$array[$valueName]:null;
+        $value = self::$target->getParamValue($parameterName);
+        return isset($value) ? $value : null;
     }
 
     private static function getForcedParameterValue($parameterName)
@@ -236,9 +230,9 @@ class SearchResultsListener
         $filter = new Filter(self::$generalGsaResponse,$linkBuilder);
 
         //force to publish the search_box block
-        if (true === is_a(self::$target, 'BackBuilder\ClassContent\Block\search_results')) {
+        if (true === is_a(self::$target, 'BackBee\ClassContent\Block\SearchResults')) {
             $searchTextBlock = self::$target->recherche_bloc;
-            $searchTextBlock->setState(\BackBuilder\ClassContent\AClassContent::STATE_NORMAL);
+            $searchTextBlock->setState(AbstractClassContent::STATE_NORMAL);
             $params = $searchTextBlock->getParam('search_results_page:array');
             $params['value'] = self::$bbapp->getRequest()->getPathInfo();
 
@@ -250,7 +244,7 @@ class SearchResultsListener
             self::$renderer->assign('active_tab', $typology);
         }
 
-        $threeFirstVideos = array();
+        $threeFirstVideos = [];
 
 
         // Create the search_results container and set needed parameters
@@ -264,7 +258,10 @@ class SearchResultsListener
             ->setParam('query', $query);
 
 
-        self::$gsaRequest->setParameters(array('requiredfields'=> 'typology:video', 'searchstring' => self::$gsaRequest->getParameters('searchstring')));
+        self::$gsaRequest->setParameters([
+                'requiredfields'=> 'typology:video',
+                'searchstring' => self::$gsaRequest->getParameters('searchstring')
+            ]);
         self::$gsaRequest->limit(0,3);
 
         $videoList =  self::doRequest(self::$gsaRequest);
@@ -275,11 +272,19 @@ class SearchResultsListener
         }
         self::$target
             ->setParam('three_first_videos', $threeFirstVideos);
-         self::$renderer->addFooterScript(self::$renderer->getUriJs('/ressources/js/gsa_search_results.js'));
+         self::$renderer->addFooterScript(self::$renderer->getUriJs('/resources/js/gsa_search_results.js'));
         if (null == $typology) {
-            self::$gsaRequest->setParameters(array('filter' => 0, 'type'=> '','searchstring' => self::$gsaRequest->getParameters('searchstring')));
+            self::$gsaRequest->setParameters([
+                    'filter' => 0,
+                    'type'=> '',
+                    'searchstring' => self::$gsaRequest->getParameters('searchstring')
+                ]);
         } else {
-            self::$gsaRequest->setParameters(array('filter' => 0, 'type'=> 'typology:'.$typology, 'searchstring' => self::$gsaRequest->getParameters('searchstring')));
+            self::$gsaRequest->setParameters([
+                    'filter' => 0,
+                    'type'=> 'typology:'.$typology,
+                    'searchstring' => self::$gsaRequest->getParameters('searchstring')
+                ]);
         }
         self::addClusterScripts();
     }
@@ -292,35 +297,33 @@ class SearchResultsListener
 
     private static function getKeywordParams($q = "")
     {
-        $parameters = array('video' =>
-                array('params' =>
-                    array('q' =>  $q,
-                        'requiredFields' => 'typology:video',
-                        'limit' => 3
-                    )
-                ),
-                'article' =>
-                array('params' =>
-                    array('q' =>  $q,
-                        'requiredFields' => 'typology:article',
-                        'limit' => 3
-                    )
-                ),
-                'dossier' =>
-                array('params' =>
-                    array('q' =>  $q,
+        $parameters = [
+            'video' => [
+                'params' => [
+                    'q' =>  $q,
+                    'requiredFields' => 'typology:video',
+                    'limit' => 3
+                ]],
+            'article' => [
+                'params' => [
+                    'q' =>  $q,
+                    'requiredFields' => 'typology:article',
+                    'limit' => 3
+                ]],
+            'dossier' =>[
+                'params' => [
+                    'q' =>  $q,
                         'requiredFields' => 'typology:dossier',
                         'limit' => 3
-                    )
-                ),
-                'diaporama' =>
-                array('params' =>
-                    array('q' =>  $q,
+                ]],
+            'diaporama' => [
+                'params' => [
+                    'q' =>  $q,
                         'requiredFields' => 'typology:diaporama',
                         'limit' => 3
-                    )
-                ),
-            );
+                ]],
+            ];
+
         return $parameters;
     }
 
