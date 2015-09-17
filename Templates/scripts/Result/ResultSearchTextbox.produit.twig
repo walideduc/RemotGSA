@@ -1,0 +1,21 @@
+{% for result in results %}
+    {% if loop.first %}
+        <div id="title-suggest-next-media-player" class="well no-padding no-margin">
+            <strong class="padding-inside-s-all">Produits</strong>
+        </div>
+		<ul class="list-unstyled padding-inside-s clearfix row">
+			<li>
+				<a class="col-xs-4 col-sm-4 col-md-4" title="" href="#">
+					<figure class="figure">
+						<img class="img-responsive-l" src="{{ result.getMetaTag('thumbnailpublicurl') }}" alt="">
+					</figure>
+				</a>
+				<div class="small col-xs-8 col-sm-8 col-md-8">
+					<a title="" href="{{ result.url }}">
+						<p class="no-margin">{{ result.getMetaTag('title') }}</p>
+					</a>
+				</div>
+			</li>
+		</ul>
+    {% endif %}
+{% endfor %}

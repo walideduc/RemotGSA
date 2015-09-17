@@ -1,0 +1,13 @@
+Recherche:
+    properties:
+        name: Conteneur principal de la recherche
+        description: "Permet de présenter dans une page dédiée les résultats de la recherche"
+        cache-lifetime: -60
+    elements:
+        recherche_results_bloc:
+            type: \BackBee\ClassContent\Block\SearchResults
+            label: Recherche page
+        recherche_right_bloc:
+            type: \BackBee\ClassContent\Block\SearchRight
+            label: Recherche pub
+

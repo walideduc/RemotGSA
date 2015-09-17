@@ -1,0 +1,18 @@
+SearchTextbox:
+    properties:
+        name: Formulaire de recherche
+        description: "Permet d'effectuer une recherche"
+        category: ['Recherche']
+        cache-lifetime: 0
+    parameters:
+        search_results_page:
+            type: 'text'
+            label: "Url de la page qui affichera la recherche"
+            value: "/search"
+        autocomplete:
+            type: 'checkbox'
+            label: "Affiche l'autocompletion"
+            options:
+                'false': 'false'
+            value: ['false']
+            inline: true

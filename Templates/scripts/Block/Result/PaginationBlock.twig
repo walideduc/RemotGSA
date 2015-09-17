@@ -1,0 +1,40 @@
+{% if (pager.0.getPageLinksAround(13)|length >0) %}
+    {% set total = response.0.totalResults %}
+<nav class="text-center">
+  <ul class="pagination clearfix text-center" id="search-results-pagination">
+     <li {% if pager.0.getCurrent() == 1 %}class="disabled"{% endif %}>
+        <a href="{{ pager.0.getFirstPageLink() }}" rel="first">
+           <i class="fa fa-chevron-left"></i>
+           <i class="fa fa-chevron-left"></i>
+        </a>
+     </li>
+     <li {% if pager.0.getCurrent() == 1 %}class="disabled"{% endif %}>
+        <a href="{{ pager.0.getPrevPageLink() }}" rel="prev">
+        <i class="fa fa-chevron-left"></i>
+        </a>
+     </li>
+     {% for index,pageLink in pager.0.getPageLinksAround(13) %}
+        {% if index == pager.0.getCurrent() %}
+           <li class="active">
+        {% else %}
+           <li>
+        {% endif %}
+        {% if index <= pager.0.getMaxPageLink() %}
+           <a href="{{ pageLink }}">{{ index }}</a>
+        {% endif %}
+        </li>
+     {% endfor %}
+     <li {% if pager.0.getCurrent() == pager.0.getMaxPageLink() %}class="disabled"{% endif %}>
+        <a href="{{ pager.0.getNextPageLink() }}" rel="next">
+           <i class="fa fa-chevron-right"></i>
+        </a>
+     </li>
+     <li {% if pager.0.getCurrent() == pager.0.getMaxPageLink() %}class="disabled"{% endif %}>
+        <a href="{{pager.0.getLastPageLink(total) }}" rel="last">
+           <i class="fa fa-chevron-right"></i>
+           <i class="fa fa-chevron-right"></i>
+        </a>
+     </li>
+  </ul>
+</nav>
+{% endif %}

@@ -1,0 +1,69 @@
+SearchResults:
+    properties:
+        name: Conteneur de résultats de recherche
+        description: "Permet de présenter dans une page dédiée les résultats de la recherche"
+        category: ['Recherche']
+        cache-lifetime: -60
+    elements:
+        recherche_bloc:
+            type: \BackBee\ClassContent\Block\SearchTextbox
+            label: Recherche bloc
+    parameters:
+        mode:
+            type: 'select'
+            label: "Mode de rendu"
+            options:
+                'full': "Page complète, filtres, pager, ..."
+                'videoinsert': "Encart Vidéo"
+                'related': "Recherche associée"
+            value: ['full']
+        source_type:
+            type: 'select'
+            label: "Source de la recherche"
+            options:
+                'query': "Paramètre de la requête http"
+                'fixed': "Valeur fixe"
+                'metatag': "Metatag de la recherche générale"
+            value: ['query']
+        source_value:
+            type: 'text'
+            label: "Valeur pour la source de la recherche"
+            value: "q"
+        start:
+            type: 'text'
+            label: "Index du premier résultat à retourner"
+            value: 0
+        force_start:
+            type: 'checkbox'
+            label: "Forcer l'index du premier résultat (la valeur en url ne sera pas prise en compte)"
+            options:
+                'false': 'false'
+            value: ['false']
+            inline: true
+        num:
+            type: 'text'
+            label: "Nombre de résultat par page"
+            value: 12
+        force_num:
+            type: 'checkbox'
+            label: "Forcer le nombre de résultat (la valeur en url ne sera pas prise en compte)"
+            options:
+                'false': 'false'
+            value: ['false']
+            inline: true
+        requiredfields:
+            type: 'text'
+            label: "Expression de filtrage par MetaTag"
+            value: ''
+        force_requiredfields:
+            type: 'checkbox'
+            label: "Forcer le filtre (la valeur en url ne sera pas prise en compte)"
+            options:
+                'false': 'false'
+            value: ['false']
+            inline: true
+        inmeta:
+            type: 'text'
+            label: "Expression de filtrage inmeta (obligatoire pour des daterange)"
+            value: ''
+

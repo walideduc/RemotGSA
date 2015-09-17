@@ -1,0 +1,41 @@
+<div class="bloc main_containt">
+    <p class="h4">
+        Dossiers associés à
+        <strong>{{ responseArticle.0.getParameters('q')['value'] }}</strong>
+    </p>
+    <ul class="list-unstyled clearfix">
+        {% for index, result in responseArticle.0.getResults() %}
+            <li class="col-xs-12 col-sm-12 col-md-12 bloc art-list clearfix no-padding">
+                <article class="modulx1 art-c">
+                    <div class="art-body small">
+                        <div class="color-txt-1">
+                            <span class="border-l border-color"></span>
+                            {{ result.getMetaTag('site') }} -
+                            <i class="fa fa-clock-o"></i>
+                            <time datetime="{{ result.getMetaTag('lastmodifieddate')|date('Y-m-d H:i:s') }}" itemprop="datePublished">
+                                {% if result.getMetaTag('lastmodifieddate')|date('d/m/y') == now|date('d/m/y') %}
+                                    il y a {{ result.getMetaTag('lastmodifieddate')|time_ago }}
+                                {% else %}
+                                    le {{ result.getMetaTag('lastmodifieddate')|date("d/m/Y") }}
+                                    {# à {{ result.getMetaTag('lastmodifieddate')|date("H:i") }} #}
+                                {% endif %}
+                            </time>
+                        </div>
+                        <p>
+                            <a title="{{ result.getMetaTag('title') | striptags }}" href="{{ result.getUrl() }}">
+                                {{ result.getMetaTag('title') | raw}}
+                            </a>
+                        </p>
+                    </div>
+                    <figure class="figure carre modulx1-inside-bloc">
+                        <p>
+                            <a href="#" title="">
+                                <img class="article-img img-responsive-l" alt="" src="{{ result.getMetaTag('thumbnailpublicurl') }}">
+                            </a>
+                        </p>
+                    </figure>
+                </article>
+            </li>
+        {% endfor %}
+    </ul>
+</div>

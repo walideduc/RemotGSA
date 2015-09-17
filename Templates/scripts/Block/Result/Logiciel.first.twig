@@ -1,0 +1,47 @@
+<li class="bloc clearfix art-bloc {{  cssSite[articleSite] }}">
+    <article>
+        <div class="hidden-xs col-sm-3 col-md-3">
+            <a href="{{ result.getMetaTag('displayurl') }}">
+                <figure class="figure border-default">
+                    <img class="article-img img-responsive-l" alt="" src="{{ result.getMetaTag('thumbnailpublicurl') }}">
+                </figure>
+            </a>
+        </div>
+        <div class="col-xs-12 col-sm-9 col-md-9 art-body">
+            <a title="{{ result.title | striptags }}" href="{{ result.getUrl() }}">
+                <h2 class="h4 media-heading">
+                    {{ result.getMetaTag('title') | raw}}
+                </h2>
+            </a>
+            <div class="clearfix">
+                <ul class="list-unstyled list-inline small color-txt-1 bloc">
+                    {% if result.getMetaTag('os') %}
+                        <li>OS : {{ result.getMetaTag('os') | raw }}</li>
+                    {% endif %}
+                    {% if result.getMetaTag('version') %}
+                        <li>Version : {{ result.getMetaTag('version') | raw }}</li>
+                    {% endif %}
+                    {% if result.getMetaTag('lastmodifieddate') %}
+                        <li>Mise à jour : {{ result.getMetaTag('lastmodifieddate') | date('d/m/y') }}</li>
+                    {% endif %}
+                    {% if result.getMetaTag('download') %}
+                        <li>Téléchargements/sem. : {{ result.getMetaTag('download')}}</li>
+                    {% endif %}
+                </ul>
+            </div>
+            <p>
+                {% if result.getMetaTag('price') %}
+                    <a class="btn btn-buy btn-xs cap" title="Acheter" href="#">
+                        <i class="fa fa-shopping-cart fa-lg"></i>
+                        {{ result.getMetaTag('price') }} €
+                    </a>
+                {% endif %}
+                <a class="btn btn-download btn-xs cap" title="Télécharger" href="{{ result.getMetaTag('displayurl') }}">
+                    Télécharger
+                    <i class="fa fa-download"></i>
+                </a>
+            </p>
+            <p>{{ result.getSnippet() | raw}}</p>
+        </div>
+    </article>
+</li>

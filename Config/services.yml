@@ -1,0 +1,46 @@
+parameters:
+
+  gsa.server_address: gsa1.01net.com
+  gsa.server_port:
+  gsa.request.class: BackBee\Bundle\GSABundle\Model\Request
+  gsa.default_parameters:
+    client: 'default_frontend'
+    output: 'xml_no_dtd'
+    site: 'default_collection'
+    start: '0'
+    num: '10'
+    getfields: '*'
+    requiredfields: 'typology'
+    rc: '1'
+    filter: '0'
+  gsa.js_cluster_scripts: [['http://%gsa.server_address%/uri.js'],['http://%gsa.server_address%/common.js'],['http://%gsa.server_address%/xmlhttp.js'],['http://%gsa.server_address%/cluster.js']]
+
+services:
+
+  gsa.request:
+    class: BackBee\Bundle\GSABundle\Model\Request #"%gsa.request.class%"
+    arguments:
+      - "@guzzle.http_client"
+      - "%gsa.server_address%"
+      - "%gsa.server_port%"
+      - "%gsa.default_parameters%"
+  guzzle.http_client:
+    class: 'GuzzleHttp\Client'
+
+
+#    <services>
+#        <service id="gsa.request"
+#                 class="%gsa.request.class%"
+#                 scope="prototype"
+#                 >
+#            <argument type="service" id="guzzle.http_client"></argument>
+#            <argument>%gsa.server_address%</argument>
+#            <argument>%gsa.server_port%</argument>
+#            <argument>%gsa.default_parameters%</argument>
+#        </service>
+
+#        <service id="guzzle.http_client"
+#                 class="Guzzle\Http\Client"
+#                 scope="prototype">
+#        </service>
+#    </services>

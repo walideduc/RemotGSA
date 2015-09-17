@@ -1,0 +1,51 @@
+<!-- ARTICLE VIDEOS EN 2EME POSITION-->
+{% if submittedQuery.type is null or  submittedQuery.type == 'typology:video' or submittedQuery.type == ''%}
+<li class="bloc art-bloc border-t-s padding-top">
+    <ul id="mediaplayer" class="list-unstyled row">
+        {% if submittedQuery.type == 'typology:video' %}
+            {% set  videoList = response.0.getResults()%}
+            {% set displayLink = false %}
+        {%  else %}
+            {% set  videoList = three_first_videos %}
+            {% set displayLink = true %}
+        {%  endif %}
+        {% for index, result in videoList %}
+            {% set type = result.getMetaTag('typology')|lower %}
+            {% if type == 'video' %}
+            <li class="bloc art-bloc col-xs-12 col-sm-4 col-md-4">
+              <article class="art-c modulx2-5 bg-color-rub0-1 box-shadow relative">
+
+                  <figure class="figure modulx1-5-inside-bloc">
+                    <a title="{{ result.title | striptags }}" href="{{ result.getUrl() }}">
+                        <div class="icon-video-big">
+                          <i class="fa fa-play media-background"></i>
+                        </div>
+                        <img src="{{ result.getImage()|replace({'/i/0/0/':'/c/200/140/', '/c/0/0/':'/c/200/140/'}) }}" class="article-img img-responsive">
+                        <div class="rub-date clearfix">
+                            <span class="pull-right cap time color-txt-0">{{ result.getDuration() }}</span>
+                        </div>
+                    </a>
+                  </figure>
+
+                  <div class="art-body">
+                    <a title="{{ result.title | striptags }}" href="{{ result.getUrl() }}">
+                      <h2 class="title-small color-txt-0">{{ result.getTitle()| truncate(120, false, '&hellip;') | raw }}</h2>
+                    </a>
+                  </div>
+
+              </article>
+            </li>
+
+            {% endif %}
+        {% endfor %}
+        {% if displayLink %}
+        <div class="pull-right col-md-12">
+            <ul class="list-unstyled">
+                <li class="pull-right"><a title="" href="/search?q={{response.0.searchString | raw}}&type=typology:video&filter=0"  class="cap big-font color">+ de vidéos sur {{response.0.searchString | raw}}</a></li>
+            </ul>
+        </div>
+        {% endif %}
+    </ul>
+</li>
+{% endif %}
+<!-- /ARTICLE VIDEOS EN 2EME POSITION -->

@@ -1,0 +1,23 @@
+<li class="bloc clearfix art-bloc {{  cssSite[articleSite] }}">
+    <article class="art-body">
+        <a title="{{ result.getMetaTag('title') | striptags }}" href="{{ result.getUrl() }}">
+            <h2 class="h4 media-heading">{{ result.getMetaTag('title') | raw}}</h2>
+        </a>
+        <div class="color-txt-1">
+            <span class="border-l border-color"></span>
+            {{ result.getMetaTag('site') }} -
+            <i class="fa fa-clock-o"></i>
+            <time datetime="{{ result.getMetaTag('lastmodifieddate') }}" itemprop="datePublished">
+                {% if result.getMetaTag('lastmodifieddate')|date('d/m/y') == now|date('d/m/y') %}
+                    il y a {{ result.getMetaTag('lastmodifieddate')|time_ago }}
+                {% else %}
+                    le {{ result.getMetaTag('lastmodifieddate')|date("d/m/Y") }}
+                    {# à {{ result.getMetaTag('lastmodifieddate')|date("H:i") }} #}
+                {% endif %}
+            </time>
+        </div>
+        <div>
+            <p>{{ result.getSnippet() | raw }}</p>
+        </div>
+    </article>
+</li>
