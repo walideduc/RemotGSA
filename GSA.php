@@ -59,23 +59,30 @@ class GSA extends AbstractBundle
             header("Location: /");
             exit;
         }
-        var_dump("GSA / searchAction");
         $gsaRequest = $bbapp->getContainer()->get('gsa.request');
         $submittedQuery =  $query->all();
-        var_dump("GSA / searchAction submittedQuery");
-        var_dump($submittedQuery);
 
         $gsaRequest->setParameters($submittedQuery);
-        var_dump("GSA / searchAction post");
         $result = $gsaRequest->send();
+
         $parser = ParserFactory::getParser('xml');
         $gsaResponse = $parser->parse($result);
+
+//var_dump($gsaResponse);
 
         // Create the search_results container and set needed parameters
         $searchResultsBlock = new Recherche();
         $searchResultsBlock->setState(AbstractClassContent::STATE_NORMAL);
-        $searchResultsBlock->recherche_results_bloc->setState(AbstractClassContent::STATE_NORMAL)
-            ->setParam('submittedQuery', $submittedQuery);
+        $searchResultsBlock->recherche_results_bloc
+            ->setState(AbstractClassContent::STATE_NORMAL)
+    //        ->setParam('submitted_query', $submittedQuery)
+            ->setParam('response', [$gsaResponse]);
+/*            ->setParam('response', [
+                        'parameters' => $gsaResponse->getParameters(),
+                        'results'    => $gsaResponse->getResults()
+                    ]);
+*/
+        //var_dump( $searchResultsBlock->recherche_results_bloc->getAllParams());
 
         // right block search
         if(null !== ($gsaResponse->getTopKeyword())) {
@@ -86,11 +93,17 @@ class GSA extends AbstractBundle
                 $resultRight = $gsaRequestRight->send($gsaResponse->getTopKeyword());
                 $parserRight = ParserFactory::getParser('xml');
                 $gsaResponseRight = $parserRight->parse($resultRight);
-                $searchResultsBlock->recherche_right_bloc->setState(AbstractClassContent::STATE_NORMAL)
-                    ->setParam('response'.ucfirst($key), $gsaResponseRight);
+                //var_dump('response_'.strtolower($key));
+
+                $searchResultsBlock->recherche_right_bloc
+                    ->setState(AbstractClassContent::STATE_NORMAL)
+                    ->setParam('response_'.strtolower($key), [
+                            'parameters' => $gsaResponseRight->getParameters(),
+                            'results'    => $gsaResponseRight->getResults()
+                        ]);
             }
         }
-
+//var_dump($searchResultsBlock);die;
         // Create page with right layout
         $site = $this->getApplication()->getSite();
         $root = $em->getRepository('BackBee\NestedNode\Page')->getRoot($site);
@@ -107,7 +120,9 @@ class GSA extends AbstractBundle
                     ->pushElement($searchResultsBlock);
 
         $renderer = $this->getApplication()->getRenderer();
+
         $response->setContent($renderer->render($pagebuilder->getPage()));
+        //$response->setContent($renderer->render($pagebuilder->getPage(), null, ['responseVideo' => $gsaResponseRight]));
 
         $response->send();
     }

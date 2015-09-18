@@ -1,10 +1,10 @@
 <div class="bloc main_containt">
     <p class="h4">
         Dossiers associés à
-        <strong>{{ responseArticle.0.getParameters('q')['value'] }}</strong>
+        <strong>{{ response_dossier.value.parameters['q']['value'] }}</strong>
     </p>
     <ul class="list-unstyled clearfix">
-        {% for index, result in responseArticle.0.getResults() %}
+        {% for index, result in response_dossier.value.results %}
             <li class="col-xs-12 col-sm-12 col-md-12 bloc art-list clearfix no-padding">
                 <article class="modulx1 art-c">
                     <div class="art-body small">

@@ -43,7 +43,6 @@ class Request
             'q',
             'site',
         );
-        var_dump("Request / __construct");//die;
     }
 
     /**
@@ -361,28 +360,20 @@ class Request
         if (!empty($this->serverPort)) {
             $baseUrl .= ':'.$this->serverPort;
         }
-        $baseUrl .= '/search?';//. $query;
 
-        var_dump('baseUrl');
-        var_dump($baseUrl);
-        var_dump('query');
-        var_dump($query);
+        // Setting up an url based on baseUrl and query
+        if (!empty($query)) {
+            $baseUrl .= '/search?'. $query;
+        }
+
         // Setting up a guzzle client with a timeout and an url base
         $client = new Client([
             'timeout'   => 5,
             'base_uri'  => $baseUrl ,
         ]);
 
-        // Request based on the $baseUrl adding $urladd
-        $request= $client->request('GET', $query);
-
-        //var_dump('request');
-        //var_dump(get_class_methods($request));
-
-
-//        $this->httpClient->setBaseUrl($baseUrl);
-        //$request = $this->httpClient->get('/search?'.$query);
-        //$request->addHeader('Accept-Language','fr;q=0.8,en;q=0.6');
+        // Request based on the $baseUrl set method
+        $request= $client->request('GET');
 
         return $request;
     }
@@ -454,8 +445,6 @@ class Request
 
         $parameters = $this->getParameters();
 
-        var_dump('parameters');
-        var_dump($parameters);
         foreach($this->mandatoryParameters as $mandatoryParameter) {
             if (!isset($parameters[$mandatoryParameter])) {
                 throw new \Exception('missing mandatory parameters : '.$mandatoryParameter);
@@ -466,25 +455,15 @@ class Request
             throw new \BadFunctionCallException('gsa request needs at least a search string');
         }
 
-
         $searchString = $this->buildQueryString();
-  //      $request = $this->buildHttpRequest($searchString);
-        //$response = (string) $request->send()->getBody();
-//setResultsFormat
-        var_dump('searchString');
-        var_dump($searchString);
+
         $request = $this->buildHttpRequest($searchString);
 
         try {
-            //$response = (string) $request->getBody();
-            var_dump($this->buildQueryString());
             $response = (string) $request->getBody();
-            var_dump($response);
         } catch (\GuzzleHttp\Exception\RequestException $e) {
             throw new \Exception('GuzzleHttp Exception : '.$e->getMessage());
         }
-
-
 
         return $response;
     }

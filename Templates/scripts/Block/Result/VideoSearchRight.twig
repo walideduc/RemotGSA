@@ -1,18 +1,16 @@
 <div class="bloc bg-color-1 padding-inside-all">
     <p class="h4">
         Vidéos associées à
-        <strong>{{ responseVideo.0.getParameters('q')['value'] }}</strong>
+        <strong>{{ response_video.value.parameters['q']['value'] }}</strong>
     </p>
     <ul class="bloc list-unstyled">
-        {% for index, result in responseVideo.0.getResults() %}
-        
+        {% for index, result in response_video.value.results %}
         <li class="border-b-s modulx1">
             <article class="row">
-                
                 <figure class="col-xs-4 col-md-4 modulx1 table-display">
                     <a href="{{ result.getUrl() }}" class="table-cell-middle">
                         <div class="relative">
-                            <img class="article-img img-responsive-l" alt="" src="{{ result.getMetaTag('image')|raw_resizer('c', 250, 175)|replace({'/i/0/0/':'/c/100/80/', '/c/0/0/':'/c/100/80/'})|raw }}">
+                            <img class="article-img img-responsive-l" alt="" src="{{ result.getMetaTag('image')|replace({'/i/0/0/':'/c/100/80/', '/c/0/0/':'/c/100/80/'})|raw }}">
                             <div class="rub-date clearfix">
                                 <div class="pull-left icon-video-small center">
                                     <i class="fa fa-play media-background"></i>

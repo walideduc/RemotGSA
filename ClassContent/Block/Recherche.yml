@@ -10,4 +10,3 @@ Recherche:
         recherche_right_bloc:
             type: \BackBee\ClassContent\Block\SearchRight
             label: Recherche pub
-

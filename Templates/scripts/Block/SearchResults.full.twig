@@ -1,9 +1,10 @@
+{% set response = response.value %}
 <!-- MONTEUR DE RECHERCHE TOP -->
  {{ this.render(recherche_bloc)|raw }}
  <!-- /MONTEUR DE RECHERCHE TOP -->
 <!-- RESULTATS TOP-->
 {% set cssSite = {'www.bfmtv.com': 'rub2', 'www.business.bfmtv.com': 'rub3', 'www.rmcsport.bfmtv.com': 'rub4', 'www.01net.com': 'rub5'} %}
-{% set customTemplate = [ 'diaporama', 'article','video' ] %}
+{% set customTemplate = [ 'Diaporama', 'Article','Video' ] %}
 <div class="bloc col-xs-12 hidden-xs">
     {%  if(response.0.getSuggestions() | length != 0) %}
         <p>Essayez avec l'orthographe :
@@ -42,7 +43,6 @@
     <!-- suggestion end-->
 </div>
 <!-- /RESULTATS TOP-->
-
 <!-- CONTENU RESULTATS -->
 {% if(noQuery.0) %}
 <div class="tab-content clearfix padding-top">
@@ -78,7 +78,7 @@
                    {% include 'Block/Result/LienCommercialBlock.twig' with {'lien_id': 1} %}
              {% include 'Block/Result/LienPartenaireBlock.twig' %}
                 {% endif %}
-                 {% set typology = result.getMetaTag('typology')|lower %}
+                 {% set typology = result.getMetaTag('typology')|capitalize %}
                  {% set result_amount = result_amount+1 %}
                 {%  if ( three_first_videos|length > 0 and videoBlock and (result_amount == 4 or (result_amount < 4 and loop.last)))  %}
                     {% include 'Block/SearchResults.videoinsert.twig' %}
@@ -87,8 +87,8 @@
                 {% if result_amount == 8 %}
                    {% include 'Block/Result/LienCommercialBlock.twig' with {'lien_id': 2} %}
                 {% endif %}
-                 {% if submittedQuery.type != 'typology:video' %}
-                    {% set type = result.getMetaTag('type')|lower %}
+                 {% if submittedQuery.type != 'typology:Video' %}
+                    {% set type = result.getMetaTag('type')|capitalize %}
                     {% set articleSite = result.getMetaTag('site') %}
                    {% if type is not empty %}
                       {% if (type not in first) and pager.0.getCurrent() == 1 %}
@@ -97,15 +97,17 @@
                       {% else %}
                          {% set template='Block/Result/'~type~'.twig' %}
                       {% endif %}
-                      {% include template %}
+                       {% if template %}
+                           {% include template %}
+                       {% endif %}
                    {%  elseif typology in customTemplate %}
-                       {% if (typology not in first) and pager.0.getCurrent() == 1 and typology != 'video' %}
-                           {% set template='Block/Result/'~typology~'.first.twig' %}
+                       {% if (typology not in first) and pager.0.getCurrent() == 1 and typology != 'Video' %}
+                           {% set template ='Block/Result/'~typology~'.first.twig' %}
                            {% set first = first|merge({(typology):true}) %}
-                       {% elseif  typology == 'video' and (result.id not in videoDisplayed)%}
-                           {% set template='Block/Result/'~typology~'.twig' %}
-                       {% elseif  typology != 'video' %}
-                           {% set template='Block/Result/'~typology~'.twig' %}
+                       {% elseif  typology == 'Video' and (result.id not in videoDisplayed)%}
+                           {% set template ='Block/Result/'~typology~'.twig' %}
+                       {% elseif  typology != 'Video' %}
+                           {% set template ='Block/Result/'~typology~'.twig' %}
                        {% endif %}
                        {% if template %}
                            {% include template %}

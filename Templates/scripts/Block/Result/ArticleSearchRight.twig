@@ -2,11 +2,11 @@
 <div class="bloc bg-color-1 padding-inside-all">
     <p class="h4">
         Articles associés à
-        <strong>{{ responseArticle.0.getParameters('q')['value'] }}</strong>
+        <strong>{{ response_article.value.parameters['q']['value'] }}</strong>
     </p>
     <ul class="bloc list-unstyled">
-        {% for index, result in responseArticle.0.getResults() %}
-        
+        {% for index, result in response_article.value.results %}
+
         <li class="border-b-s modulx1">
             <article class="row">
 
