@@ -7,7 +7,7 @@
                     {% if result.getMetaTag('image') %}
                         <img class="article-img img-responsive-l" alt="" src="{{ result.getMetaTag('image')|raw_resizer('c', 250, 175)|replace({'/i/0/0/':'/c/140/100/', '/c/0/0/':'/c/140/100/'}) }}">
                     {% elseif result.getMetaTag('thumbnailpublicurl') %}
-                        <img class="article-img img-responsive-l" alt="" src="{{ result.getMetaTag('thumbnailpublicurl')|raw_resizer('c', 250, 175)|replace({'/i/0/0/':'/c/140/100/', '/c/0/0/':'/c/140/100/'}) }}">
+                        <img class="article-img img-responsive-l" alt="" src="{{ result.getMetaTag('thumbnailpublicurl')|replace({'/i/0/0/':'/c/140/100/', '/c/0/0/':'/c/140/100/'}) }}">
                     {% endif %}
                 </figure>
             </a>
@@ -22,7 +22,7 @@
                 <h2 class="title-medium no-margin padding-bottom-s">{{ result.getTitle()|raw}}</h2>
             </a>
             <div class="clearfix"></div>
-            <div class="color-txt-1"> 
+            <div class="color-txt-1">
                 <span class="border-l border-color"></span>
                 <font class="type cap"><b>Article</b></font> > {{ result.getMetaTag('site') }} -
                 <i class="fa fa-clock-o"></i>

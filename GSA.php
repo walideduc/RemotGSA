@@ -59,23 +59,42 @@ class GSA extends AbstractBundle
             header("Location: /");
             exit;
         }
-        var_dump("GSA / searchAction");
+        $query->set('q', $searchString);
         $gsaRequest = $bbapp->getContainer()->get('gsa.request');
         $submittedQuery =  $query->all();
-        var_dump("GSA / searchAction submittedQuery");
-        var_dump($submittedQuery);
 
+//var_dump($submittedQuery);die;
         $gsaRequest->setParameters($submittedQuery);
-        var_dump("GSA / searchAction post");
+
         $result = $gsaRequest->send();
         $parser = ParserFactory::getParser('xml');
         $gsaResponse = $parser->parse($result);
 
+
+        // Setting up an url based on server_adress and server_port defined in the services.yml
+        /*$baseUrl = 'http://'.$gsaRequest->getServerAddress();
+        if (!empty($gsaRequest->getServerPort())) {
+            $baseUrl .= ':'.$gsaRequest->getServerPort();
+        }*/
+
+        //$linkBuilder = new LinkBuilder($gsaRequest, $baseUrl);
+        //$filter = new Filter($gsaResponse, $linkBuilder);
+
+
         // Create the search_results container and set needed parameters
         $searchResultsBlock = new Recherche();
         $searchResultsBlock->setState(AbstractClassContent::STATE_NORMAL);
-        $searchResultsBlock->recherche_results_bloc->setState(AbstractClassContent::STATE_NORMAL)
-            ->setParam('submittedQuery', $submittedQuery);
+        $searchResultsBlock->recherche_results_bloc
+            ->setState(AbstractClassContent::STATE_NORMAL)
+            ->setParam('submitted_query', $submittedQuery);
+            //->setParam('responses', [$gsaResponse])
+//            ->setParam('filters', [$filter]);
+/*            ->setParam('response', [
+                        'parameters' => $gsaResponse->getParameters(),
+                        'results'    => $gsaResponse->getResults()
+                    ]);
+*/
+        //var_dump( $searchResultsBlock->recherche_results_bloc->getAllParams());
 
         // right block search
         if(null !== ($gsaResponse->getTopKeyword())) {
@@ -86,11 +105,18 @@ class GSA extends AbstractBundle
                 $resultRight = $gsaRequestRight->send($gsaResponse->getTopKeyword());
                 $parserRight = ParserFactory::getParser('xml');
                 $gsaResponseRight = $parserRight->parse($resultRight);
-                $searchResultsBlock->recherche_right_bloc->setState(AbstractClassContent::STATE_NORMAL)
-                    ->setParam('response'.ucfirst($key), $gsaResponseRight);
+                //var_dump('response_'.strtolower($key));
+
+                $searchResultsBlock->recherche_right_bloc
+                    ->setState(AbstractClassContent::STATE_NORMAL)
+                    ->setParam('response_'.strtolower($key), [
+                            'parameters' => $gsaResponseRight->getParameters(),
+                            'results'    => $gsaResponseRight->getResults()
+                        ]);
             }
         }
 
+//var_dump($searchResultsBlock);die;
         // Create page with right layout
         $site = $this->getApplication()->getSite();
         $root = $em->getRepository('BackBee\NestedNode\Page')->getRoot($site);
@@ -107,7 +133,9 @@ class GSA extends AbstractBundle
                     ->pushElement($searchResultsBlock);
 
         $renderer = $this->getApplication()->getRenderer();
+
         $response->setContent($renderer->render($pagebuilder->getPage()));
+        //$response->setContent($renderer->render($pagebuilder->getPage(), null, ['responseVideo' => $gsaResponseRight]));
 
         $response->send();
     }

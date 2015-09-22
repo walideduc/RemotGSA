@@ -1,5 +1,8 @@
 <div {{ this.bbcontent() | raw }} >
-    {% if responseVideo.0.getResults() %}
+    {#% if response_video %
+    {{ dump(response_video) }}
+    #}
+    {% if (response_video.value.results|length > 0) %}
         {% include 'Block/Result/VideoSearchRight.twig' %}
     {% endif %}
 
@@ -10,7 +13,7 @@
         <!-- PUB -->
     </div>
 
-    {% if responseArticle.0.getResults() %}
+    {% if (response_article.value.results|length > 0) %}
         {% include 'Block/Result/ArticleSearchRight.twig' %}
     {% endif %}
 
@@ -20,10 +23,10 @@
         <!-- PUB -->
     </div>
 
-    {% if responseDiaporama.0.getResults() %}
+    {% if (response_diaporama.value.results|length > 0) %}
         {% include 'Block/Result/DiaporamaSearchRight.twig' %}
     {% endif %}
-    {% if responseDossier.0.getResults() %}
+    {% if (response_dossier.value.results|length > 0) %}
         {% include 'Block/Result/DossierSearchRight.twig' %}
     {% endif %}
 

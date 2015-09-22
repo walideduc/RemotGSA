@@ -182,7 +182,7 @@ class Result implements \JsonSerializable
      */
     public function getMetaTag($name)
     {
-        return isset($this->metaTags[$name])?$this->metaTags[$name]:'';
+        return isset($this->metaTags[$name]) ? $this->metaTags[$name]:'';
     }
 
     /**

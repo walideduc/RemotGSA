@@ -4,7 +4,7 @@ namespace BackBee\Bundle\GSABundle\Model\Response;
 
 use BackBee\Bundle\GSABundle\Model\Response;
 use BackBee\Bundle\GSABundle\Model\Result;
-use BackBee\Bundle\CommonBundle\Service\Encoding;
+use BackBee\Bundle\CommonBundle\Utils\Encoding;
 
 class XmlParser implements ParserInterface
 {
@@ -50,7 +50,7 @@ class XmlParser implements ParserInterface
 
         $sXml = simplexml_load_string($xml);
 
-        $this->gsaResponse =  new Response();
+        $this->gsaResponse = new Response();
 
         $this->gsaResponse
             ->setGsaVersion((string)$sXml->attributes()->VER)
@@ -151,6 +151,7 @@ class XmlParser implements ParserInterface
                    ->setSearchApplianceId((string)$resultNode->ENT_SOURCE)
                    ->setSnippet((string)Encoding::UTF8FixWin1252Chars($resultNode->S))
                    ->setLanguage((string)$resultNode->LANG);
+
             foreach($resultNode->MT as $metaNode) {
                 $this->parseResultMetaTag($metaNode,$result);
             }

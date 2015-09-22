@@ -5,6 +5,7 @@ SearchTextbox:
         category: ['Recherche']
         cache-lifetime: 0
     parameters:
+        query: ''
         search_results_page:
             type: 'text'
             label: "Url de la page qui affichera la recherche"

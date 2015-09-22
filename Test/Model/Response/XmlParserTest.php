@@ -2,8 +2,6 @@
 
 namespace BackBee\Bundle\GSABundle\Test\Model\Response;
 
-
-
 use BackBee\Bundle\GSABundle\Model\Response\XmlParser;
 use BackBee\Bundle\GSABundle\Model\Response;
 

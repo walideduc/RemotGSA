@@ -1,3 +1,4 @@
+{% set filter = this.getObject().getParamValue('filters') %}
 <!-- BARRE D'ONGLETS DESKTOP -->
 {% if (filter.0.getFilters('typology')|length > 0) %}
 <nav class="hidden-xs nav-search">
@@ -6,11 +7,11 @@
             <a class="onglet" data-anchor="false" data-toggle="tab" href="#" title="">Tous ({{ filter.0.response.totalResults }})</a>
         </li>
         {% for name, values in filter.0.getFilters('typology') %}
-         {% if loop.index0 < 4 %}
+            {% if loop.index0 < 4 %}
              <li {% if active_tab == values.value|lower %}class="active"{% endif %}>
-                <a class="onglet"  href="/search?q={{response.0.searchString | raw}}&type=typology:{{ values['value'] }}&filter=0" title="">{{ values['value'] }} ({{ values['count'] }})</a>
+                <a class="onglet"  href="/search?q={{ response.0.searchString | raw}}&type=typology:{{ values['value'] }}&filter=0" title="">{{ values['value'] }} ({{ values['count'] }})</a>
              </li>
-        {% endif %}
+            {% endif %}
         {% endfor %}
     </ul>
 </nav>

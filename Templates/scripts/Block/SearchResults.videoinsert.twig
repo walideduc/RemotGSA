@@ -1,14 +1,15 @@
 <!-- ARTICLE VIDEOS EN 2EME POSITION-->
-{% if submittedQuery.type is null or  submittedQuery.type == 'typology:video' or submittedQuery.type == ''%}
+{% if submittedQuery['type'] is null or  submittedQuery['type'] == 'typology:video' or submittedQuery['type'] == ''%}
 <li class="bloc art-bloc border-t-s padding-top">
     <ul id="mediaplayer" class="list-unstyled row">
-        {% if submittedQuery.type == 'typology:video' %}
-            {% set  videoList = response.0.getResults()%}
+        {% if submittedQuery['type'] == 'typology:video' %}
+            {% set videoList = response.0.getResults() %}
             {% set displayLink = false %}
         {%  else %}
             {% set  videoList = three_first_videos %}
             {% set displayLink = true %}
         {%  endif %}
+
         {% for index, result in videoList %}
             {% set type = result.getMetaTag('typology')|lower %}
             {% if type == 'video' %}
@@ -38,6 +39,7 @@
 
             {% endif %}
         {% endfor %}
+
         {% if displayLink %}
         <div class="pull-right col-md-12">
             <ul class="list-unstyled">

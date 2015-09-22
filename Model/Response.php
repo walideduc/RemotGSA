@@ -283,6 +283,7 @@ class Response implements \JsonSerializable
         if (!is_null($metaTagName)) {
             return isset($this->metaTags[$metaTagName]) ? $this->metaTags[$metaTagName] : '';
         }
+
         return $this->metaTags;
     }
 

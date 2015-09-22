@@ -9,6 +9,14 @@ SearchResults:
             type: \BackBee\ClassContent\Block\SearchTextbox
             label: Recherche bloc
     parameters:
+        submitted_query: null
+        noquery: null
+        responses: []
+        pagers: []
+        filters: []
+        linkbuilders: []
+        query: !!scalar
+        three_first_videos: []
         mode:
             type: 'select'
             label: "Mode de rendu"
@@ -66,4 +74,3 @@ SearchResults:
             type: 'text'
             label: "Expression de filtrage inmeta (obligatoire pour des daterange)"
             value: ''
-

@@ -25,7 +25,6 @@ class SearchResultsListener
     private static $parser;
     private static $generalGsaResponse;
 
-
     private static function initOnPrerenderSearch(Event $event)
     {
         if (self::init($event)) {
@@ -33,20 +32,26 @@ class SearchResultsListener
         } else {
             return false;
         }
-
         return true;
     }
 
     private static function init(Event $event)
     {
         self::reset();
-        if (null === self::$bbapp = $event->getDispatcher()->getApplication()) return false;
-        if (null === self::$target = $event->getTarget()) return false;
-        if (null === self::$renderer = $event->getEventArgs()) return false;
-        if (null === self::$container = self::$bbapp->getContainer()) return false;
-        if (null === self::$query = self::$bbapp->getRequest()->query) return false;
-        if (null === self::$gsaRequest = self::$container->get('gsa.request')) return false;
-        if (null === self::$parser = ParserFactory::getParser('xml')) return false;
+        if (null === self::$bbapp = $event->getDispatcher()->getApplication())
+            return false;
+        if (null === self::$target = $event->getTarget())
+            return false;
+        if (null === self::$renderer = $event->getEventArgs())
+            return false;
+        if (null === self::$container = self::$bbapp->getContainer())
+            return false;
+        if (null === self::$query = self::$bbapp->getRequest()->query)
+            return false;
+        if (null === self::$gsaRequest = self::$container->get('gsa.request'))
+            return false;
+        if (null === self::$parser = ParserFactory::getParser('xml'))
+            return false;
 
         if ( null !== self::$query->get('type', null))
         {
@@ -78,6 +83,8 @@ class SearchResultsListener
     private static function getBlockParameterValue($parameterName,$valueName)
     {
         $value = self::$target->getParamValue($parameterName);
+        $value = (count($value) > 0) ? $value[0] : $value;
+
         return isset($value) ? $value : null;
     }
 
@@ -87,16 +94,15 @@ class SearchResultsListener
         //for instance: the general search result template
         //wants to call a partial "videoinsertSearch"
         //and set requiredfields to typology:video
-        return self::$target->getParam($parameterName,'force');
+        return self::$target->getParamValue($parameterName,'force');
     }
 
 
     public static function getGsaRequestParameters()
     {
-
         $gsaParameters = array();
-        $gsaParameters['renderMode'] = !is_null(self::$renderer->getMode())? self::$renderer->getMode() : self::getBlockParameterValue('mode','selected');
-        $gsaParameters['sourceType']= self::getBlockParameterValue('source_type','selected');
+        $gsaParameters['renderMode'] = !is_null(self::$renderer->getMode())? self::$renderer->getMode() : self::getBlockParameterValue('mode','value');
+        $gsaParameters['sourceType']= self::getBlockParameterValue('source_type','value');
         $gsaParameters['sourceValue'] = self::getBlockParameterValue('source_value','value');
 
         switch($gsaParameters['sourceType'])
@@ -182,13 +188,18 @@ class SearchResultsListener
             /**
              * @var $renderMode string
              * @var $searchString string
-             * @var $start string
-             * @var $num string
-             * @var $requiredfields string
-             * @var $inmeta string
+             * @var $start array
+             * @var $num array
+             * @var $requiredfields array
+             * @var $inmeta array
              */
 
             extract(self::getGsaRequestParameters());
+
+            if (empty($requiredfields) && !empty(self::$query->get('requiredfields'))) {
+                $requiredfields = self::$query->get('requiredfields');
+            }
+
             self::$renderer->setMode($renderMode);
             self::$gsaRequest
                 ->setSearchString($searchString)
@@ -201,12 +212,11 @@ class SearchResultsListener
                 $method = $renderMode.'SearchMode';
             }
 
-
             call_user_func(array(__CLASS__,$method));
 
         } catch (\Exception $e) {
             self::$target
-                ->setParam('noQuery',true);
+                ->setParam('noquery',true);
             return;
         }
     }
@@ -233,10 +243,11 @@ class SearchResultsListener
         if (true === is_a(self::$target, 'BackBee\ClassContent\Block\SearchResults')) {
             $searchTextBlock = self::$target->recherche_bloc;
             $searchTextBlock->setState(AbstractClassContent::STATE_NORMAL);
-            $params = $searchTextBlock->getParam('search_results_page:array');
-            $params['value'] = self::$bbapp->getRequest()->getPathInfo();
+          //  $params = $searchTextBlock->getParam('search_results_page');
+        //var_dump($params);
+          //  $params['value'] = self::$bbapp->getRequest()->getPathInfo();
 
-            $searchTextBlock->setParam('search_results_page', $params, 'array');
+            $searchTextBlock->setParam('search_results_page',  self::$bbapp->getRequest()->getPathInfo(), 'scalar');
         }
 
         if (null !== $typology = self::$bbapp->getRequest()->query->get('requiredfields', null)) {
@@ -246,17 +257,16 @@ class SearchResultsListener
 
         $threeFirstVideos = [];
 
-
         // Create the search_results container and set needed parameters
         $request = self::$bbapp->getRequest();
         $query = $request->get('q');
-        self::$target
-            ->setParam('response', self::$gsaResponse)
-            ->setParam('pager', $pager)
-            ->setParam('filter', $filter)
-            ->setParam('linkbuilder', $linkBuilder)
-            ->setParam('query', $query);
 
+        self::$target
+            ->setParam('responses', [self::$gsaResponse])
+            ->setParam('pagers', [$pager])
+            ->setParam('filters', [$filter])
+            ->setParam('linkbuilders', [$linkBuilder])
+            ->setParam('query', $query);
 
         self::$gsaRequest->setParameters([
                 'requiredfields'=> 'typology:video',
@@ -270,19 +280,21 @@ class SearchResultsListener
                 $threeFirstVideos[] = $result;
             }
         }
+
         self::$target
             ->setParam('three_first_videos', $threeFirstVideos);
-         self::$renderer->addFooterScript(self::$renderer->getUriJs('/resources/js/gsa_search_results.js'));
+        self::$renderer->addFooterScript(self::$renderer->getUriJs('/resources/js/gsa_search_results.js'));
+
         if (null == $typology) {
             self::$gsaRequest->setParameters([
                     'filter' => 0,
-                    'type'=> '',
+                    'types' => '',
                     'searchstring' => self::$gsaRequest->getParameters('searchstring')
                 ]);
         } else {
             self::$gsaRequest->setParameters([
                     'filter' => 0,
-                    'type'=> 'typology:'.$typology,
+                    'types' => 'typology:'. strtolower($typology),
                     'searchstring' => self::$gsaRequest->getParameters('searchstring')
                 ]);
         }

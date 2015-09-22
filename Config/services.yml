@@ -13,7 +13,7 @@ parameters:
     requiredfields: 'typology'
     rc: '1'
     filter: '0'
-  gsa.js_cluster_scripts: [['http://%gsa.server_address%/uri.js'],['http://%gsa.server_address%/common.js'],['http://%gsa.server_address%/xmlhttp.js'],['http://%gsa.server_address%/cluster.js']]
+  gsa.js_cluster_scripts: ['http://%gsa.server_address%/uri.js','http://%gsa.server_address%/common.js','http://%gsa.server_address%/xmlhttp.js','http://%gsa.server_address%/cluster.js']
 
 services:
 
