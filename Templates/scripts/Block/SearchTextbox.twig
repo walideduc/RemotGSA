@@ -3,7 +3,7 @@
 	<form class="form-horizontal searchForm" role="search" action="{{ this.getObject().getParamValue('search_results_page') }}" method="get" autocomplete="off">
 		<div id="custom-search-input">
             <div class="input-group col-md-12">
-                <input type="text" class="search-query noshadow form-control" placeholder="Recherche..." name="q" value="{{ query.0 }}">
+                <input type="text" class="search-query noshadow form-control" placeholder="Recherche..." name="q" value="{{ this.getObject().getParamValue('query') }}">
                 <input type="hidden" name="filter" value="0">
                 <span class="input-group-btn">
                     <button class="btn btn-default" type="submit">

@@ -1,6 +1,6 @@
-block.search_results.prerender:
+block.searchresults.prerender:
     listeners:
-        - [BackBuilder\Bundle\GSABundle\Listener\SearchResultsListener, onPrerenderSearch]
-block.search_textbox.prerender:
+        - [BackBee\Bundle\GSABundle\Listener\SearchResultsListener, onPrerenderSearch]
+block.searchtextbox.prerender:
     listeners:
-        - [BackBuilder\Bundle\GSABundle\Listener\SearchTextboxListener, onPrerenderSearch]
+        - [BackBee\Bundle\GSABundle\Listener\SearchTextboxListener, onPrerenderSearch]

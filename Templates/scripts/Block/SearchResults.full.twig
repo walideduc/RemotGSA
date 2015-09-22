@@ -1,12 +1,16 @@
-{% set response = response.value %}
+{% set response = this.getObject().getParamValue('responses') %}
+{% set linkbuilder = this.getObject().getParamValue('linkbuilders') %}
+{% set pager = this.getObject().getParamValue('pagers') %}
+
 <!-- MONTEUR DE RECHERCHE TOP -->
  {{ this.render(recherche_bloc)|raw }}
  <!-- /MONTEUR DE RECHERCHE TOP -->
-<!-- RESULTATS TOP-->
+
+ <!-- RESULTATS TOP-->
 {% set cssSite = {'www.bfmtv.com': 'rub2', 'www.business.bfmtv.com': 'rub3', 'www.rmcsport.bfmtv.com': 'rub4', 'www.01net.com': 'rub5'} %}
-{% set customTemplate = [ 'Diaporama', 'Article','Video' ] %}
+{% set customTemplate = [ 'diaporama', 'article','video' ] %}
 <div class="bloc col-xs-12 hidden-xs">
-    {%  if(response.0.getSuggestions() | length != 0) %}
+    {%  if (response.0.getSuggestions() | length != 0) %}
         <p>Essayez avec l'orthographe :
             {% for suggestion in response.0.getSuggestions() %}
                 <em><strong><a href="{{ linkbuilder.0.getLink(suggestion) }}" title="{{ suggestion }}">{{ suggestion }}</a></strong></em>
@@ -19,7 +23,7 @@
 
     <ul class="list-unstyled list-inline">
         {% set clusterCount = 3 %}
-        {%  if(response.0.getSynonyms() | length != 0) %}
+        {%  if (response.0.getSynonyms() | length != 0) %}
             {% for name,query in response.0.getSynonyms() %}
                 {%  if clusterCount > 0 %}
                     <li><a href="{{ linkbuilder.0.getLink(suggestion) }}">{{ name }}</a></li>
@@ -43,8 +47,9 @@
     <!-- suggestion end-->
 </div>
 <!-- /RESULTATS TOP-->
+
 <!-- CONTENU RESULTATS -->
-{% if(noQuery.0) %}
+{% if (noquery.0) %}
 <div class="tab-content clearfix padding-top">
     <div class="tab-pane fade in active" id="all">
         <p>Pas de terme recherché</p>
@@ -63,58 +68,65 @@
         <div class="tab-content clearfix padding-top" id="search-result-content">
           <div class="tab-pane fade in active" id="all">
              <ul class="list-unstyled">
-             {% set first = {} %}
-             {% set result_amount = 0 %}
-             {% set videoDisplayed = [] %}
-             {% set videoBlock = true %}
+              {% set first = {} %}
+              {% set result_amount = 0 %}
+              {% set videoDisplayed = [] %}
+              {% set videoBlock = true %}
 
-                 {% for index, result in three_first_videos %}
-                     {% set videoDisplayed = videoDisplayed|merge([result.id]) %}
-                 {% endfor %}
-             {% for index, result in response.0.getResults() %}
+              {% for index, result in three_first_videos %}
+                {% set videoDisplayed = videoDisplayed|merge([result.id]) %}
+              {% endfor %}
 
-                 {% set currentId = result.id %}
-                 {% if result_amount == 1 %}
-                   {% include 'Block/Result/LienCommercialBlock.twig' with {'lien_id': 1} %}
-             {% include 'Block/Result/LienPartenaireBlock.twig' %}
+              {% for index, result in response.0.getResults() %}
+
+                {% set currentId = result.id %}
+                {% if result_amount == 1 %}
+                  {% include 'Block/Result/LienCommercialBlock.twig' with {'lien_id': 1} %}
+                  {% include 'Block/Result/LienPartenaireBlock.twig' %}
                 {% endif %}
-                 {% set typology = result.getMetaTag('typology')|capitalize %}
-                 {% set result_amount = result_amount+1 %}
+
+                {% set typology = result.getMetaTag('typology') %}
+                {% set result_amount = result_amount+1 %}
                 {%  if ( three_first_videos|length > 0 and videoBlock and (result_amount == 4 or (result_amount < 4 and loop.last)))  %}
-                    {% include 'Block/SearchResults.videoinsert.twig' %}
-                    {% set videoBlock = false %}
-                 {% endif %}
-                {% if result_amount == 8 %}
-                   {% include 'Block/Result/LienCommercialBlock.twig' with {'lien_id': 2} %}
+                  {% include 'Block/SearchResults.videoinsert.twig' %}
+                  {% set videoBlock = false %}
                 {% endif %}
-                 {% if submittedQuery.type != 'typology:Video' %}
-                    {% set type = result.getMetaTag('type')|capitalize %}
-                    {% set articleSite = result.getMetaTag('site') %}
-                   {% if type is not empty %}
-                      {% if (type not in first) and pager.0.getCurrent() == 1 %}
-                         {% set template='Block/Result/'~type~'.first.twig' %}
-                         {% set first = first|merge({(type):true}) %}
-                      {% else %}
-                         {% set template='Block/Result/'~type~'.twig' %}
-                      {% endif %}
-                       {% if template %}
-                           {% include template %}
-                       {% endif %}
-                   {%  elseif typology in customTemplate %}
-                       {% if (typology not in first) and pager.0.getCurrent() == 1 and typology != 'Video' %}
-                           {% set template ='Block/Result/'~typology~'.first.twig' %}
-                           {% set first = first|merge({(typology):true}) %}
-                       {% elseif  typology == 'Video' and (result.id not in videoDisplayed)%}
-                           {% set template ='Block/Result/'~typology~'.twig' %}
-                       {% elseif  typology != 'Video' %}
-                           {% set template ='Block/Result/'~typology~'.twig' %}
-                       {% endif %}
-                       {% if template %}
-                           {% include template %}
-                       {% endif %}
-                   {% endif %}
-                 {% endif %}
-             {% endfor %}
+
+                {% if result_amount == 8 %}
+                  {% include 'Block/Result/LienCommercialBlock.twig' with {'lien_id': 2} %}
+                {% endif %}
+
+                {% if typology != 'video' %}
+
+                  {% set type = result.getMetaTag('type') %}
+                  {% set articleSite = result.getMetaTag('site') %}
+                  {% if type is not empty %}
+                    {% if (type not in first) and pager.0.getCurrent() == 1 %}
+                      {% set template ='Block/Result/'~ type|capitalize ~'.first.twig' %}
+                      {% set first = first|merge({(type):true}) %}
+                    {% else %}
+                      {% set template ='Block/Result/'~ type|capitalize ~'.twig' %}
+                    {% endif %}
+                    {% include template %}
+
+                  {%  elseif typology in customTemplate %}
+
+                    {% if (typology not in first) and pager.0.getCurrent() == 1 and typology != 'video' %}
+                      {% set template='Block/Result/'~ typology|capitalize ~'.first.twig' %}
+                      {% set first = first|merge({(typology):true}) %}
+                    {% elseif  typology == 'video' and (result.id not in videoDisplayed)%}
+                      {% set template='Block/Result/'~ typology|capitalize ~'.twig' %}
+                    {% elseif  typology != 'video' %}
+                      {% set template='Block/Result/'~ typology|capitalize ~'.twig' %}
+                    {% endif %}
+
+                    {% if template %}
+                      {% include template %}
+                    {% endif %}
+
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
              <!-- PUB BOTTOM -->
              {% include 'Block/Result/LienCommercialBlock.twig' with {'lien_id': 3} %}
              <!-- /PUB BOTTOM -->

@@ -1,8 +1,9 @@
 <!-- ARTICLE VIDEOS EN 2EME POSITION-->
-{% if submittedQuery.type is null or  submittedQuery.type == 'typology:video' or submittedQuery.type == ''%}
+{#{% if submitted_query.type is null or  submitted_query.type == 'typology:video' or submitted_query.type == ''%}#}
+{% if typology is null or typology == 'video' or typology == ''%}
 <li class="bloc art-bloc border-t-s padding-top">
     <ul id="mediaplayer" class="list-unstyled row">
-        {% if submittedQuery.type == 'typology:video' %}
+        {% if typology == 'video' %}
             {% set  videoList = response.0.getResults()%}
             {% set displayLink = false %}
         {%  else %}

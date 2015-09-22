@@ -5,5 +5,3 @@ bundle:
     version: 1
     enable: on
     thumbnail: "img/extnd-x/picto-extnd-gsa.png"
-    #service: BackBuilder\Bundle\PollBundle\Services\Local\Poll
-    #manage_multisite: false

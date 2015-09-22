@@ -28,25 +28,37 @@ class SearchResultsListener
 
     private static function initOnPrerenderSearch(Event $event)
     {
+        //var_dump('initOnPrerenderSearch');
         if (self::init($event)) {
             if (false === is_a(self::$target, '\BackBee\ClassContent\Block\SearchResults')) return false;
         } else {
             return false;
         }
-
         return true;
     }
 
     private static function init(Event $event)
     {
+        //var_dump('init');
         self::reset();
-        if (null === self::$bbapp = $event->getDispatcher()->getApplication()) return false;
-        if (null === self::$target = $event->getTarget()) return false;
-        if (null === self::$renderer = $event->getEventArgs()) return false;
-        if (null === self::$container = self::$bbapp->getContainer()) return false;
-        if (null === self::$query = self::$bbapp->getRequest()->query) return false;
-        if (null === self::$gsaRequest = self::$container->get('gsa.request')) return false;
-        if (null === self::$parser = ParserFactory::getParser('xml')) return false;
+        if (null === self::$bbapp = $event->getDispatcher()->getApplication())
+            return false;
+        if (null === self::$target = $event->getTarget())
+            return false;
+        if (null === self::$renderer = $event->getEventArgs())
+            return false;
+        if (null === self::$container = self::$bbapp->getContainer())
+            return false;
+        if (null === self::$query = self::$bbapp->getRequest()->query)
+            return false;
+
+  //      var_dump(self::$gsaRequest);
+        if (null === self::$gsaRequest = self::$container->get('gsa.request'))
+            return false;
+//        var_dump(self::$gsaRequest);die;
+
+        if (null === self::$parser = ParserFactory::getParser('xml'))
+            return false;
 
         if ( null !== self::$query->get('type', null))
         {
@@ -60,6 +72,7 @@ class SearchResultsListener
 
     private static function reset()
     {
+        //var_dump('reset');
         self::$bbapp = null;
         self::$target = null;
         self::$renderer = null;
@@ -77,12 +90,16 @@ class SearchResultsListener
      */
     private static function getBlockParameterValue($parameterName,$valueName)
     {
+        //var_dump('getBlockParameterValue');
         $value = self::$target->getParamValue($parameterName);
+        $value = (count($value) > 0) ? $value[0] : $value;
+
         return isset($value) ? $value : null;
     }
 
     private static function getForcedParameterValue($parameterName)
     {
+        //var_dump('getForcedParameterValue');
         //allow to force a certain value
         //for instance: the general search result template
         //wants to call a partial "videoinsertSearch"
@@ -93,10 +110,10 @@ class SearchResultsListener
 
     public static function getGsaRequestParameters()
     {
-
+        //var_dump('getGsaRequestParameters');
         $gsaParameters = array();
-        $gsaParameters['renderMode'] = !is_null(self::$renderer->getMode())? self::$renderer->getMode() : self::getBlockParameterValue('mode','selected');
-        $gsaParameters['sourceType']= self::getBlockParameterValue('source_type','selected');
+        $gsaParameters['renderMode'] = !is_null(self::$renderer->getMode())? self::$renderer->getMode() : self::getBlockParameterValue('mode','value');
+        $gsaParameters['sourceType']= self::getBlockParameterValue('source_type','value');
         $gsaParameters['sourceValue'] = self::getBlockParameterValue('source_value','value');
 
         switch($gsaParameters['sourceType'])
@@ -132,6 +149,8 @@ class SearchResultsListener
         //4.block param (default)
         foreach(array('start','num','requiredfields','inmeta') as $paramName) {
 
+//        foreach(array('requiredfields','inmeta') as $paramName) {
+
             $gsaParameters[$paramName] = self::getForcedParameterValue($paramName);
 
             if(is_null($gsaParameters[$paramName]) && self::getBlockParameterValue('force_'.$paramName,'checked')) {
@@ -150,6 +169,7 @@ class SearchResultsListener
 
     public static function addClusterScripts()
     {
+        //var_dump('addClusterScripts');
         foreach (self::$container->getParameter('gsa.js_cluster_scripts') as $script) {
             self::$renderer->addFooterScript($script);
         }
@@ -157,14 +177,21 @@ class SearchResultsListener
 
     public static function doRequest($gsaRequest)
     {
+        //var_dump($gsaRequest);die;
         $rawResponse = $gsaRequest->send();
         $gsaResponse = self::$parser->parse($rawResponse);
 
+/*
+        $result = $gsaRequest->send();
+        $parser = ParserFactory::getParser('xml');
+        $gsaResponse = $parser->parse($result);
+*/
         return $gsaResponse;
     }
 
     public static function doGeneralGsaRequest()
     {
+        //var_dump('doGeneralGsaRequest');
         $generalGsaRequest = clone self::$gsaRequest;
         $generalGsaRequest->setRequiredFields('');
         $generalGsaRequest->setAsQ('');
@@ -173,9 +200,11 @@ class SearchResultsListener
 
     public static function onPrerenderSearch(Event $event)
     {
+        //var_dump('onPrerenderSearch');
         if (!self::initOnPrerenderSearch($event)) {
             return;
         }
+        //var_dump(self::$gsaRequest);
 
         try
         {
@@ -189,10 +218,11 @@ class SearchResultsListener
              */
 
             extract(self::getGsaRequestParameters());
+            //var_dump($num);die;
             self::$renderer->setMode($renderMode);
             self::$gsaRequest
                 ->setSearchString($searchString)
-                ->limit($start,$num)
+                ->limit($start['value'],$num['value'])
                 ->setRequiredFields($requiredfields)
                 ->setAsQ($inmeta);
 
@@ -201,12 +231,11 @@ class SearchResultsListener
                 $method = $renderMode.'SearchMode';
             }
 
-
             call_user_func(array(__CLASS__,$method));
 
         } catch (\Exception $e) {
             self::$target
-                ->setParam('noQuery',true);
+                ->setParam('noquery',true);
             return;
         }
     }
@@ -233,10 +262,11 @@ class SearchResultsListener
         if (true === is_a(self::$target, 'BackBee\ClassContent\Block\SearchResults')) {
             $searchTextBlock = self::$target->recherche_bloc;
             $searchTextBlock->setState(AbstractClassContent::STATE_NORMAL);
-            $params = $searchTextBlock->getParam('search_results_page:array');
-            $params['value'] = self::$bbapp->getRequest()->getPathInfo();
+          //  $params = $searchTextBlock->getParam('search_results_page');
+        //var_dump($params);
+          //  $params['value'] = self::$bbapp->getRequest()->getPathInfo();
 
-            $searchTextBlock->setParam('search_results_page', $params, 'array');
+            $searchTextBlock->setParam('search_results_page',  self::$bbapp->getRequest()->getPathInfo(), 'scalar');
         }
 
         if (null !== $typology = self::$bbapp->getRequest()->query->get('requiredfields', null)) {
@@ -250,13 +280,13 @@ class SearchResultsListener
         // Create the search_results container and set needed parameters
         $request = self::$bbapp->getRequest();
         $query = $request->get('q');
+//var_dump(self::$gsaResponse);die;
         self::$target
-            ->setParam('response', self::$gsaResponse)
-            ->setParam('pager', $pager)
-            ->setParam('filter', $filter)
-            ->setParam('linkbuilder', $linkBuilder)
+            ->setParam('responses', [self::$gsaResponse])
+            ->setParam('pagers', [$pager])
+            ->setParam('filters', [$filter])
+            ->setParam('linkbuilders', [$linkBuilder])
             ->setParam('query', $query);
-
 
         self::$gsaRequest->setParameters([
                 'requiredfields'=> 'typology:video',
@@ -282,7 +312,7 @@ class SearchResultsListener
         } else {
             self::$gsaRequest->setParameters([
                     'filter' => 0,
-                    'type'=> 'typology:'.$typology,
+                    'type'=> 'typology:'. strtolower($typology),
                     'searchstring' => self::$gsaRequest->getParameters('searchstring')
                 ]);
         }
@@ -291,12 +321,14 @@ class SearchResultsListener
 
     public static function defaultSearchMode()
     {
+        //var_dump("defaultSearchMode");
         self::$gsaResponse = self::doRequest(self::$gsaRequest);
         self::$target->setParam('response', self::$gsaResponse);
     }
 
     private static function getKeywordParams($q = "")
     {
+        //var_dump("getKeywordParams");
         $parameters = [
             'video' => [
                 'params' => [

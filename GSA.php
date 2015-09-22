@@ -59,24 +59,36 @@ class GSA extends AbstractBundle
             header("Location: /");
             exit;
         }
+        $query->set('q', $searchString);
         $gsaRequest = $bbapp->getContainer()->get('gsa.request');
         $submittedQuery =  $query->all();
 
+//var_dump($submittedQuery);die;
         $gsaRequest->setParameters($submittedQuery);
-        $result = $gsaRequest->send();
 
+        $result = $gsaRequest->send();
         $parser = ParserFactory::getParser('xml');
         $gsaResponse = $parser->parse($result);
 
-//var_dump($gsaResponse);
+
+        // Setting up an url based on server_adress and server_port defined in the services.yml
+        /*$baseUrl = 'http://'.$gsaRequest->getServerAddress();
+        if (!empty($gsaRequest->getServerPort())) {
+            $baseUrl .= ':'.$gsaRequest->getServerPort();
+        }*/
+
+        //$linkBuilder = new LinkBuilder($gsaRequest, $baseUrl);
+        //$filter = new Filter($gsaResponse, $linkBuilder);
+
 
         // Create the search_results container and set needed parameters
         $searchResultsBlock = new Recherche();
         $searchResultsBlock->setState(AbstractClassContent::STATE_NORMAL);
         $searchResultsBlock->recherche_results_bloc
             ->setState(AbstractClassContent::STATE_NORMAL)
-    //        ->setParam('submitted_query', $submittedQuery)
-            ->setParam('response', [$gsaResponse]);
+            ->setParam('submitted_query', $submittedQuery);
+            //->setParam('responses', [$gsaResponse])
+//            ->setParam('filters', [$filter]);
 /*            ->setParam('response', [
                         'parameters' => $gsaResponse->getParameters(),
                         'results'    => $gsaResponse->getResults()
@@ -103,6 +115,7 @@ class GSA extends AbstractBundle
                         ]);
             }
         }
+
 //var_dump($searchResultsBlock);die;
         // Create page with right layout
         $site = $this->getApplication()->getSite();
