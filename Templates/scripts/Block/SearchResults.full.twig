@@ -92,20 +92,20 @@
                         {% set articleSite = result.getMetaTag('site') %}
                         {% if type is not empty %}
                             {% if (type not in first) and pager.0.getCurrent() == 1 %}
-                                {% set template='Block/Result/'~type~'.first.twig' %}
+                                {% set template='Block/Result/'~type|capitalize~'.first.twig' %}
                                 {% set first = first|merge({(type):true}) %}
                             {% else %}
-                                {% set template='Block/Result/'~type~'.twig' %}
+                                {% set template='Block/Result/'~type|capitalize~'.twig' %}
                             {% endif %}
                             {% include template %}
                         {%  elseif typology in customTemplate %}
                             {% if (typology not in first) and pager.0.getCurrent() == 1 and typology != 'video' %}
-                                {% set template='Block/Result/'~typology~'.first.twig' %}
+                                {% set template='Block/Result/'~typology|capitalize~'.first.twig' %}
                                 {% set first = first|merge({(typology):true}) %}
                             {% elseif  typology == 'video' and (result.id not in videoDisplayed)%}
-                                {% set template='Block/Result/'~typology~'.twig' %}
+                                {% set template='Block/Result/'~typology|capitalize~'.twig' %}
                             {% elseif  typology != 'video' %}
-                                {% set template='Block/Result/'~typology~'.twig' %}
+                                {% set template='Block/Result/'~typology|capitalize~'.twig' %}
                             {% endif %}
                             {% if template %}
                                 {% include template %}

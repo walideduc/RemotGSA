@@ -367,12 +367,10 @@ class Request
         }
 
         // Setting up a guzzle client with a timeout and an url base
-        $client = new Client([
-            'timeout'   => 5,
-            'base_uri'  => $baseUrl ,
+       $client = new Client([
+            'base_uri'  => $baseUrl
         ]);
 
-        // Request based on the $baseUrl set method
         $request= $client->request('GET');
 
         return $request;
@@ -441,18 +439,6 @@ class Request
     {
         if (!is_null($searchString)) {
             $this->addParameters(array('q' => $searchString));
-        }
-
-        $parameters = $this->getParameters();
-
-        foreach($this->mandatoryParameters as $mandatoryParameter) {
-            if (!isset($parameters[$mandatoryParameter])) {
-                throw new \Exception('missing mandatory parameters : '.$mandatoryParameter);
-            }
-        }
-
-        if (!isset($this->parameters['q']) || empty($this->parameters['q'])) {
-            throw new \BadFunctionCallException('gsa request needs at least a search string');
         }
 
         $searchString = $this->buildQueryString();
