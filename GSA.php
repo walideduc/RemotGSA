@@ -63,22 +63,11 @@ class GSA extends AbstractBundle
         $gsaRequest = $bbapp->getContainer()->get('gsa.request');
         $submittedQuery =  $query->all();
 
-//var_dump($submittedQuery);die;
         $gsaRequest->setParameters($submittedQuery);
 
         $result = $gsaRequest->send();
         $parser = ParserFactory::getParser('xml');
         $gsaResponse = $parser->parse($result);
-
-
-        // Setting up an url based on server_adress and server_port defined in the services.yml
-        /*$baseUrl = 'http://'.$gsaRequest->getServerAddress();
-        if (!empty($gsaRequest->getServerPort())) {
-            $baseUrl .= ':'.$gsaRequest->getServerPort();
-        }*/
-
-        //$linkBuilder = new LinkBuilder($gsaRequest, $baseUrl);
-        //$filter = new Filter($gsaResponse, $linkBuilder);
 
 
         // Create the search_results container and set needed parameters
@@ -87,14 +76,6 @@ class GSA extends AbstractBundle
         $searchResultsBlock->recherche_results_bloc
             ->setState(AbstractClassContent::STATE_NORMAL)
             ->setParam('submitted_query', $submittedQuery);
-            //->setParam('responses', [$gsaResponse])
-//            ->setParam('filters', [$filter]);
-/*            ->setParam('response', [
-                        'parameters' => $gsaResponse->getParameters(),
-                        'results'    => $gsaResponse->getResults()
-                    ]);
-*/
-        //var_dump( $searchResultsBlock->recherche_results_bloc->getAllParams());
 
         // right block search
         if(null !== ($gsaResponse->getTopKeyword())) {
@@ -102,10 +83,11 @@ class GSA extends AbstractBundle
                 $gsaRequestRight = $bbapp->getContainer()->get('gsa.request');
                 $gsaRequestRight->setRequiredFields($param['params']['requiredFields']);
                 $gsaRequestRight->limit(0,$param['params']['limit']);
+
                 $resultRight = $gsaRequestRight->send($gsaResponse->getTopKeyword());
+
                 $parserRight = ParserFactory::getParser('xml');
                 $gsaResponseRight = $parserRight->parse($resultRight);
-                //var_dump('response_'.strtolower($key));
 
                 $searchResultsBlock->recherche_right_bloc
                     ->setState(AbstractClassContent::STATE_NORMAL)
@@ -116,7 +98,6 @@ class GSA extends AbstractBundle
             }
         }
 
-//var_dump($searchResultsBlock);die;
         // Create page with right layout
         $site = $this->getApplication()->getSite();
         $root = $em->getRepository('BackBee\NestedNode\Page')->getRoot($site);
@@ -135,7 +116,6 @@ class GSA extends AbstractBundle
         $renderer = $this->getApplication()->getRenderer();
 
         $response->setContent($renderer->render($pagebuilder->getPage()));
-        //$response->setContent($renderer->render($pagebuilder->getPage(), null, ['responseVideo' => $gsaResponseRight]));
 
         $response->send();
     }
@@ -247,8 +227,11 @@ class GSA extends AbstractBundle
 
             // Suggest search
             $urlSuggest = 'http://'.$serverAddress . '/suggest?token='.$query->get('q').'&max_matches=5';
-            $requestSuggest = $request = $client->get($urlSuggest);
-            $suggestResult = json_decode((string)$requestSuggest->send()->getBody());
+
+            $requestSuggest = $client->get($urlSuggest);
+
+
+            $suggestResult = json_decode((string)$requestSuggest->getBody());
 
             $firstSuggest = "";
 
