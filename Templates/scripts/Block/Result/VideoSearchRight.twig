@@ -10,7 +10,7 @@
                 <figure class="col-xs-4 col-md-4 modulx1 table-display">
                     <a href="{{ result.getUrl() }}" class="table-cell-middle">
                         <div class="relative">
-                            <img class="article-img img-responsive-l" alt="" src="{{ result.getMetaTag('image')|replace({'/i/0/0/':'/c/100/80/', '/c/0/0/':'/c/100/80/'})|raw }}">
+                            <img class="article-img img-responsive-l" alt="" src="{{ result.getMetaTag('image')|raw_resizer('c', 250, 175)|replace({'/i/0/0/':'/c/100/80/', '/c/0/0/':'/c/100/80/'})|raw }}">
                             <div class="rub-date clearfix">
                                 <div class="pull-left icon-video-small center">
                                     <i class="fa fa-play media-background"></i>
