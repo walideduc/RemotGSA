@@ -5,7 +5,8 @@
             <a href="{{ result.getUrl() }}">
                 <figure class="figure">
                     {% if result.getMetaTag('image') %}
-                        <img class="article-img img-responsive-l" alt="" src="{{ result.getMetaTag('image')|raw_resizer('c', 250, 175)|replace({'/i/0/0/':'/c/140/100/', '/c/0/0/':'/c/140/100/'}) }}">
+                        <img class="article-img img-responsive-l" alt="" src="{{ result.getMetaTag('image')|replace({'/i/0/0/':'/c/140/100/', '/c/0/0/':'/c/140/100/'}) }}">
+                        {#<img class="article-img img-responsive-l" alt="" src="{{ result.getMetaTag('image')|raw_resizer('c', 250, 175)|replace({'/i/0/0/':'/c/140/100/', '/c/0/0/':'/c/140/100/'}) }}">#}
                     {% elseif result.getMetaTag('thumbnailpublicurl') %}
                         <img class="article-img img-responsive-l" alt="" src="{{ result.getMetaTag('thumbnailpublicurl')|replace({'/i/0/0/':'/c/140/100/', '/c/0/0/':'/c/140/100/'}) }}">
                     {% endif %}
