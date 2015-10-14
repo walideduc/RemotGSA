@@ -6,8 +6,10 @@ use BackBee\Bundle\GSABundle\Model\Response\ParserFactory;
 use BackBee\Event\Event;
 use BackBee\Bundle\GSABundle\Model\Pager;
 use BackBee\Bundle\GSABundle\Model\Filter;
+use BackBee\Bundle\GSABundle\Model\Request;
 use BackBee\Renderer\Renderer;
 use BackBee\ClassContent\AbstractClassContent;
+use GuzzleHttp\Client;
 
 class SearchResultsListener
 {
@@ -105,10 +107,33 @@ class SearchResultsListener
         $gsaParameters['sourceType']= self::getBlockParameterValue('source_type','value');
         $gsaParameters['sourceValue'] = self::getBlockParameterValue('source_value','value');
 
+        //1.forced in object
+        //2.block param (forced)
+        //3.query
+        //4.block param (default)
+        foreach(array('start','num','requiredfields','inmeta') as $paramName) {
+
+            $gsaParameters[$paramName] = self::getForcedParameterValue($paramName);
+
+            if(is_null($gsaParameters[$paramName]) && self::getBlockParameterValue('force_'.$paramName,'checked')) {
+                $gsaParameters[$paramName] = self::getBlockParameterValue($paramName,'value');
+            }
+            if (is_null($gsaParameters[$paramName])) {
+                $gsaParameters[$paramName] = self::$query->get($paramName);
+            }
+            if (is_null($gsaParameters[$paramName])) {
+                $gsaParameters[$paramName] = self::getBlockParameterValue($paramName,'value');
+            }
+        }
+
         switch($gsaParameters['sourceType'])
         {
             case 'query':
                 $gsaParameters['searchString'] = self::$query->get($gsaParameters['sourceValue']);
+                if (self::$query->has('start'))
+                    $gsaParameters['start'] = (int) self::$query->get('start');
+                if (self::$query->has('num'))
+                    $gsaParameters['num'] = (int) self::$query->get('num');
                 break;
 
             case 'fixed':
@@ -130,25 +155,6 @@ class SearchResultsListener
                     }
                 }
                 break;
-        }
-
-        //1.forced in object
-        //2.block param (forced)
-        //3.query
-        //4.block param (default)
-        foreach(array('start','num','requiredfields','inmeta') as $paramName) {
-
-            $gsaParameters[$paramName] = self::getForcedParameterValue($paramName);
-
-            if(is_null($gsaParameters[$paramName]) && self::getBlockParameterValue('force_'.$paramName,'checked')) {
-                $gsaParameters[$paramName] = self::getBlockParameterValue($paramName,'value');
-            }
-            if (is_null($gsaParameters[$paramName])) {
-                $gsaParameters[$paramName] = self::$query->get($paramName);
-            }
-            if (is_null($gsaParameters[$paramName])) {
-                $gsaParameters[$paramName] = self::getBlockParameterValue($paramName,'value');
-            }
         }
 
         return $gsaParameters;
@@ -235,6 +241,7 @@ class SearchResultsListener
         }
 
         $linkBuilder = new LinkBuilder(self::$gsaRequest, self::$bbapp->getRequest()->getPathInfo());
+
         $pager = new Pager(self::$gsaRequest, self::$gsaResponse,$linkBuilder);
         //we pass the general response to the filter in ordre to have the right numbers by meta.
         $filter = new Filter(self::$generalGsaResponse,$linkBuilder);
@@ -243,9 +250,6 @@ class SearchResultsListener
         if (true === is_a(self::$target, 'BackBee\ClassContent\Block\SearchResults')) {
             $searchTextBlock = self::$target->recherche_bloc;
             $searchTextBlock->setState(AbstractClassContent::STATE_NORMAL);
-          //  $params = $searchTextBlock->getParam('search_results_page');
-        //var_dump($params);
-          //  $params['value'] = self::$bbapp->getRequest()->getPathInfo();
 
             $searchTextBlock->setParam('search_results_page',  self::$bbapp->getRequest()->getPathInfo(), 'scalar');
         }
@@ -261,20 +265,15 @@ class SearchResultsListener
         $request = self::$bbapp->getRequest();
         $query = $request->get('q');
 
-        self::$target
-            ->setParam('responses', [self::$gsaResponse])
-            ->setParam('pagers', [$pager])
-            ->setParam('filters', [$filter])
-            ->setParam('linkbuilders', [$linkBuilder])
-            ->setParam('query', $query);
-
-        self::$gsaRequest->setParameters([
+        // Appel de la request pour récupérer les 3 premieres vidéos
+        $gsaRequestThreeVideo = new Request(new Client(), self::$gsaRequest->getServerAddress(), self::$gsaRequest->getServerPort(), self::$gsaRequest->getDefaultParams());
+        $gsaRequestThreeVideo->setParameters([
                 'requiredfields'=> 'typology:video',
                 'searchstring' => self::$gsaRequest->getParameters('searchstring')
             ]);
-        self::$gsaRequest->limit(0,3);
+        $gsaRequestThreeVideo->limit(0,3);
 
-        $videoList =  self::doRequest(self::$gsaRequest);
+        $videoList =  self::doRequest($gsaRequestThreeVideo);
         foreach ($videoList->getResults() as $result) {
             if (count($threeFirstVideos) < 3) {
                 $threeFirstVideos[] = $result;
@@ -282,7 +281,13 @@ class SearchResultsListener
         }
 
         self::$target
-            ->setParam('three_first_videos', $threeFirstVideos);
+            ->setParam('responses', [self::$gsaResponse])
+            ->setParam('pagers', [$pager])
+            ->setParam('filters', [$filter])
+            ->setParam('linkbuilders', [$linkBuilder])
+            ->setParam('three_first_videos', $threeFirstVideos)
+            ->setParam('query', $query);
+
         self::$renderer->addFooterScript(self::$renderer->getUriJs('/resources/js/gsa_search_results.js'));
 
         if (null == $typology) {
@@ -298,6 +303,7 @@ class SearchResultsListener
                     'searchstring' => self::$gsaRequest->getParameters('searchstring')
                 ]);
         }
+
         self::addClusterScripts();
     }
 
@@ -306,37 +312,4 @@ class SearchResultsListener
         self::$gsaResponse = self::doRequest(self::$gsaRequest);
         self::$target->setParam('response', self::$gsaResponse);
     }
-
-    private static function getKeywordParams($q = "")
-    {
-        $parameters = [
-            'video' => [
-                'params' => [
-                    'q' =>  $q,
-                    'requiredFields' => 'typology:video',
-                    'limit' => 3
-                ]],
-            'article' => [
-                'params' => [
-                    'q' =>  $q,
-                    'requiredFields' => 'typology:article',
-                    'limit' => 3
-                ]],
-            'dossier' =>[
-                'params' => [
-                    'q' =>  $q,
-                        'requiredFields' => 'typology:dossier',
-                        'limit' => 3
-                ]],
-            'diaporama' => [
-                'params' => [
-                    'q' =>  $q,
-                        'requiredFields' => 'typology:diaporama',
-                        'limit' => 3
-                ]],
-            ];
-
-        return $parameters;
-    }
-
 }
