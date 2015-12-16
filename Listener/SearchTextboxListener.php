@@ -48,7 +48,7 @@ class SearchTextboxListener
 
         if (self::$target->getParamValue('autocomplete'))
         {
-           self::$renderer->addFooterScript('/resources/js/external/js_autocomplete.js');
+           self::$renderer->addFooterScript(self::$renderer->getResourceUrl('/js/external/js_autocomplete.js'));
         }
     }
 

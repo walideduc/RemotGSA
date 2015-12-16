@@ -288,7 +288,7 @@ class SearchResultsListener
             ->setParam('three_first_videos', $threeFirstVideos)
             ->setParam('query', $query);
 
-        self::$renderer->addFooterScript(self::$renderer->getUriJs('/resources/js/gsa_search_results.js'));
+        self::$renderer->addFooterScript(self::$renderer->getResourceUrl('js/gsa_search_results.js'));
 
         if (null == $typology) {
             self::$gsaRequest->setParameters([
