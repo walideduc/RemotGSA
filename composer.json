@@ -5,6 +5,11 @@
     "extra": {
 	"installer-name": "GSABundle"
     },
+    "autoload": {
+        "psr-4": {
+            "BackBee\\Bundle\\CommonBundle\\": ""
+        }
+    },
     "require": {
 	"next/composer-installers": "1.1.0"
     }
