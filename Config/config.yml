@@ -4,4 +4,4 @@ bundle:
     author: 'Next Interactive Media'
     version: 1
     enable: on
-    thumbnail: "img/extnd-x/picto-extnd-gsa.png"
+    thumbnail: /%bbapp.routing.resource_uri_prefix%/img/extnd-x/picto-extnd-gsa.png
