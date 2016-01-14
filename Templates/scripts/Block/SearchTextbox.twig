@@ -1,9 +1,8 @@
 <div {{ this.bbcontent(null, {'class': 'recherche padding-top bloc'})|raw }}>
-
 	<form class="form-horizontal searchForm" role="search" action="{{ this.getObject().getParamValue('search_results_page') }}" method="get" autocomplete="off">
 		<div id="custom-search-input">
             <div class="input-group col-md-12">
-                <input type="text" class="search-query noshadow form-control" placeholder="Recherche..." name="q" value="{{ this.getObject().getParamValue('query') }}">
+                <input type="text" class="search-query noshadow form-control" placeholder="Recherche..." name="q" value="{{ this.FormGSA(this.getObject().getParamValue('query')).0 }}{#{{ this.getObject().getParamValue('query') }}#}">
                 <input type="hidden" name="filter" value="0">
                 <span class="input-group-btn">
                     <button class="btn btn-default" type="submit">
@@ -18,5 +17,11 @@
 <!-- MOTEUR RECHERCHE -->
 
 <script type='text/javascript'>
+    /*$('.searchForm').submit(function(event) {
+
+
+        $(this).submit();
+        return false;
+    });*/
    document.resultPage = "{{ this.getObject().getParamValue('search_results_page') }}";
 </script>

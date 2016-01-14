@@ -4,6 +4,8 @@
 {% set submittedQuery = this.getObject().getParamValue('submitted_query') %}
 {% set three_first_videos = this.getObject().getParamValue('three_first_videos') %}
 
+
+{% set urlbase = "/search?" %}
 <!-- MONTEUR DE RECHERCHE TOP -->
 {{ this.render(recherche_bloc)|raw }}
 <!-- /MONTEUR DE RECHERCHE TOP -->
@@ -67,7 +69,62 @@
     {% include 'Block/Result/NavBlock.twig' %}
     {# include template by type, first type template differs from others #}
     <div class="tab-content clearfix padding-top" id="search-result-content">
-        <div class="tab-pane fade in active" id="all">
+
+        <!-- Test Facette -->
+        <div class="hidden-xs col-xs-3">
+            {% for Namefacet, value in  response.0.getmetaTags() %}
+                <h4 class="padding-left color-txt-3 title-medium cap">{{ Namefacet }}</h4>
+                <div class="bg-color-1 box-shadow padding-inside-all bloc">
+                    <ul class="list-unstyled">
+                        {% for index, value in  value %}
+                            {% if value.value  %}
+                                {% set inmeta = "inmeta:" ~ Namefacet ~ "=" ~ value.value %}
+                            {% else %}
+                                {% set inmeta = "inmeta:" ~ Namefacet ~ ":" ~ value.l ~ ".." ~ value.h %}
+                            {% endif %}
+                            <li> {#<pre>{{ this.UrlGSA(inmeta).1 }}</pre>#}
+                                {#<a href="{{ this.UrlGSA(inmeta) }}" class="facet"  {% if value.value == '' %} l="{{ value.l }}"  h="{{ value.h }}"  {% endif %} facet="{{ Namefacet }}"  val="{{ value.value }}">#}
+                                {%   if this.UrlGSA(inmeta).1 == false %}
+                                    <a href="{{ this.UrlGSA(inmeta).0 }}">
+                                {%  endif %}
+                                {% if value.value %}
+                                    {{ value.value }} ({{ value.count }})
+                                    {%   if this.UrlGSA(inmeta).1 %}
+                                    <a href="{{ this.UrlGSA(inmeta, true).0 }}"> X </a>
+                                    {%  endif %}
+                                {% else  %}
+                                    {% if value.count > 0 %}
+                                    {% if  value.h   %}
+                                        {{ value.h }}
+                                    {% else  %}
+                                        plus
+                                    {% endif %}
+                                    -
+                                    {% if   value.l   %}
+                                        {{ value.l }}
+                                    {% else  %}
+                                        moins
+                                    {% endif %}
+                                    ({{ value.count }})
+                                        {%   if this.UrlGSA(inmeta).1 %}
+                                            <a href="{{ this.UrlGSA(inmeta, true).0 }}"> X </a>
+                                        {%  endif %}
+                                    {% endif %}
+                                {% endif %}
+
+                                {%   if this.UrlGSA(inmeta).1 == false %}
+                                </a>
+                                {% endif %}
+
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endfor %}
+        </div>
+        <!--- //Fin test --->
+
+        <div class="col-xs-8" id="all">
             <ul class="list-unstyled">
                 {% set first = {} %}
                 {% set result_amount = 0 %}
@@ -124,6 +181,7 @@
                 <!-- /PUB BOTTOM -->
             </ul>
         </div>
+
     </div>
     <!-- MONTEUR DE RECHERCHE BOTTOM -->
     {{ this.render(recherche_bloc)|raw }}
@@ -177,6 +235,31 @@
                     $('#liens-commerciaux_3').hide();
                 }
             });
+
+            /*$('.facet').click(function(event) {
+                var q = window.location.search.substring(1);
+                var target = $( event.target );
+                var nameFacet = $(this).attr('facet');
+                var val = $(this).attr('val');
+                var l = null;
+                var h = null;
+                if (typeof input !== $(this).attr('l')) {
+                    l = $(this).attr('l');
+                }
+
+                if (typeof input !== $(this).attr('h')) {
+                    h = $(this).attr('h');
+                }
+
+                var inmeta = 'inmeta:'+ nameFacet + "=" + val;
+
+                var url = window.location.href + '&inmeta:'+ nameFacet + "=" + val;
+
+                $(location).attr('href',url);
+
+
+            });
+            */
         });
 
         function google_ad_request_done(google_ads) {
@@ -196,6 +279,7 @@
             }
             $('#loading_cluster').hide();
         }
+
 
 
     </script>
