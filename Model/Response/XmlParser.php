@@ -180,12 +180,15 @@ class XmlParser implements ParserInterface
     {
         if($parmNode->PMT) {
             foreach($parmNode->PMT as $pmtNode) {
-                foreach($pmtNode->PV as $pvNode)
-                $this->gsaResponse->addMetaTag(
-                    (string)$pmtNode->attributes()->NM,
-                    (string)$pvNode->attributes()->V,
-                    (string)$pvNode->attributes()->C
-                );
+                foreach($pmtNode->PV as $pvNode) {
+                    $this->gsaResponse->addMetaTag(
+                        (string)$pmtNode->attributes()->NM,
+                        (string)$pvNode->attributes()->V,
+                        (string)$pvNode->attributes()->L,
+                        (string)$pvNode->attributes()->H,
+                        (string)$pvNode->attributes()->C
+                    );
+                }
             }
         }
 
