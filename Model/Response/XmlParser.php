@@ -186,7 +186,8 @@ class XmlParser implements ParserInterface
                         (string)$pvNode->attributes()->V,
                         (string)$pvNode->attributes()->L,
                         (string)$pvNode->attributes()->H,
-                        (string)$pvNode->attributes()->C
+                        (string)$pvNode->attributes()->C,
+                        (string)$pmtNode->attributes()->T
                     );
                 }
             }

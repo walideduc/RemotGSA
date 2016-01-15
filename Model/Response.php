@@ -265,16 +265,18 @@ class Response implements \JsonSerializable
      * @param $value for the meta
      * @param $count results count for this value
      */
-    public function addMetaTag($name, $value, $l, $h, $count)
+    public function addMetaTag($name, $value, $l, $h, $count, $type)
     {
         if (!isset($this->metaTags[$name])) {
             $this->metaTags[$name] = array();
         }
+
         $this->metaTags[$name][] = array(
             'value' => $value,
             'l' => $l,
             'h' => $h,
             'count' => $count,
+            'type' => $type
         );
 
         return $this;
