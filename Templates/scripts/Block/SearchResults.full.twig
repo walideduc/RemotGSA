@@ -72,23 +72,21 @@
     {% include 'Block/Result/NavBlock.twig' %}
     {# include template by type, first type template differs from others #}
 
-
     <div class="bloc" id="search-result-content">
 
-        <!-- Test Facette -->
+        <!-- Facette -->
         <div class="col-xs-3 col-md-3">
             {% for Namefacet, value in  response.0.getmetaTags() %}
-                <h4 class="padding-left color-txt-3 title-medium cap">{{ Namefacet }}</h4>
+
+                <h4 class="padding-left color-txt-3 title-medium cap">{{ value.0.NameFacet }}</h4>
                 <div class="bg-color-1 box-shadow padding-inside-all bloc">
                     <ul class="list-unstyled">
                         {% set Valmin = ''  %}
                         {% set Valmax = ''  %}
                         {% set SetNameFacet = Namefacet  %}
-
                         {% for index, value in  value %}
-
                             {% if value.value  %}
-                                {% set inmeta = "inmeta:" ~ Namefacet ~ "=" ~ value.value %}
+                                {% set inmeta = "inmeta:" ~ Namefacet ~ "=" ~ value.valueFormat %}
                             {% else %}
 
                                 {% if value.type == '2'%}
@@ -109,7 +107,7 @@
                             {% endif %}
                             <li>
                                 {%   if this.UrlGSA(inmeta).1 == false %}
-                                    <a href="{{ this.UrlGSA(inmeta).0 }}">
+                                <a href="{{ this.UrlGSA(inmeta).0|raw }}">
                                 {%  endif %}
 
                                 {% if value.value %}
@@ -146,6 +144,7 @@
                             </li>
                         {% endfor %}
                         {% if Valmin and Valmax %}
+
                             {% set  ValminSelect = Valmin %}
                             {% set  ValmaxSelect = Valmax %}
                                 {% if ValMin != this.UrlGSA(inmeta, true, true, Valmin, Valmax, SetNameFacet).1[0] and  this.UrlGSA(inmeta, true, true, Valmin, Valmax, SetNameFacet).1[0] != ''%}
@@ -171,10 +170,10 @@
                                             $(this).find('.ui-slider-handle').first().html("<div style='margin-top:-20px;'>" + ui.values[0] + "</div>");
                                             $(this).find('.ui-slider-handle').last().html("<div style='margin-top:-20px;'>" + ui.values[1] + "</div>");
 
-                                            var inmeta = "{{ this.UrlGSA(inmeta, true, true, "ValMin", "ValMax", SetNameFacet).0 }}";
+                                            var inmeta = "{{ this.UrlGSA(inmeta, true, true, "ValMin", "ValMax", SetNameFacet).0|raw }}";
                                             inmeta =   inmeta.replace("ValMin", ui.values[0]);
                                             inmeta =   inmeta.replace("ValMax", ui.values[1]);
-                                            inmeta =   inmeta.replace("&amp;", "&");
+
                                             var Fk = "{{ this.getObject().getParamValue('search_results_page') }}?" + inmeta;
                                             $('#{{ SetNameFacet }}Link').attr('href',Fk );
                                         }
@@ -244,7 +243,7 @@
                 </div>
             {% endfor %}
         </div>
-        <!--- //Fin test --->
+        <!--- //Fin Facet --->
 
         <!-- Resultat de recherche -->
         <div class="col-xs-8 col-md-8" id="all">

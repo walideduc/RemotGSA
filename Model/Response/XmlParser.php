@@ -178,6 +178,7 @@ class XmlParser implements ParserInterface
 
     private function parseMetaTags(\SimpleXMLElement $parmNode)
     {
+
         if($parmNode->PMT) {
             foreach($parmNode->PMT as $pmtNode) {
                 foreach($pmtNode->PV as $pvNode) {
@@ -187,12 +188,31 @@ class XmlParser implements ParserInterface
                         (string)$pvNode->attributes()->L,
                         (string)$pvNode->attributes()->H,
                         (string)$pvNode->attributes()->C,
-                        (string)$pmtNode->attributes()->T
+                        (string)$pmtNode->attributes()->T,
+                        $this->CleanString((string)$pvNode->attributes()->V),
+                        (string)$pmtNode->attributes()->DN
                     );
                 }
             }
         }
 
         return $this;
+    }
+
+    private function CleanString($text) {
+
+        $tab =  array("%" => "%25", " " => "%20", "!" => "%21", "\""=> "%22", "." => "%2E",
+            "&" => "%26", "(" => "%28", ")" => "%29", "," => "%2C",
+            "'" => "%27",  "/" => "%2F", "\\" => "%5C",
+            "-" => "%2D", "_" => "%5F", "[" => "%5B", "]" => "%5D",
+            "*" => "%2A",
+        );
+
+        foreach ($tab as $key => $str) {
+            $text = str_ireplace($key, $str, $text);
+        }
+
+        $text = str_replace("%","%25",$text);
+        return $text;
     }
 }
