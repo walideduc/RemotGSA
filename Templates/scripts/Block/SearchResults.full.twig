@@ -84,22 +84,24 @@
                         {% set Valmin = ''  %}
                         {% set Valmax = ''  %}
                         {% set SetNameFacet = Namefacet  %}
+                        {% set SetNbRange = value|length   %}
+
                         {% for index, value in  value %}
                             {% if value.value  %}
                                 {% set inmeta = "inmeta:" ~ Namefacet ~ "=" ~ value.valueFormat %}
                             {% else %}
 
                                 {% if value.type == '2'%}
-                                {% if Valmin == '' and loop.first %}
-                                    {% set Valmin = value.l  %}
-                                {% endif %}
-                                {% if Valmax == '' and loop.last %}
-                                    {% if value.h %}
-                                        {% set Valmax = value.h  %}
-                                    {% else %}
-                                        {% set Valmax = value.l  %}
+                                    {% if Valmin == '' and loop.first %}
+                                        {% set Valmin = value.l  %}
                                     {% endif %}
-                                {% endif %}
+                                    {% if Valmax == '' and loop.last %}
+                                        {% if value.h %}
+                                            {% set Valmax = value.h  %}
+                                        {% else %}
+                                            {% set Valmax = value.l  %}
+                                        {% endif %}
+                                    {% endif %}
                                 {% endif %}
 
                                 {% set inmeta = "inmeta:" ~ Namefacet ~ ":" ~ value.l ~ ".." ~ value.h %}
@@ -108,14 +110,14 @@
                             <li>
                                 {%   if this.UrlGSA(inmeta).1 == false %}
                                 <a href="{{ this.UrlGSA(inmeta).0|raw }}">
-                                {%  endif %}
-
-                                {% if value.value %}
-                                    {{ value.value }} ({{ value.count }})
-                                    {%   if this.UrlGSA(inmeta).1 %}
-                                    <a href="{{ this.UrlGSA(inmeta, true).0 }}"> X </a>
                                     {%  endif %}
-                                {% else  %}
+
+                                    {% if value.value %}
+                                        {{ value.value }} ({{ value.count }})
+                                        {%   if this.UrlGSA(inmeta).1 %}
+                                            <a href="{{ this.UrlGSA(inmeta, true).0 }}"> X </a>
+                                        {%  endif %}
+                                    {% else  %}
                                         {% if value.type != '2'%}
                                             {% if value.count > 0 %}
                                                 {% if  value.h   %}
@@ -123,21 +125,21 @@
                                                 {% else  %}
                                                     plus
                                                 {% endif %}
-                                             -
+                                                -
                                                 {% if   value.l   %}
                                                     {{ value.l }}
                                                 {% else  %}
                                                     moins
                                                 {% endif %}
-                                                 ({{ value.count }})
+                                                ({{ value.count }})
                                                 {%   if this.UrlGSA(inmeta).1 %}
                                                     <a href="{{ this.UrlGSA(inmeta, true).0 }}"> X </a>
                                                 {%  endif %}
                                             {% endif %}
                                         {% endif %}
-                                {% endif %}
+                                    {% endif %}
 
-                                {%   if this.UrlGSA(inmeta).1 == false %}
+                                    {%   if this.UrlGSA(inmeta).1 == false %}
                                 </a>
                                 {% endif %}
 
@@ -147,9 +149,9 @@
 
                             {% set  ValminSelect = Valmin %}
                             {% set  ValmaxSelect = Valmax %}
-                                {% if ValMin != this.UrlGSA(inmeta, true, true, Valmin, Valmax, SetNameFacet).1[0] and  this.UrlGSA(inmeta, true, true, Valmin, Valmax, SetNameFacet).1[0] != ''%}
-                                   {% set  ValminSelect = this.UrlGSA(inmeta, true, true, Valmin, Valmax, SetNameFacet).1[0] %}
-                                {% endif %}
+                            {% if ValMin != this.UrlGSA(inmeta, true, true, Valmin, Valmax, SetNameFacet).1[0] and  this.UrlGSA(inmeta, true, true, Valmin, Valmax, SetNameFacet).1[0] != ''%}
+                                {% set  ValminSelect = this.UrlGSA(inmeta, true, true, Valmin, Valmax, SetNameFacet).1[0] %}
+                            {% endif %}
                             {% if Valmax != this.UrlGSA(inmeta, true, true, Valmin, Valmax, SetNameFacet).1[1] and  this.UrlGSA(inmeta, true, true, Valmin, Valmax, SetNameFacet).1[1] != '' %}
                                 {% set  ValmaxSelect = this.UrlGSA(inmeta, true, true, Valmin, Valmax, SetNameFacet).1[1] %}
                             {% endif %}
@@ -158,12 +160,19 @@
                                 $(function() {
 
                                     $('#{{ SetNameFacet }}Link').css({ 'display': 'none'});
+                                    {% set step = Valmax / (SetNbRange-1)  %}
+
+                                    {% if step <= 1%}
+                                    {% set step = step|round(2,'floor')  %}
+                                    {% else %}
+                                    {% set step = step|round %}
+                                    {% endif %}
 
                                     $( "#{{ SetNameFacet }}slider-range" ).slider({
                                         range: true,
-                                        min: {{ Valmin }},
-                                        max: {{ Valmax }},
-                                        step: 100,
+                                        min: {{ Valmin|round  }},
+                                        max: {{ Valmax|round  }},
+                                        step: {{ step }},
                                         values: [ {{ ValminSelect }}, {{ ValmaxSelect }} ],
                                         slide: function( event, ui ) {
                                             $('#{{ SetNameFacet }}Link').css({ 'display': 'block'});
@@ -180,7 +189,7 @@
 
                                     });
 
-                                   $(".slider-range").each(function() {
+                                    $("#{{ SetNameFacet }}slider-range").each(function() {
                                         $(this).find('.ui-slider-handle').first().html("<div style='margin-top:-20px;'>" + $(this).slider("values", 0) + "</div>");
                                         $(this).find('.ui-slider-handle').last().html("<div style='margin-top:-20px;'>" + $(this).slider("values", 1) + "</div>");
                                     });
@@ -234,7 +243,7 @@
 
                             <div class="slider-range-holder">
                                 <div class="clearfix padding-topx2 padding-bottomx2">
-                                        <div id="{{ SetNameFacet }}slider-range" class="relative slider-range clearfix"></div>
+                                    <div id="{{ SetNameFacet }}slider-range" class="relative slider-range clearfix"></div>
                                 </div>
                                 <a id="{{ SetNameFacet }}Link" class="btn btn-default" href="{{ this.getObject().getParamValue('search_results_page') }}?{{ this.UrlGSA(inmeta, true, true, Valmin, Valmax, SetNameFacet).0 }}">Filter</a>
                             </div>
@@ -272,6 +281,8 @@
                     {% if result_amount == 8 %}
                         {% include 'Block/Result/LienCommercialBlock.twig' with {'lien_id': 2} %}
                     {% endif %}
+
+
                     {% if submittedQuery.type != 'typology:video' %}
                         {% set type = result.getMetaTag('type')|lower %}
                         {% set articleSite = result.getMetaTag('site') %}
@@ -283,7 +294,7 @@
                                 {% set template ='Block/Result/'~type|capitalize~'.twig' %}
                             {% endif %}
                             {% include template %}
-                        {%  elseif typology in customTemplate %}
+                        {% elseif typology in customTemplate %}
                             {% if (typology not in first) and pager.0.getCurrent() == 1 and typology != 'video' %}
                                 {% set template ='Block/Result/'~typology|capitalize~'.first.twig' %}
                                 {% set first = first|merge({(typology):true}) %}
