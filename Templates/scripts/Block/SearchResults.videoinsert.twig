@@ -14,23 +14,20 @@
             {% set type = result.getMetaTag('typology')|lower %}
             {% if type == 'video' %}
             <li class="bloc art-bloc col-xs-12 col-sm-4 col-md-4">
-              <article class="art-c modulx2-5 bg-color-rub0-1 box-shadow relative">
+              <article class="art-c modulx3 bg-color-4 relative">
 
-                  <figure class="figure modulx1-5-inside-bloc">
+                  <figure class="figure modulx2-inside-bloc">
                     <a title="{{ result.title | striptags }}" href="{{ result.getUrl() }}">
                         <div class="icon-video-big">
                           <i class="fa fa-play media-background"></i>
                         </div>
-                        <img src="{{ result.getImage()|replace({'/i/0/0/':'/c/200/140/', '/c/0/0/':'/c/200/140/'}) }}" class="article-img img-responsive">
-                        <div class="rub-date clearfix">
-                            <span class="pull-right cap time color-txt-0">{{ result.getDuration() }}</span>
-                        </div>
+                        <img src="{{ result.getImage()|replace({'/i/0/0/':'/c/330/190/', '/c/0/0/':'/c/330/190/'}) }}" class="article-img img-responsive-l">
                     </a>
                   </figure>
 
-                  <div class="art-body">
+                  <div class="art-body padding-inside-all">
                     <a title="{{ result.title | striptags }}" href="{{ result.getUrl() }}">
-                      <h2 class="title-small color-txt-0">{{ result.getTitle()| truncate(120, false, '&hellip;') | raw }}</h2>
+                      <h2 class="title-normal color-txt-0">{{ result.getTitle()| truncate(60, false, '&hellip;') | raw }}</h2>
                     </a>
                   </div>
 
