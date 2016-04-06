@@ -1,4 +1,10 @@
 <div {{ this.bbcontent(null, {'class': 'row padding-top'})|raw }}>
+    {{ this.render(recherche_results_bloc)|raw }}
+    {{ this.render(recherche_right_bloc)|raw }}
+</div>
+
+{#
+<div {{ this.bbcontent(null, {'class': 'row padding-top'})|raw }}>
     <div class="">
         <div class="">
             {{ this.render(recherche_results_bloc)|raw }}
@@ -7,4 +13,4 @@
     <div class="col-xs-12 col-sm-4 col-md-1000-4 col-md-3">
         {{ this.render(recherche_right_bloc)|raw }}
     </div>
-</div>
+</div>#}

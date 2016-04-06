@@ -4,9 +4,9 @@ parameters:
   gsa.server_port:
   gsa.request.class: BackBee\Bundle\GSABundle\Model\Request
   gsa.default_parameters:
-    client: 'default_frontend'
+    client: 'test_catalog' #default_frontend
     output: 'xml_no_dtd'
-    site: 'default_collection'
+    site: 'test_catalog_pdt' #default_collection
     start: '0'
     num: '10'
     getfields: '*'
