@@ -312,4 +312,19 @@ class SearchResultsListener
         self::$gsaResponse = self::doRequest(self::$gsaRequest);
         self::$target->setParam('response', self::$gsaResponse);
     }
+    public static function _01netSearchMode(){
+        static::fullSearchMode();
+        //debug(self::$gsaResponse->getAllFiltersExcept());
+//        debug(self::$gsaResponse->getParameters('sous_categorie'));
+//        debug(self::$gsaResponse->getmetaTags('sous_categorie'));
+        //dd(var_export(self::$gsaResponse->getmetaTags()));
+//        $retrn= file_put_contents('/home/waled/my_docs/getmetaTagsForThisRequest.txt',var_export(self::$gsaResponse->getmetaTags(),true));
+
+        //die('I am in '.__FILE__.' in line '.__LINE__);
+//        foreach(self::$gsaResponse->getmetaTags() as $namefacet => $value){
+//            debug($namefacet);
+//            debug($value);
+//        }
+//        die('I am in '.__FILE__.' in line '.__LINE__);
+    }
 }

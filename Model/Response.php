@@ -66,7 +66,6 @@ class Response implements \JsonSerializable
      */
     private $partnersLinks;
 
-
     public function __construct()
     {
         $this->parameters = array();
@@ -325,5 +324,101 @@ class Response implements \JsonSerializable
     {
         return $this->partnersLinks;
     }
+
+    public function getWantedFiltersForTypology($clicked_typology){
+        //debug($clicked_typology);
+        $typology_filters = [
+            'produit' => ['categorie','sous_categorie','fabriquant','date','note'],
+        ];
+
+        return isset($typology_filters[$clicked_typology]) ? $typology_filters[$clicked_typology] : false ;
+
+    }
+
+    public function getAllFiltersExcept(){
+        $except = ['typology','categorie','sous_categorie','fabriquant','date','note'];
+        $filtersStep = array();
+        foreach( $this->metaTags  as $k => $v){
+            //debug($k);
+            if(!in_array($k,$except)){
+                $filtersStep[$k] =  $this->metaTags[$k];
+            }
+        }
+        //dd($filtersStep);
+
+        return empty($filtersStep) ?  false : $filtersStep;
+    }
+
+
+
+    public function getMetaFiltersStep2($clicked_typology){
+        $filtersStep2 = array();
+        $wantedFilter2 = $this->getWantedFiltersForTypology($clicked_typology);
+        //debug($wantedFilter2);
+        // if the wanted filter is present in GSAresponse, I take it.
+        if ($wantedFilter2){
+            foreach( $wantedFilter2  as $k => $v){
+                debug($k);
+                if(isset($this->metaTags[$v])){
+                    $filtersStep2[$v] =  $this->metaTags[$v];
+                }
+            }
+        }
+//        debug($filtersStep2);
+        return empty($filtersStep2) ?  false : $filtersStep2;
+    }
+
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//    public function addAppliedFilters($pmtNode,$pvNode){
+//
+//        $type = (string)$pmtNode->attributes()->T ;
+//        $nm = (string)$pmtNode->attributes()->NM ;
+//        $value = (string)$pvNode->attributes()->V ;
+//        $min = (string)$pmtNode->attributes()->L ;
+//        $max = (string)$pmtNode->attributes()->H ;
+//        if ($type == 0){
+//            $inMetaString = 'inmeta:'.$nm.'='.$value;
+//        }elseif($type == 2 ){
+//            $inMetaString = 'inmeta:'.$nm.':'.$min.'..+inmeta:'.$nm.':..'.$max;
+//
+//        }elseif($type == 4 ){
+//            $inMetaString = 'inmeta:'.$nm.'='.$value;
+//        }else{
+//            dd($pmtNode);
+//        }
+//        $isInMetaApplied = $this->isInMetaApplied($inMetaString);
+//
+//        $this->appliedFilters[$nm][$inMetaString]['isApplied']= $isInMetaApplied;
+//        $isInMetaApplied ? $this->appliedFilters['appliedFilters'][$nm][$inMetaString] = $inMetaString : '';
+//
+//        //dd($inMetaString);
+//
+//    }
+//
+//    public function isInMetaApplied($inmetaFilter){
+////        dd($inmetaFilter);
+//        $parm_q = $this->getParameters('q');
+//        $isInMetaExist = strpos('inmeta:typology=produit'.$parm_q['value'],$inmetaFilter);
+//        // strpos Return 0 if the substring exist in the beginning of the string
+//        if($isInMetaExist === false){
+//            $return = false ;
+//        }else {
+//            $return = True;
+//
+//        }
+////        var_dump($return);dd($inmetaFilter);
+//        return $return ;
+//
+//    }
+
 
 }

@@ -63,8 +63,16 @@ class UrlGSA extends AbstractHelper
         }
 
         if ($inmetaDelete == 'true') {
-            $createQuery = str_ireplace($inmeta, '', $createQuery);
-            $createQuery = str_ireplace('  ', ' ', $createQuery);
+
+            if(strpos($inmeta,'inmeta:typology') !== false){
+//                debug($createQuery);
+                $tab = explode(' ',$createQuery);
+                $createQuery = $tab[0].'&filter=0';
+            }else{
+                $createQuery = str_ireplace($inmeta, '', $createQuery);
+                $createQuery = str_ireplace('  ', ' ', $createQuery);
+            }
+
         }
 
         if ($dnavs == false ) {

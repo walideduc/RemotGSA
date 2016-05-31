@@ -1,0 +1,192 @@
+<h4 class="padding-left color-txt-3 title-medium cap">{{ value.0.NameFacet }}</h4>
+<div class="bg-color-1 box-shadow padding-inside-all bloc">
+    <ul class="list-unstyled">
+        {% set Valmin = '' %}
+        {% set Valmax = '' %}
+        {% set SetNameFacet = Namefacet %}
+        {% set SetNbRange = value|length %}
+        {#{% set subFilterPerFacet = 4 %}#}
+        {% set i = 0 %}
+
+        {% for index, value in  value %}
+            {% set i = i+1 %}
+            {# Begin constacton of inmeta #}
+            {% if value.value %} {# if true that means non range metadata #}
+                {% set inmeta = "inmeta:" ~ Namefacet ~ "=" ~ value.valueFormat %}
+            {% else %} {# metadata range #}
+
+                {% if value.type == '2' %}
+                    {#hi saves the Valmin and Valmax #}
+                    {% if Valmin == '' and loop.first %}
+                        {% set Valmin = value.l %}
+                    {% endif %}
+                    {% if Valmax == '' and loop.last %}
+                        {% if value.h %}
+                            {% set Valmax = value.h %}
+                        {% else %}
+                            {% set Valmax = value.l %}
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+
+                {% set inmeta = "inmeta:" ~ Namefacet ~ ":" ~ value.l ~ ".." ~ value.h %}
+
+            {% endif %}
+            {#End constacton of inmeta #}
+            {% if i < subFilterPerFacet  %}
+                <li>
+                    {# Now that he had the inmeta value, we send it to the UrlGSA and depends on the returned array and the the metaData and subtag metadata we display some thing #}
+                    {% if this.UrlGSA(inmeta).1 == false %}
+                        <a href="{{ this.UrlGSA(inmeta).0|raw }}">
+                    {% endif %}
+
+                    {% if value.value %}
+                        {{ value.value | capitalize }} ({{ value.count }}) {#video (398)#}
+                        {% if this.UrlGSA(inmeta).1 %}
+                            {% if Namefacet == 'typology' %}
+                                <a class="active color"  href="{{ this.UrlGSA(inmeta, true).0 }}"><br><i class="fa fa-refresh color padding-right"></i>Réinitialiser</a>
+                            {% else %}
+                                <a class="active color"  href="{{ this.UrlGSA(inmeta, true).0 }}"> X</a>
+                            {% endif %}
+                        {% endif %}
+                    {% else %}
+                            {% if value.type != '2' %}
+                                {% if value.count > 0 %}
+                                    {% if value.h %}
+                                        {{ value.h }}
+                                    {% else %}
+                                        plus
+                                    {% endif %}
+                                    -
+                                    {% if value.l %}
+                                        {{ value.l }}
+                                    {% else %}
+                                        moins
+                                    {% endif %}
+                                    ({{ value.count }})
+                                    {% if this.UrlGSA(inmeta).1 %}
+                                        <a href="{{ this.UrlGSA(inmeta, true).0 }}"> X </a>
+                                    {% endif %}
+                                {% endif %}
+                            {% endif %}
+                    {% endif %}
+
+                    {% if this.UrlGSA(inmeta).1 == false %}
+                        </a>
+                    {% endif %}
+
+                </li>
+            {% endif %}
+        {% endfor %}
+        {% if Valmin and Valmax %}  {# if he has tow values then he needs to display a slider with JQuery UI #}
+
+            {% set  ValminSelect = Valmin %}
+            {% set  ValmaxSelect = Valmax %}
+            {% if ValMin != this.UrlGSA(inmeta, true, true, Valmin, Valmax, SetNameFacet).1[0] and  this.UrlGSA(inmeta, true, true, Valmin, Valmax, SetNameFacet).1[0] != '' %}
+                {% set  ValminSelect = this.UrlGSA(inmeta, true, true, Valmin, Valmax, SetNameFacet).1[0] %}
+            {% endif %}
+            {% if Valmax != this.UrlGSA(inmeta, true, true, Valmin, Valmax, SetNameFacet).1[1] and  this.UrlGSA(inmeta, true, true, Valmin, Valmax, SetNameFacet).1[1] != '' %}
+                {% set  ValmaxSelect = this.UrlGSA(inmeta, true, true, Valmin, Valmax, SetNameFacet).1[1] %}
+            {% endif %}
+
+            <script>
+                $(function () {
+
+                    $('#{{ SetNameFacet }}Link').css({'display': 'none'});
+                    {% set step = Valmax / (SetNbRange-1)  %}
+
+                    {% if step <= 1%}
+                    {% set step = step|round(2,'floor')  %}
+                    {% else %}
+                    {% set step = step|round %}
+                    {% endif %}
+
+                    $("#{{ SetNameFacet }}slider-range").slider({
+                        range: true,
+                        min: {{ Valmin|round  }},
+                        max: {{ Valmax|round  }},
+                        step: {{ step }},
+                        values: [{{ ValminSelect }}, {{ ValmaxSelect }}],
+                        slide: function (event, ui) {
+                            $('#{{ SetNameFacet }}Link').css({'display': 'block'});
+                            $(this).find('.ui-slider-handle').first().html("<div style='margin-top:-20px;'>" + ui.values[0] + "</div>");
+                            $(this).find('.ui-slider-handle').last().html("<div style='margin-top:-20px;'>" + ui.values[1] + "</div>");
+
+                            var inmeta = "{{ this.UrlGSA(inmeta, true, true, "ValMin", "ValMax", SetNameFacet).0|raw }}";
+                            inmeta = inmeta.replace("ValMin", ui.values[0]);
+                            inmeta = inmeta.replace("ValMax", ui.values[1]);
+
+                            var Fk = "{{ this.getObject().getParamValue('search_results_page') }}?" + inmeta;
+                            $('#{{ SetNameFacet }}Link').attr('href', Fk);
+                        }
+
+                    });
+
+                    $("#{{ SetNameFacet }}slider-range").each(function () {
+                        $(this).find('.ui-slider-handle').first().html("<div style='margin-top:-20px;'>" + $(this).slider("values", 0) + "</div>");
+                        $(this).find('.ui-slider-handle').last().html("<div style='margin-top:-20px;'>" + $(this).slider("values", 1) + "</div>");
+                    });
+
+
+                });
+            </script>
+
+
+            <style type="text/css">
+                #wrap .ui-widget-header {
+                    background: #E40613 !important;
+                }
+
+                #wrap .ui-slider-horizontal {
+                    height: 2px !important;
+                    border: 0 !important;
+                    background: #333 !important;
+                    border-radius: 0 !important;
+                }
+
+                #wrap .ui-state-default {
+                    background: #E40613 !important;
+                    color: #E40613 !important;
+                    height: 12px !important;
+                    border: 1px red !important;
+                    width: 12px !important;
+                    border-radius: 23px !important;
+                    padding: 0;
+                    margin: 0 0 0 -5px;
+                }
+
+                .slider-range-holder {
+                    width: 200px;
+                }
+
+                .steps {
+                    width: 200px;
+                }
+
+                #{{ SetNameFacet }}slider-range::before {
+                    content: "|";
+                    position: absolute;
+                    top: -11px;
+                    left: -3px;
+                    color: #333;
+                }
+
+                #{{ SetNameFacet }}slider-range::after {
+                    content: "|";
+                    position: absolute;
+                    top: -11px;
+                    right: -3px;
+                    color: #333;
+                }
+            </style>
+
+            <div class="slider-range-holder">
+                <div class="clearfix padding-topx2 padding-bottomx2">
+                    <div id="{{ SetNameFacet }}slider-range" class="relative slider-range clearfix"></div>
+                </div>
+                <a id="{{ SetNameFacet }}Link" class="btn btn-default"
+                   href="{{ this.getObject().getParamValue('search_results_page') }}?{{ this.UrlGSA(inmeta, true, true, Valmin, Valmax, SetNameFacet).0 }}">Filter</a>
+            </div>
+        {% endif %}
+    </ul>
+</div>

@@ -39,6 +39,7 @@ class FormGSA extends AbstractHelper
         }
 
         $tab = array($q, $Selectfacet );
+//        debug($tab);
         return $tab;
     }
 }

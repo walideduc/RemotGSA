@@ -41,6 +41,8 @@ class GSA extends AbstractBundle
      *
      * @param Request
      */
+
+
     public function searchAction(Request $request)
     {
         $response = new Response();
@@ -63,19 +65,43 @@ class GSA extends AbstractBundle
         $gsaRequest = $bbapp->getContainer()->get('gsa.request');
         $submittedQuery =  $query->all();
 
+
+
         $gsaRequest->setParameters($submittedQuery);
 
         $result = $gsaRequest->send();
         $parser = ParserFactory::getParser('xml');
         $gsaResponse = $parser->parse($result);
 
-
+//        debug($submittedQuery['q']);
+        if(isset($submittedQuery['dnavs']) || strpos('inmeta',$submittedQuery['q']) ){
+            $explode = explode('inmeta:', $submittedQuery['q']);
+            //debug($explode);
+            foreach ($explode as $value){
+                //debug($value);
+                if (strpos($value,'=')){
+                    $explode2 = explode('=', $value);
+                    $submittedQuery['tracking'][$explode2[0]] = $explode2[1];
+                    //dd($explode2);
+                }
+                if (strpos($value,':')){
+                    $explode2 = explode(':', $value);
+                    $submittedQuery['tracking'][$explode2[0]] = $explode2[1];
+                    //dd($explode2);
+                }
+            }
+            $inmeta_removed = str_replace('inmeta:','',$submittedQuery['dnavs']);
+            $explode = explode('=',trim($inmeta_removed));
+        }
+        //debug($submittedQuery);
+//        debug($submittedQuery);
         // Create the search_results container and set needed parameters
         $searchResultsBlock = new Recherche();
         $searchResultsBlock->setState(AbstractClassContent::STATE_NORMAL);
         $searchResultsBlock->recherche_results_bloc
             ->setState(AbstractClassContent::STATE_NORMAL)
             ->setParam('submitted_query', $submittedQuery);
+
 
         // right block search
         if(null !== ($gsaResponse->getTopKeyword())) {
@@ -92,9 +118,9 @@ class GSA extends AbstractBundle
                 $searchResultsBlock->recherche_right_bloc
                     ->setState(AbstractClassContent::STATE_NORMAL)
                     ->setParam('response_'.strtolower($key), [
-                            'parameters' => $gsaResponseRight->getParameters(),
-                            'results'    => $gsaResponseRight->getResults()
-                        ]);
+                        'parameters' => $gsaResponseRight->getParameters(),
+                        'results'    => $gsaResponseRight->getResults()
+                    ]);
             }
         }
 
@@ -103,19 +129,24 @@ class GSA extends AbstractBundle
         $root = $em->getRepository('BackBee\NestedNode\Page')->getRoot($site);
         $layout = $em->find('BackBee\Site\Layout', md5('searchlayout-' . $site->getLabel()));
 
+        $renderMode = null ;
+        if ($site->getLabel() ==  '01net'){
+            $renderMode = '_01net' ;
+        }
+
         $pagebuilder = $bbapp->getContainer()->get('pagebuilder');
 
         $pagebuilder->setRoot($root)
-                    ->setTitle('Résultat recherche')
-                    ->putOnlineAndHidden()
-                    ->setSite($site)
-                    ->setParent($root)
-                    ->setLayout($layout)
-                    ->pushElement($searchResultsBlock);
+            ->setTitle('Résultat recherche')
+            ->putOnlineAndHidden()
+            ->setSite($site)
+            ->setParent($root)
+            ->setLayout($layout)
+            ->pushElement($searchResultsBlock);
 
         $renderer = $this->getApplication()->getRenderer();
 
-        $response->setContent($renderer->render($pagebuilder->getPage()));
+        $response->setContent($renderer->render($pagebuilder->getPage(),$renderMode));
 
         $response->send();
     }

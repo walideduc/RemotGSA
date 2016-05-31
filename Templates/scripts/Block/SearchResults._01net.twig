@@ -4,13 +4,12 @@
 {% set submittedQuery = this.getObject().getParamValue('submitted_query') %}
 {% set three_first_videos = this.getObject().getParamValue('three_first_videos') %}
 
-<!-- MONTEUR DE RECHERCHE TOP -->
-{{ this.render(recherche_bloc)|raw }}
-<!-- /MONTEUR DE RECHERCHE TOP -->
+{#{{ submittedQuery | json_encode()  }}#}
+
 <!-- RESULTATS TOP-->
 {% set cssSite = {'www.bfmtv.com': 'rub2', 'www.business.bfmtv.com': 'rub3', 'www.rmcsport.bfmtv.com': 'rub4', 'www.01net.com': 'rub5'} %}
 {% set customTemplate = [ 'diaporama', 'article','video' ] %}
-<div class="bloc col-xs-12 hidden-xs">
+<div class="bloc"> {# col-xs-12 hidden-xs #}
     {%  if (response.0.getSuggestions() | length != 0) %}
         <p>Essayez avec l'orthographe :
             {% for suggestion in response.0.getSuggestions() %}
@@ -19,33 +18,6 @@
         </p>
     {% endif %}
     <!-- cluster -->
-    <div>Environ {{response.0.totalResults}} résultats {# | Recherches associées à <strong>{{response.0.searchString}}</strong> : #}</div>
-    <p id="loading_cluster"></p>
-
-    <ul class="list-unstyled list-inline">
-        {% set clusterCount = 3 %}
-        {%  if (response.0.getSynonyms() | length != 0) %}
-            {% for name,query in response.0.getSynonyms() %}
-                {%  if clusterCount > 0 %}
-                    <li><a href="{{ linkbuilder.0.getLink(suggestion) }}">{{ name }}</a></li>
-                    {% set clusterCount = clusterCount-1 %}
-                {% endif %}
-            {% endfor %}
-        {% endif %}
-        {%  if clusterCount > 0 %}
-            {%  for i in 0..clusterCount %}
-                {% if i-1 >= 0 %}
-                    <li class="cluster_label{{ i }}"></li>
-                {% endif %}
-            {% endfor %}
-        {%  endif %}
-
-    </ul>
-
-    <!-- cluster end -->
-    <!-- suggestion begin -->
-
-    <!-- suggestion end-->
 </div>
 <!-- /RESULTATS TOP-->
 
@@ -64,10 +36,62 @@
         </div>
     </div>
 {% else %}
-    {% include 'Block/Result/NavBlock.twig' %}
+
     {# include template by type, first type template differs from others #}
-    <div class="tab-content clearfix padding-top" id="search-result-content">
-        <div class="tab-pane fade in active" id="all">
+    <div class="bloc" id="search-result-content">
+        <!-- Facette -->
+        <div class="col-xs-3 col-md-3">
+            <div class="bg-color-1 box-shadow padding-inside-all bloc">
+                <span class="text-danger">{{response.0.totalResults}} résultats</span> pour
+                <h1 class="text-danger">
+                    {{ this.FormGSA(this.getObject().getParamValue('query')).0 }}
+                </h1>
+                <h4 class="">
+                    Filtrez votre recherche :
+                </h4>
+            </div>
+
+            {#{% for Namefacet, value in  response.0.getmetaTags() %}#}
+                {#&#123;&#35;{% if Namefacet == 'typology' %}&#35;&#125;#}
+                    {#{% include 'Block/Result/FacetMetadata.twig' with { 'Namefacet': Namefacet , 'value': value ,  'subFilterPerFacet' :  7 } %}#}
+                {#&#123;&#35;{% endif %}&#35;&#125;#}
+            {#{% endfor %}#}
+
+            {#{% if submittedQuery.tracking |length <= 1 %}#}
+                    {% set typologyArray = response.0.getmetaTags('typology') %}
+                    {% include 'Block/Result/FacetMetadata.twig' with { 'Namefacet': 'typology' , 'value': typologyArray ,  'subFilterPerFacet' :  7 } %}
+
+                    {% if submittedQuery.tracking.typology == 'produit' and submittedQuery.tracking.sous_categorie is not defined  %}
+                        {% for filter in response.0.getWantedFiltersForTypology(submittedQuery.tracking.typology)  %}
+                            {% set filterArray = response.0.getmetaTags(filter) %}
+                            {% include 'Block/Result/FacetMetadata.twig' with { 'Namefacet': filter , 'value': filterArray,  'subFilterPerFacet' : 4 } %}
+                        {% endfor %}
+                    {% endif %}
+                    {#{% set others = response.0.getAllFiltersExcept() %}#}
+                    {% if submittedQuery.tracking.sous_categorie is defined %}
+                        {% set filterArray = response.0.getmetaTags('sous_categorie') %}
+                        {% include 'Block/Result/FacetMetadata.twig' with { 'Namefacet': 'sous_categorie' , 'value': filterArray,  'subFilterPerFacet' : 4 } %}
+                        {% for Namefacet, value in  response.0.getAllFiltersExcept() %}
+                            {% include 'Block/Result/FacetMetadata.twig' with { 'Namefacet': Namefacet , 'value': value, 'subFilterPerFacet' : 4 } %}
+                        {% endfor %}
+                    {% endif %}
+
+            {#{% else %}#}
+                {#{% for filter, someshit in  submittedQuery.tracking %}#}
+                    {#{% set filterArray = response.0.getmetaTags(filter) %}#}
+                    {#{% include 'Block/Result/FacetMetadata.twig' with { 'Namefacet': filter , 'value': filterArray, 'subFilterPerFacet' : 3 } %}#}
+                {#{% endfor %}#}
+            {#{% endif %}#}
+
+        </div>
+        <!--- //Fin Facet --->
+
+        <!-- Resultat de recherche -->
+        <div class="col-xs-8 col-md-8" id="all">
+            <!-- MONTEUR DE RECHERCHE TOP -->
+            {{ this.render(recherche_bloc)|raw }}
+            <div class="clearfix">&nbsp;</div>
+            <!-- /MONTEUR DE RECHERCHE TOP -->
             <ul class="list-unstyled">
                 {% set first = {} %}
                 {% set result_amount = 0 %}
@@ -93,6 +117,8 @@
                     {% if result_amount == 8 %}
                         {% include 'Block/Result/LienCommercialBlock.twig' with {'lien_id': 2} %}
                     {% endif %}
+
+
                     {% if submittedQuery.type != 'typology:video' %}
                         {% set type = result.getMetaTag('type')|lower %}
                         {% set articleSite = result.getMetaTag('site') %}
@@ -104,7 +130,7 @@
                                 {% set template ='Block/Result/'~type|capitalize~'.twig' %}
                             {% endif %}
                             {% include template %}
-                        {%  elseif typology in customTemplate %}
+                        {% elseif typology in customTemplate %}
                             {% if (typology not in first) and pager.0.getCurrent() == 1 and typology != 'video' %}
                                 {% set template ='Block/Result/'~typology|capitalize~'.first.twig' %}
                                 {% set first = first|merge({(typology):true}) %}
@@ -125,6 +151,7 @@
             </ul>
         </div>
     </div>
+
     <!-- MONTEUR DE RECHERCHE BOTTOM -->
     {{ this.render(recherche_bloc)|raw }}
     <!-- /MONTEUR DE RECHERCHE BOTTOM -->
@@ -145,6 +172,7 @@
 
         </ul>
     </div>
+
     <!-- PAGE -->
     {% include 'Block/Result/PaginationBlock.twig' %}
     <!-- /PAGE -->
@@ -177,6 +205,7 @@
                     $('#liens-commerciaux_3').hide();
                 }
             });
+
         });
 
         function google_ad_request_done(google_ads) {
@@ -196,6 +225,7 @@
             }
             $('#loading_cluster').hide();
         }
+
 
 
     </script>

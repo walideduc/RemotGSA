@@ -166,8 +166,9 @@ class Request
      */
     private function buildQueryString()
     {
+//        debug($this->getParameters());
         $queryString = http_build_query($this->getParameters());
-
+        //debug($queryString);
         return $queryString;
     }
 

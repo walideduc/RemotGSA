@@ -27,7 +27,6 @@ services:
   guzzle.http_client:
     class: 'GuzzleHttp\Client'
 
-
 #    <services>
 #        <service id="gsa.request"
 #                 class="%gsa.request.class%"

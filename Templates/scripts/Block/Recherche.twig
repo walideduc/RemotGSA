@@ -1,16 +1,10 @@
 <div {{ this.bbcontent(null, {'class': 'row padding-top'})|raw }}>
-    {{ this.render(recherche_results_bloc)|raw }}
-    {{ this.render(recherche_right_bloc)|raw }}
-</div>
-
-{#
-<div {{ this.bbcontent(null, {'class': 'row padding-top'})|raw }}>
-    <div class="">
-        <div class="">
+    <div class="col-xs-12 col-sm-8 col-md-1000-8 col-md-9">
+        <div class="bg-color-1 padding-right padding-left">
             {{ this.render(recherche_results_bloc)|raw }}
         </div>
     </div>
     <div class="col-xs-12 col-sm-4 col-md-1000-4 col-md-3">
         {{ this.render(recherche_right_bloc)|raw }}
     </div>
-</div>#}
+</div>
